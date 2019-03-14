@@ -72,9 +72,15 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             if (e instanceof FirebaseAuthException) {
-                                mPasswordView.setError("Password incorrect.");
                                 mPasswordView.requestFocus();
-                                ((FirebaseAuthException) e).getErrorCode();
+                                if(((FirebaseAuthException) e).getErrorCode().equals("ERROR_WRONG_PASSWORD")){
+                                    mPasswordView.setError("Password incorrect.");
+                                }
+                                else{
+                                    System.out.println("Error code test:" + ((FirebaseAuthException) e).getErrorCode());
+                                    mPasswordView.setError("Unable to login. Please try again.");
+                                }
+                                mPasswordView.requestFocus();
                             }
                         }
                     });
