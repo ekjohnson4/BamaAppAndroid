@@ -14,7 +14,6 @@ public class MyCustomPagerAdapter extends PagerAdapter{
     int images[];
     LayoutInflater layoutInflater;
 
-
     public MyCustomPagerAdapter(Context context, int images[]) {
         this.context = context;
         this.images = images;
