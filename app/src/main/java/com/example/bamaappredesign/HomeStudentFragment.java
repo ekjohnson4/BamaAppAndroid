@@ -1,34 +1,32 @@
 package com.example.bamaappredesign;
 
-
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class HomeStudentFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
-    ViewFlipper viewFlipper;
-    FragmentManager fragmentManager;
-    int gallery_grid_Images[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
+    ViewPager viewPager;
+    MyCustomPagerAdapter myCustomPagerAdapter;
+    int images[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
 
     public HomeStudentFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inflate the layout for this fragment
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
@@ -39,22 +37,12 @@ public class HomeStudentFragment extends Fragment {
         //TextView frv = view.findViewById(R.id.welcomeText);
         //frv.setText("Welcome, " + user.getEmail() + "!");
 
-        //Set slide-show
-        viewFlipper = view.findViewById(R.id.viewflip);
-        for(int i=0; i<gallery_grid_Images.length; i++){
-            // This will create dynamic image views and add them to the ViewFlipper.
-            setFlipperImage(gallery_grid_Images[i]);
-        }
+        //Home page slides
+        viewPager = view.findViewById(R.id.viewPager);
+        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images);
+        viewPager.setAdapter(myCustomPagerAdapter);
 
         return view;
     }
-
-    private void setFlipperImage(int res) {
-        Log.i("Set Filpper Called", res+"");
-        ImageView image = new ImageView(getContext());
-        image.setBackgroundResource(res);
-        viewFlipper.addView(image);
-        viewFlipper.setFlipInterval(5000);
-        viewFlipper.setAutoStart(true);
-    }
 }
+
