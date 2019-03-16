@@ -7,16 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyCustomPagerAdapter extends PagerAdapter{
     Context context;
     int images[];
+    String strings[];
     LayoutInflater layoutInflater;
 
-    public MyCustomPagerAdapter(Context context, int images[]) {
+    public MyCustomPagerAdapter(Context context, int images[], String stringArray[]) {
         this.context = context;
         this.images = images;
+        this.strings = stringArray;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -35,8 +38,11 @@ public class MyCustomPagerAdapter extends PagerAdapter{
         View itemView;
         itemView = layoutInflater.inflate(R.layout.view_pager, container, false);
 
+        //Load image and headline
         ImageView imageView = itemView.findViewById(R.id.imageView);
         imageView.setImageResource(images[position]);
+        TextView txt = itemView.findViewById(R.id.textView);
+        txt.setText(strings[position]);
 
         container.addView(itemView);
 
@@ -44,7 +50,7 @@ public class MyCustomPagerAdapter extends PagerAdapter{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "you clicked image " + (position + 1), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "you clicked headline " + (position + 1), Toast.LENGTH_LONG).show();
             }
         });
 

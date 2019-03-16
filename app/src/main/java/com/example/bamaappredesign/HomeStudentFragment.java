@@ -19,6 +19,7 @@ public class HomeStudentFragment extends Fragment {
     ViewPager viewPager;
     MyCustomPagerAdapter myCustomPagerAdapter;
     int images[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
+    String strings[] = {"Headline 1", "Headline 2","Headline 3"};
 
     public HomeStudentFragment() {
         // Required empty public constructor
@@ -39,7 +40,7 @@ public class HomeStudentFragment extends Fragment {
 
         //Home page slides
         viewPager = view.findViewById(R.id.viewPager);
-        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images);
+        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
         viewPager.setAdapter(myCustomPagerAdapter);
 
         return view;
