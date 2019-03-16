@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity
         if(b != null)
             value = b.getInt("key");
 
-        //user is logged in, update layout for student
+        //User is logged in, update layout for student
         if(value == 1){
             isLoggedIn = true;
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -46,7 +46,10 @@ public class HomeActivity extends AppCompatActivity
             ft.commit();
         }
         else{
-            //visitor login code goes here
+            isLoggedIn = false;
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flMain, new HomeVisitorFragment());
+            ft.commit();
         }
 
         //Nav menu setup
@@ -62,8 +65,8 @@ public class HomeActivity extends AppCompatActivity
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(action_bar);
 
+        //Change menu to student menu if user is logged in
         if(value == 1){
-            //change menu to student menu if user is logged in
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.student_activity_drawer);
         }

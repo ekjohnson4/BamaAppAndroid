@@ -62,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtras(b); //Put your id to your next Intent
                                 startActivity(intent);
                                 finish();
-                            } else {
-                              //  mPasswordView.setError("Password incorrect.");
-                                //mPasswordView.requestFocus();
                             }
                         }
                     })
