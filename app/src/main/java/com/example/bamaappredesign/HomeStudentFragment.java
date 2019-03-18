@@ -7,6 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +20,8 @@ public class HomeStudentFragment extends Fragment {
     FirebaseUser user;
     ViewPager viewPager;
     MyCustomPagerAdapter myCustomPagerAdapter;
+    private EditText mEditText;
+    //private List<RssFeedModel> mFeedModelList;
     int images[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
     String strings[] = {"Headline 1", "Headline 2","Headline 3"};
 
@@ -42,6 +46,9 @@ public class HomeStudentFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
         myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
         viewPager.setAdapter(myCustomPagerAdapter);
+
+        //mEditText =  view.findViewById(R.id.textView);
+        //new FetchFeedTask().execute((Void) null);
 
         return view;
     }
