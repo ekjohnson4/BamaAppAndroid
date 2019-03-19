@@ -6,20 +6,56 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TicketsFragment extends Fragment {
 
-    public TicketsFragment() {
+    public TicketsFragment()
+    {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tickets, container, false);
-    }
+        //return inflater.inflate(R.layout.fragment_tickets, container, false);
 
+        View inputView = inflater.inflate(R.layout.fragment_tickets, container, false);
+
+        //transfer ticket button
+        Button transferTicket = inputView.findViewById(R.id.transfer_button);
+        View.OnClicklistener transferListener = new View.OnClicklistener()
+        {
+            @Override
+            public void onClick(android.view.View view)
+            {
+                assert getFragmentManager() != null;
+                FragmentTransaction fragtran = getFragmentManager().beginTransaction();
+                fragtran.replace(R.id.flMain, new TransferFragment());
+                fragtran.addToBackStack(null);
+                fragtran.commit();
+            }
+        };
+
+        //donate ticket button
+        Button donateTicket = inputView.findViewById(R.id.donate_button);
+        View.OnClicklistener donateListener = new View.OnClicklistener()
+        {
+            @Override
+            public void onClick(android.view.View view)
+            {
+                assert getFragmentManager() != null;
+                FragmentTransaction fragtran = getFragmentManager().beginTransaction();
+                fragtran.replace(R.id.flMain, new DonateFragment());
+                fragtran.addToBackStack(null);
+                fragtran.commit();
+            }
+        };
+
+        //add portion to page to display existing user ticket if there is one or hard code it
+
+        transferTicket.setOnClickListener(transferListener);
+        donateTicket.setOnClickListener(donateListener);
+        return inputView;
+    }
 }

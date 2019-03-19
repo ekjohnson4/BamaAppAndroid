@@ -57,8 +57,73 @@ public class ActionCardFragment extends Fragment
             }
         };
 
+        //Accounts Button
+        Button accounts = inputView.findViewById(R.id.accounts_button);
+        View.OnClickListener accountsListener = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(android.view.View view)
+            {
+                assert getFragmentManager() != null;
+                FragmentTransaction fragTran = getFragmentManager().beginTransaction();
+                fragTran.replace(R.id.flMain, new AccountFragment());
+                fragTran.addToBackStack(null);
+                fragTran.commit();
+            }
+        };
+
+        //Deposit Button
+        Button deposit = inputView.findViewById(R.id.deposit_button);
+        View.OnClickListener depositListener = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(android.view.View view)
+            {
+                assert getFragmentManager() != null;
+                FragmentTransaction fragTran = getFragmentManager().beginTransaction();
+                fragTran.replace(R.id.flMain, new DepositFragment());
+                fragTran.addToBackStack(null);
+                fragTran.commit();
+            }
+        };
+
+        //Lost Card Button
+        Button lostCard = inputView.findViewById(R.id.lostCard_button);
+        View.OnClickListener lostCardListener = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(android.view.View view)
+            {
+                assert getFragmentManager() != null;
+                FragmentTransaction fragTran = getFragmentManager().beginTransaction();
+                fragTran.replace(R.id.flMain, new LostCardFragment());
+                fragTran.addToBackStack(null);
+                fragTran.commit();
+            }
+        };
+
+        //Change Password/Change Pin Button
+        Button changeSecurity = inputView.findViewById(R.id.changeSecurity_button);
+        View.OnClickListener changeSecurityListener = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(android.view.View view)
+            {
+                assert getFragmentManager() != null;
+                FragmentTransaction fragTran = getFragmentManager().beginTransaction();
+                fragTran.replace(R.id.flMain, new ChangeSecurityFragment());
+                fragTran.addToBackStack(null);
+                fragTran.commit();
+            }
+        };
+
+
         bamaCash.setOnClickListener(bCashListener);
         diningDollars.setOnClickListener(dDollarsListener);
+        accounts.setOnClickListener(accountsListener);
+        deposit.setOnClickListener(depositListener);
+        lostCard.setOnClickListener(lostCardListener);
+        changeSecurity.setOnClickListener(changeSecurityListener);
         return inputView;
     }
 }
