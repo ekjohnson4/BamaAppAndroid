@@ -30,4 +30,28 @@
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/lostCard_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/deposit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deposit Funds" />
+
+    <Button
+        android:id="@+id/accounts_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accounts" />
+
+    <Button
+        android:id="@+id/changeSecurity_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Password/PIN" />
+
 </FrameLayout>

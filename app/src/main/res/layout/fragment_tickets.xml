@@ -10,4 +10,16 @@
         android:layout_height="match_parent"
         android:text="My Tickets Page" />
 
+    <Button
+        android:id="@+id/transfer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transfer Ticket" />
+
+    <Button
+        android:id="@+id/donate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donate Ticket" />
+
 </FrameLayout>
