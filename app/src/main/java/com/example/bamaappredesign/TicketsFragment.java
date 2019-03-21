@@ -27,7 +27,7 @@ public class TicketsFragment extends Fragment {
 
         //transfer ticket button
         Button transferTicket = inputView.findViewById(R.id.transfer_button);
-        View.OnClicklistener transferListener = new View.OnClicklistener()
+        View.OnClickListener transferListener = new View.OnClickListener()
         {
             @Override
             public void onClick(android.view.View view)
@@ -42,7 +42,7 @@ public class TicketsFragment extends Fragment {
 
         //donate ticket button
         Button donateTicket = inputView.findViewById(R.id.donate_button);
-        View.OnClicklistener donateListener = new View.OnClicklistener()
+        View.OnClickListener donateListener = new View.OnClickListener()
         {
             @Override
             public void onClick(android.view.View view)
