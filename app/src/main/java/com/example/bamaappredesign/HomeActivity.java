@@ -3,23 +3,20 @@ package com.example.bamaappredesign;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.*;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
+import android.view.View;
+import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.Objects;
-
 import static com.example.bamaappredesign.R.layout.action_bar;
 
 public class HomeActivity extends AppCompatActivity
@@ -69,6 +66,27 @@ public class HomeActivity extends AppCompatActivity
         if(value == 1){
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.student_activity_drawer);
+
+            //Make logo in ActionBar shortcut to Student home page
+            ImageView img = findViewById(R.id.icon);
+            img.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, new HomeStudentFragment());
+                    ft.commit();
+                }
+            });
+        }
+        else{
+            //Make logo in ActionBar shortcut to Visitor home page
+            ImageView img = findViewById(R.id.icon);
+            img.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, new HomeVisitorFragment());
+                    ft.commit();
+                }
+            });
         }
     }
 
@@ -129,7 +147,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view view_pager clicks here.
         int id = item.getItemId();
         if (id == R.id.home) {
