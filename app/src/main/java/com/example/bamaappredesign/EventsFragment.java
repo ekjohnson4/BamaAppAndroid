@@ -141,7 +141,6 @@ public class EventsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         String todayDate = sdf.format(c.getTime());
-        System.out.println("Today's date:" + todayDate);
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -172,7 +171,6 @@ public class EventsFragment extends Fragment {
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
         String tomorrowDate = sdf.format(gc.getTime());
-        System.out.println("Today's date:" + tomorrowDate);
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -232,6 +230,9 @@ public class EventsFragment extends Fragment {
         //checks if date is within 7 days
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<String> thisWeek = new ArrayList<String>();
+        Calendar c = Calendar.getInstance();
+        String todayDate = sdf.format(c.getTime());
+        thisWeek.add(todayDate);
         for(int i = 1; i<7; i++) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.add(Calendar.DATE, i);
