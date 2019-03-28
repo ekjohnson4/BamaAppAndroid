@@ -25,9 +25,9 @@
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+        android:layout_height="35sp"
+        android:indeterminate="true"
+        android:visibility="gone"/>
 
     <ScrollView
         android:id="@+id/login_form"

@@ -39,14 +39,22 @@ public class MainActivity extends AppCompatActivity {
 
     //Visitor login button pressed
     public void visitorLogin(View v){
+        findViewById(R.id.login_progress).setVisibility(View.VISIBLE);
+        findViewById(R.id.showdescriptiontitle).setVisibility(View.GONE);
         Intent i = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(i);
+        findViewById(R.id.login_progress).setVisibility(View.GONE);
+        findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
     }
 
     //Sign in button pressed, checks credentials in Firebase
     public void studentLogin(View v) {
+        findViewById(R.id.login_progress).setVisibility(View.VISIBLE);
+        findViewById(R.id.showdescriptiontitle).setVisibility(View.GONE);
         //If fields are empty, throw error
         if (e1.getText().toString().equals("") && e2.getText().toString().equals("")) {
+            findViewById(R.id.login_progress).setVisibility(View.GONE);
+            findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), "Must enter in Crimson email and password.", Toast.LENGTH_SHORT).show();
         } else {
             auth.signInWithEmailAndPassword(e1.getText().toString(), e2.getText().toString())
@@ -59,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
                                 b.putInt("key", 1); //Your id
                                 intent.putExtras(b); //Put your id to your next Intent
                                 startActivity(intent);
+                                findViewById(R.id.login_progress).setVisibility(View.GONE);
+                                findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
                                 finish();
                             }
                         }
@@ -68,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             if (e instanceof FirebaseAuthException) {
                                 mPasswordView.requestFocus();
+                                findViewById(R.id.login_progress).setVisibility(View.GONE);
+                                findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
                                 if(((FirebaseAuthException) e).getErrorCode().equals("ERROR_WRONG_PASSWORD")){
                                     mPasswordView.setError("Password incorrect.");
                                 }
