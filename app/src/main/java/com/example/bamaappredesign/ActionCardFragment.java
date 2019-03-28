@@ -57,7 +57,6 @@ public class ActionCardFragment extends Fragment
             }
         };
 
-        //Accounts Button
         Button accounts = inputView.findViewById(R.id.accounts_button);
         View.OnClickListener accountsListener = new View.OnClickListener()
         {
@@ -70,7 +69,8 @@ public class ActionCardFragment extends Fragment
                 fragTran.addToBackStack(null);
                 fragTran.commit();
             }
-        };
+        }; //Accounts Button
+
 
         //Deposit Button
         Button deposit = inputView.findViewById(R.id.deposit_button);
