@@ -205,6 +205,7 @@ public class EventsFragment extends Fragment {
         System.out.println("Today's date:" + tomorrowDate);
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
+
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) nNode;
                 // Set the texts into TextViews from item nodes
