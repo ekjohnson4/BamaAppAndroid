@@ -22,7 +22,6 @@
         android:layout_weight="8"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minHeight="25dp"
         android:paddingTop="8dp"
         android:paddingBottom="0dp">
 
@@ -51,41 +50,20 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Events"
                     android:layout_gravity="left"
+                    android:layout_marginBottom="2dp"
+                    android:text="Events"
                     android:textColor="#000"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="2dp"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="fill_parent"
-                    android:layout_height="60sp"
+                    android:layout_height="fill_parent"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ticket" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Alabama Vs. ???"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Bowl - Gate"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"/>
-
+                    android:src="@drawable/events2"/>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
@@ -114,7 +92,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Shop"
                     android:layout_gravity="left"
@@ -125,30 +103,9 @@
 
                 <ImageView
                     android:layout_width="fill_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="fill_parent"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/actioncard"/>
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Bama Cash: --"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:textAlignment="center"
-                    android:text="Dining Dollars: --"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"/>
-
+                    android:src="@drawable/supe"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </GridLayout>
