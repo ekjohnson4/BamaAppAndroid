@@ -5,7 +5,11 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,11 +40,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
  */
 public class EventsFragment extends Fragment {
     View v;
+    private RecyclerView myrecyclerview;
+    private List<Event> linkList = new ArrayList<>();;
     TextView textview;
     Button today;
     Button tomorrow;
     Button week;
     NodeList nodelist;
+    EventsAdapter adapter;
     // Insert image URL
     String URL = "https://www.ua.edu/api/events/?cat=2";
     public EventsFragment() {
@@ -51,12 +59,13 @@ public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_events, container, false);
-        textview =  v.findViewById(R.id.text);
-        textview.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showEvent();
-            }
-        });
+        // Execute DownloadXML AsyncTask
+        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvContacts);
+        adapter = new EventsAdapter(getContext(),linkList);
+        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        System.out.println(linkList.size());
+        myrecyclerview.setAdapter(adapter);
+        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         today = v.findViewById(R.id.button);
         today.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -75,8 +84,6 @@ public class EventsFragment extends Fragment {
                 setWeeksEvents();
             }
         });
-        // Execute DownloadXML AsyncTask
-        new DownloadXML().execute(URL);
         return v;
     }
 
@@ -116,25 +123,14 @@ public class EventsFragment extends Fragment {
                     // Set the texts into TextViews from item nodes
                     // Get the title
                     if(getNode("start_date", eElement).substring(0,10).equals(todayDate)) {
-                        textview.setTextColor(Color.RED);
-                        textview.setText(textview.getText() + ""
-                                + Html.fromHtml(""+ getNode("title", eElement)) + "\n" + "\n");
-                        // Get the description
-                        textview.setTextColor(Color.BLACK);
-                        textview.setText(textview.getText() + "Description: "
-                                + Html.fromHtml(getNode("description", eElement)) + "\n" + "\n");
-                        // Get the link
-                        textview.setText(textview.getText() + "Location: "
-                                + Html.fromHtml(getNode("location", eElement)) + "\n" + "\n");
-                        // Get the date
-                        textview.setText(textview.getText() + "Date: "
-                                + Html.fromHtml(getNode("start_date", eElement)) + "\n" + "\n" + "\n"
-                                + "\n");
+                        Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                        linkList.add(a);
                     }
                 }
             }
+            adapter.notifyDataSetChanged();
             // Close progressbar
-        }
+    }
     }
     // getNode function
     private static String getNode(String sTag, Element eElement) {
@@ -145,10 +141,10 @@ public class EventsFragment extends Fragment {
     }
 
     private void setTodaysEvents(){
-        textview.setText("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         String todayDate = sdf.format(c.getTime());
+        linkList.clear();
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -156,28 +152,19 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(getNode("start_date", eElement).substring(0,10).equals(todayDate)) {
-                    textview.setText(textview.getText() + "Title: "
-                            + Html.fromHtml(getNode("title", eElement)) + "\n" + "\n");
-                    // Get the description
-                    textview.setText(textview.getText() + "Description: "
-                            + Html.fromHtml(getNode("description", eElement)) + "\n" + "\n");
-                    // Get the link
-                    textview.setText(textview.getText() + "Location: "
-                            + Html.fromHtml(getNode("location", eElement)) + "\n" + "\n");
-                    // Get the date
-                    textview.setText(textview.getText() + "Date: "
-                            + Html.fromHtml(getNode("start_date", eElement)) + "\n" + "\n" + "\n"
-                            + "\n");
+                    Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                    linkList.add(a);
                 }
             }
         }
+        adapter.notifyDataSetChanged();
     }
 
     private void setTomorrowsEvents(){
-        textview.setText("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
+        linkList.clear();
         String tomorrowDate = sdf.format(gc.getTime());
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
@@ -186,27 +173,18 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(getNode("start_date", eElement).substring(0,10).equals(tomorrowDate)) {
-                    textview.setText(textview.getText() + "Title: "
-                            + Html.fromHtml(getNode("title", eElement)) + "\n" + "\n");
-                    // Get the description
-                    textview.setText(textview.getText() + "Description: "
-                            + Html.fromHtml(getNode("description", eElement)) + "\n" + "\n");
-                    // Get the link
-                    textview.setText(textview.getText() + "Location: "
-                            + Html.fromHtml(getNode("location", eElement)) + "\n" + "\n");
-                    // Get the date
-                    textview.setText(textview.getText() + "Date: "
-                            + Html.fromHtml(getNode("start_date", eElement)) + "\n" + "\n" + "\n"
-                            + "\n");
+                    Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                    linkList.add(a);
                 }
             }
         }
+        adapter.notifyDataSetChanged();
     }
     private void setWeeksEvents(){
-        textview.setText("");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
+        linkList.clear();
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
 
@@ -215,21 +193,12 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(checkDate(getNode("start_date", eElement).substring(0,10))) {
-                    textview.setText(textview.getText() + "Title: "
-                            + Html.fromHtml(getNode("title", eElement)) + "\n" + "\n");
-                    // Get the description
-                    textview.setText(textview.getText() + "Description: "
-                            + Html.fromHtml(getNode("description", eElement)) + "\n" + "\n");
-                    // Get the link
-                    textview.setText(textview.getText() + "Location: "
-                            + Html.fromHtml(getNode("location", eElement)) + "\n" + "\n");
-                    // Get the date
-                    textview.setText(textview.getText() + "Date: "
-                            + Html.fromHtml(getNode("start_date", eElement)) + "\n" + "\n" + "\n"
-                            + "\n");
+                    Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                    linkList.add(a);
                 }
             }
         }
+        adapter.notifyDataSetChanged();
     }
 
     private boolean checkDate(String dateCheck){
@@ -262,6 +231,12 @@ public class EventsFragment extends Fragment {
 
     private void showEvent(){
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new DownloadXML().execute(URL);
     }
 
 }
