@@ -9,7 +9,7 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="240dp"
         />
 
@@ -20,9 +20,10 @@
         android:alignmentMode="alignMargins"
         android:columnOrderPreserved="false"
         android:layout_weight="8"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingTop="16dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="25dp"
+        android:paddingTop="8dp"
         android:paddingBottom="0dp">
 
     <!-- ROW 1  -->
@@ -60,8 +61,8 @@
                     android:layout_marginBottom="2dp"/>
 
                 <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="60dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60sp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ticket" />
 
@@ -71,8 +72,8 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -81,8 +82,8 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -123,10 +124,10 @@
                 android:layout_marginBottom="2dp"/>
 
             <ImageView
-                android:layout_width="110dp"
+                android:layout_width="fill_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/actioncard" />
+                android:src="@drawable/actioncard"/>
 
             <TextView
                 android:textAlignment="center"
@@ -134,8 +135,8 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -144,8 +145,8 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -154,7 +155,7 @@
 
     <GridLayout
         android:id="@+id/mainGrid2"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="80dp"
         android:layout_weight="8"
         android:alignmentMode="alignMargins"
@@ -175,7 +176,7 @@
             android:layout_columnWeight="1"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp">
 
@@ -187,8 +188,8 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="360dp"
-                    android:layout_height="20dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginLeft="16dp"
                     android:text="News"
@@ -197,7 +198,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="250dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/news_slide" />
