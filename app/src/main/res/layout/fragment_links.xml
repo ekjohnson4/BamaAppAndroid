@@ -1,19 +1,19 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
     tools:context=".LinksFragment">
 
     <TextView
-        android:id="@+id/links_title"
+        android:id="@+id/student_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop= "10dp"
-        android:paddingLeft= "16dp"
+        android:paddingStart= "16dp"
         android:paddingBottom="16dp"
-        android:text="Important Links"
+        android:text="Extra Links"
         android:textColor="@android:color/black"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -22,118 +22,14 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="68dp"
         tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/linkOne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:paddingLeft= "16dp"
-        android:paddingTop= "50dp"
-        android:paddingBottom="16dp"
-        android:text="@string/link_one"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/links_title"
-        app:layout_constraintTop_toTopOf="@id/links_title"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/linkTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft= "16dp"
-        android:paddingTop= "80dp"
-        android:autoLink="web"
-        android:paddingBottom="16dp"
-        android:text="@string/link_two"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/linkOne"
-        app:layout_constraintTop_toTopOf="@id/linkOne"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/linkThree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft= "16dp"
-        android:paddingTop= "110dp"
-        android:paddingBottom="16dp"
-        android:autoLink="web"
-        android:text="@string/link_three"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/linkTwo"
-        app:layout_constraintTop_toTopOf="@id/linkTwo"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/linkFour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft= "16dp"
-        android:paddingTop= "140dp"
-        android:paddingBottom="16dp"
-        android:autoLink="web"
-        android:text="@string/link_four"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/linkThree"
-        app:layout_constraintTop_toTopOf="@id/linkThree"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/linkFive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft= "16dp"
-        android:paddingTop= "170dp"
-        android:paddingBottom="16dp"
-        android:text="@string/link_five"
-        android:autoLink="web"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/linkFour"
-        app:layout_constraintTop_toTopOf="@id/linkFour"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/linkSix"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft= "16dp"
-        android:paddingTop= "200dp"
-        android:paddingBottom="16dp"
-        android:text="@string/link_six"
-        android:autoLink="web"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/linkFive"
-        app:layout_constraintTop_toTopOf="@id/linkFive"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
-    <TextView
-        android:id="@+id/linkSeven"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft= "16dp"
-        android:paddingTop= "230dp"
-        android:autoLink="web"
-        android:paddingBottom="16dp"
-        android:text="@string/link_seven"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/linkSix"
-        app:layout_constraintTop_toTopOf="@id/linkSix"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvContacts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop= "45dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

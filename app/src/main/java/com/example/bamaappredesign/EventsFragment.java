@@ -2,6 +2,7 @@ package com.example.bamaappredesign;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,20 +51,25 @@ public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_events, container, false);
-        textview = (TextView) v.findViewById(R.id.text);
-        today = (Button) v.findViewById(R.id.button);
+        textview =  v.findViewById(R.id.text);
+        textview.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showEvent();
+            }
+        });
+        today = v.findViewById(R.id.button);
         today.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setTodaysEvents();
             }
         });
-        tomorrow = (Button) v.findViewById(R.id.button4);
+        tomorrow =  v.findViewById(R.id.button4);
         tomorrow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setTomorrowsEvents();
             }
         });
-        week = (Button) v.findViewById(R.id.button5);
+        week = v.findViewById(R.id.button5);
         week.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setWeeksEvents();
@@ -110,16 +116,18 @@ public class EventsFragment extends Fragment {
                     // Set the texts into TextViews from item nodes
                     // Get the title
                     if(getNode("start_date", eElement).substring(0,10).equals(todayDate)) {
-                        textview.setText(textview.getText() + "Title : "
-                                + Html.fromHtml(getNode("title", eElement)) + "\n" + "\n");
+                        textview.setTextColor(Color.RED);
+                        textview.setText(textview.getText() + ""
+                                + Html.fromHtml(""+ getNode("title", eElement)) + "\n" + "\n");
                         // Get the description
-                        textview.setText(textview.getText() + "Description : "
+                        textview.setTextColor(Color.BLACK);
+                        textview.setText(textview.getText() + "Description: "
                                 + Html.fromHtml(getNode("description", eElement)) + "\n" + "\n");
                         // Get the link
-                        textview.setText(textview.getText() + "Location : "
+                        textview.setText(textview.getText() + "Location: "
                                 + Html.fromHtml(getNode("location", eElement)) + "\n" + "\n");
                         // Get the date
-                        textview.setText(textview.getText() + "Date : "
+                        textview.setText(textview.getText() + "Date: "
                                 + Html.fromHtml(getNode("start_date", eElement)) + "\n" + "\n" + "\n"
                                 + "\n");
                     }
@@ -148,16 +156,16 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(getNode("start_date", eElement).substring(0,10).equals(todayDate)) {
-                    textview.setText(textview.getText() + "Title : "
+                    textview.setText(textview.getText() + "Title: "
                             + Html.fromHtml(getNode("title", eElement)) + "\n" + "\n");
                     // Get the description
-                    textview.setText(textview.getText() + "Description : "
+                    textview.setText(textview.getText() + "Description: "
                             + Html.fromHtml(getNode("description", eElement)) + "\n" + "\n");
                     // Get the link
-                    textview.setText(textview.getText() + "Location : "
+                    textview.setText(textview.getText() + "Location: "
                             + Html.fromHtml(getNode("location", eElement)) + "\n" + "\n");
                     // Get the date
-                    textview.setText(textview.getText() + "Date : "
+                    textview.setText(textview.getText() + "Date: "
                             + Html.fromHtml(getNode("start_date", eElement)) + "\n" + "\n" + "\n"
                             + "\n");
                 }
@@ -178,16 +186,16 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(getNode("start_date", eElement).substring(0,10).equals(tomorrowDate)) {
-                    textview.setText(textview.getText() + "Title : "
+                    textview.setText(textview.getText() + "Title: "
                             + Html.fromHtml(getNode("title", eElement)) + "\n" + "\n");
                     // Get the description
-                    textview.setText(textview.getText() + "Description : "
+                    textview.setText(textview.getText() + "Description: "
                             + Html.fromHtml(getNode("description", eElement)) + "\n" + "\n");
                     // Get the link
-                    textview.setText(textview.getText() + "Location : "
+                    textview.setText(textview.getText() + "Location: "
                             + Html.fromHtml(getNode("location", eElement)) + "\n" + "\n");
                     // Get the date
-                    textview.setText(textview.getText() + "Date : "
+                    textview.setText(textview.getText() + "Date: "
                             + Html.fromHtml(getNode("start_date", eElement)) + "\n" + "\n" + "\n"
                             + "\n");
                 }
@@ -199,8 +207,6 @@ public class EventsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
-        String tomorrowDate = sdf.format(gc.getTime());
-        System.out.println("Today's date:" + tomorrowDate);
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
 
@@ -245,6 +251,17 @@ public class EventsFragment extends Fragment {
             }
         }
         return true;
+    }
+
+    public String convertDate(String date){
+        String fixedDate = "";
+
+
+        return date;
+    }
+
+    private void showEvent(){
+
     }
 
 }
