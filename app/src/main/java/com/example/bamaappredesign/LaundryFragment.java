@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class LaundryFragment extends Fragment {
     private WebView mWebView;
@@ -21,8 +22,10 @@ public class LaundryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_laundry, container, false);
         mWebView = view.findViewById(R.id.laundry_web_view);
+        mWebView.setWebViewClient(new WebViewClient());
 
         WebSettings webSettings = mWebView.getSettings();
+        webSettings.setDomStorageEnabled(true);
         webSettings.setJavaScriptEnabled(true);
         mWebView.loadUrl("https://www.laundryview.com/selectProperty");
 
