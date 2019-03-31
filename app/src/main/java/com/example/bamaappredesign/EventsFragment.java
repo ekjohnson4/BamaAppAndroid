@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Document;
@@ -48,6 +49,7 @@ public class EventsFragment extends Fragment {
     Button week;
     NodeList nodelist;
     EventsAdapter adapter;
+    ProgressBar progress;
     // Insert image URL
     String URL = "https://www.ua.edu/api/events/?cat=2";
     public EventsFragment() {
@@ -84,11 +86,16 @@ public class EventsFragment extends Fragment {
                 setWeeksEvents();
             }
         });
+        progress = v.findViewById(R.id.progressBar);
+        progress.setVisibility(View.VISIBLE);
         return v;
     }
 
     private class DownloadXML extends AsyncTask<String, Void, Void> {
-
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
         @Override
         protected Void doInBackground(String... Url) {
             try {
@@ -128,7 +135,9 @@ public class EventsFragment extends Fragment {
                     }
                 }
             }
+            progress.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
+
             // Close progressbar
     }
     }
