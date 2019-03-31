@@ -1,10 +1,15 @@
 package com.example.bamaappredesign;
 
 import android.app.DownloadManager;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,8 +82,12 @@ public class ActionCardFragment extends Fragment
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-                        bamaCashText.setText(bamaCashText.getText() + "$" + document.getString("bamaCash"));
-                        diningDollarText.setText(diningDollarText.getText() + "$" + document.getString("diningDollars"));
+                        Spannable bamaCashColor = new SpannableString("$" + document.getString("bamaCash"));
+                        Spannable diningDollarColor = new SpannableString("$" + document.getString("diningDollars"));
+                        diningDollarColor.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, diningDollarColor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        bamaCashColor.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, bamaCashColor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        bamaCashText.append(bamaCashColor);
+                        diningDollarText.append(diningDollarColor);
 
                     } else {
                         Log.d("LOGGER", "No such document");
@@ -90,4 +99,11 @@ public class ActionCardFragment extends Fragment
         });
         return inputView;
     }
+    public static final Spannable getColoredString(Context context, CharSequence text, int color) {
+        Spannable spannable = new SpannableString(text);
+        spannable.setSpan(new ForegroundColorSpan(color), 0, spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
+    }
+
+
 }
