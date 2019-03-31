@@ -60,20 +60,22 @@
                     android:layout_marginBottom="2dp"/>
 
                 <TextView
-                    android:text="Alabama Vs. ???"
+                    android:id="@+id/ticketInfo1"
+                    android:text="--"
                     android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textStyle="bold"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_gravity="left"/>
 
                 <TextView
-                    android:text="Bowl - Gate"
+                    android:id="@+id/ticketInfo2"
+                    android:text="--"
                     android:textColor="@color/colorAccent"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textStyle="bold"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_gravity="left"/>
                 <ImageView
@@ -121,20 +123,22 @@
                 android:layout_marginBottom="2dp"/>
 
             <TextView
+                android:id="@+id/actionInfo1"
                 android:text="Bama Cash: --"
                 android:textColor="@color/colorAccent"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="left"/>
 
             <TextView
+                android:id="@+id/actionInfo2"
                 android:text="Dining Dollars: --"
                 android:textColor="@color/colorAccent"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="left"/>
 
