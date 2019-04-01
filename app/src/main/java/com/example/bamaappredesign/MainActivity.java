@@ -15,15 +15,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
+    private FirebaseUser user;
     EditText e1, e2;
     private EditText mPasswordView;
-    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mPasswordView = findViewById(R.id.password);
-        sp = getSharedPreferences("login",MODE_PRIVATE);
-        if(sp.getBoolean("logged",false)){
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            Bundle b = new Bundle();
-            b.putInt("key", 1); //Your id
-            intent.putExtras(b); //Put your id to your next Intent
-            startActivity(intent);
-        }
+
     }
 
     //Visitor login button pressed
@@ -76,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                                 Bundle b = new Bundle();
                                 b.putInt("key", 1); //Your id
                                 intent.putExtras(b); //Put your id to your next Intent
-                                sp.edit().putBoolean("logged",true).apply();
                                 startActivity(intent);
                                 findViewById(R.id.login_progress).setVisibility(View.GONE);
                                 findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
