@@ -101,7 +101,7 @@ public class ActionCardFragment extends Fragment
         });
         return inputView;
     }
-    
+
     public static Spannable getColoredString(CharSequence text, int color) {
         Spannable spannable = new SpannableString(text);
         spannable.setSpan(new ForegroundColorSpan(color), 0, spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
