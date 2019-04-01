@@ -84,8 +84,8 @@ public class ActionCardFragment extends Fragment
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-                        Spannable bamaCashColor = new SpannableString("$" + document.getString("bamaCash"));
-                        Spannable diningDollarColor = new SpannableString("$" + document.getString("diningDollars"));
+                        Spannable bamaCashColor = new SpannableString("\n$" + document.getString("bamaCash") + "    ");
+                        Spannable diningDollarColor = new SpannableString("\n$" + document.getString("diningDollars"));
                         diningDollarColor.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, diningDollarColor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         bamaCashColor.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, bamaCashColor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         bamaCashText.append(bamaCashColor);
@@ -102,9 +102,4 @@ public class ActionCardFragment extends Fragment
         return inputView;
     }
 
-    public static Spannable getColoredString(CharSequence text, int color) {
-        Spannable spannable = new SpannableString(text);
-        spannable.setSpan(new ForegroundColorSpan(color), 0, spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannable;
-    }
 }
