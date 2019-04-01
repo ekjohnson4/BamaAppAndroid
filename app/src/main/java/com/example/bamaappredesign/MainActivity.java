@@ -1,6 +1,7 @@
 package com.example.bamaappredesign;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     EditText e1, e2;
     private EditText mPasswordView;
-
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mPasswordView = findViewById(R.id.password);
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+        if(sp.getBoolean("logged",false)){
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            Bundle b = new Bundle();
+            b.putInt("key", 1); //Your id
+            intent.putExtras(b); //Put your id to your next Intent
+            startActivity(intent);
+        }
     }
 
     //Visitor login button pressed
@@ -67,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                 Bundle b = new Bundle();
                                 b.putInt("key", 1); //Your id
                                 intent.putExtras(b); //Put your id to your next Intent
+                                sp.edit().putBoolean("logged",true).apply();
                                 startActivity(intent);
                                 findViewById(R.id.login_progress).setVisibility(View.GONE);
                                 findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
