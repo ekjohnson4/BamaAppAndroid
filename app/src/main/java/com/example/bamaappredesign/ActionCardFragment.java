@@ -1,5 +1,6 @@
 package com.example.bamaappredesign;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -27,13 +28,9 @@ import java.io.InputStream;
 
 public class ActionCardFragment extends Fragment
 {
-    private TextView nameText;
     private TextView diningDollarText;
     private TextView bamaCashText;
-    private FirebaseAuth auth;
-    private FirebaseUser user;
 
-    // Create a reference to the cities collection
     public ActionCardFragment()
     {
         //required empty public constructor
@@ -43,22 +40,23 @@ public class ActionCardFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Inflate the layout for this fragment
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
         final String[] fname = new String[1];
         final String[] lname = new String[1];
+        final String[] occ = new String[1];
         final String[] url = new String[1];
 
         //Set view
         final View inputView = inflater.inflate(R.layout.fragment_card, container, false);
 
         //Set TextViews
-        nameText = inputView.findViewById(R.id.textview1);
         diningDollarText = inputView.findViewById(R.id.textview2);
         bamaCashText = inputView.findViewById(R.id.textview3);
 
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        assert user != null;
         DocumentReference urlRef = db.collection("actionCards").document(user.getUid());
 
         //Display action card image
@@ -93,8 +91,11 @@ public class ActionCardFragment extends Fragment
                     if (document != null) {
                         fname[0] = document.getString("fname");
                         lname[0] = document.getString("lname");
+                        occ[0] = document.getString("occupation");
                         TextView n = inputView.findViewById(R.id.textview1);
                         n.setText(fname[0] + " " + lname[0]);
+                        TextView o = inputView.findViewById(R.id.textview4);
+                        o.setText(occ[0]);
 
                     } else {
                         Log.d("LOGGER", "No such document");
@@ -131,16 +132,11 @@ public class ActionCardFragment extends Fragment
         return inputView;
     }
 
-    public static Spannable getColoredString(CharSequence text, int color) {
-        Spannable spannable = new SpannableString(text);
-        spannable.setSpan(new ForegroundColorSpan(color), 0, spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannable;
-    }
-
+    @SuppressLint("StaticFieldLeak")
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
+        DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
