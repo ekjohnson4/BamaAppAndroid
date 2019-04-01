@@ -1,6 +1,9 @@
 package com.example.bamaappredesign;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.io.InputStream;
 
 public class ActionCardFragment extends Fragment
 {
@@ -42,6 +47,7 @@ public class ActionCardFragment extends Fragment
         user = auth.getCurrentUser();
         final String[] fname = new String[1];
         final String[] lname = new String[1];
+        final String[] url = new String[1];
 
         //Set view
         final View inputView = inflater.inflate(R.layout.fragment_card, container, false);
@@ -53,9 +59,32 @@ public class ActionCardFragment extends Fragment
 
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference nameRef = db.collection("studentInformation").document(user.getUid());
+        DocumentReference urlRef = db.collection("actionCards").document(user.getUid());
+
+        //Display action card image
+        urlRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        url[0] = document.getString("image");
+
+                        //Display action card
+                        new DownloadImageTask((ImageView) inputView.findViewById(R.id.card_image))
+                                .execute(url[0]);
+
+                    } else {
+                        Log.d("LOGGER", "No such document");
+                    }
+                } else {
+                    Log.d("LOGGER", "get failed with ", task.getException());
+                }
+            }
+        });
 
         //Display name
+        DocumentReference nameRef = db.collection("studentInformation").document(user.getUid());
         nameRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -84,8 +113,8 @@ public class ActionCardFragment extends Fragment
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-                        Spannable bamaCashColor = new SpannableString("\n$" + document.getString("bamaCash") + "    ");
-                        Spannable diningDollarColor = new SpannableString("\n$" + document.getString("diningDollars"));
+                        Spannable bamaCashColor = new SpannableString("$" + document.getString("bamaCash"));
+                        Spannable diningDollarColor = new SpannableString("$" + document.getString("diningDollars"));
                         diningDollarColor.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, diningDollarColor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         bamaCashColor.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, bamaCashColor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         bamaCashText.append(bamaCashColor);
@@ -102,4 +131,34 @@ public class ActionCardFragment extends Fragment
         return inputView;
     }
 
+    public static Spannable getColoredString(CharSequence text, int color) {
+        Spannable spannable = new SpannableString(text);
+        spannable.setSpan(new ForegroundColorSpan(color), 0, spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 }

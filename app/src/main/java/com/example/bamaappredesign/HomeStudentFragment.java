@@ -1,5 +1,8 @@
 package com.example.bamaappredesign;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.*;
+
+import java.io.InputStream;
 import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
@@ -46,6 +52,7 @@ public class HomeStudentFragment extends Fragment {
         final String[] opponent = new String[1];
         final String[] bowl = new String[1];
         final String[] gate = new String[1];
+        final String[] url = new String[1];
 
         //Set view
         final View view = inflater.inflate(R.layout.fragment_home_student, container, false);
@@ -95,7 +102,33 @@ public class HomeStudentFragment extends Fragment {
         DocumentReference actRef = db.collection("actionCards").document(user.getUid());
         DocumentReference ticRef = db.collection("ticketInformation").document("game1");
         DocumentReference ticRef2 = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getUid());
+        DocumentReference urlRef = db.collection("actionCards").document(user.getUid());
 
+        //Display action card image
+        urlRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        url[0] = document.getString("image2");
+
+                        //Display action card
+                        new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.card_image2))
+                                .execute(url[0]);
+                        new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.ticketImg))
+                                .execute("https://firebasestorage.googleapis.com/v0/b/bama-app.appspot.com/o/ticket.png?alt=media&token=9c8f2a78-314e-499c-ab3e-e216f1ca2eb0");
+
+                    } else {
+                        Log.d("LOGGER", "No such document");
+                    }
+                } else {
+                    Log.d("LOGGER", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //Display monetary data
         actRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -118,6 +151,7 @@ public class HomeStudentFragment extends Fragment {
             }
         });
 
+        //Display opponent
         ticRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -137,6 +171,7 @@ public class HomeStudentFragment extends Fragment {
             }
         });
 
+        //Display bowl and gate
         ticRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -158,6 +193,31 @@ public class HomeStudentFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }
 

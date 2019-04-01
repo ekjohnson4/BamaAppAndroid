@@ -79,10 +79,10 @@
                     android:layout_height="fill_parent"
                     android:layout_gravity="left"/>
                 <ImageView
+                    android:id="@+id/ticketImg"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ticket"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>
             </LinearLayout>
@@ -143,10 +143,10 @@
                 android:layout_gravity="left"/>
 
             <ImageView
+                android:id="@+id/card_image2"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/actioncard"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"/>
         </LinearLayout>
