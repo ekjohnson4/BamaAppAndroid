@@ -107,6 +107,7 @@ public class HomeStudentFragment extends Fragment {
         card_view2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.flMain, new ActionCardFragment());
                 ft.addToBackStack(null);
@@ -119,6 +120,7 @@ public class HomeStudentFragment extends Fragment {
         card_view3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.flMain, new NewsFragment());
                 ft.addToBackStack(null);

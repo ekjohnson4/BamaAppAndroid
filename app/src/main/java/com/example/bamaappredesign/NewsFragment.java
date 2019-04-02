@@ -24,10 +24,6 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"unchecked","deprecation"})
 
-/**
- * A simple {@link Fragment} subclass.
- *
- */
 public class NewsFragment extends Fragment {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -46,14 +42,13 @@ public class NewsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.news_swipe_refresh_layout);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.news_recycler_view);
+        mSwipeRefreshLayout = view.findViewById(R.id.news_swipe_refresh_layout);
+        mRecyclerView = view.findViewById(R.id.news_recycler_view);
         mLinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerAdapter = new RecyclerAdapter(mContext, new ArrayList<RssDataParser.Item>());
@@ -127,7 +122,6 @@ public class NewsFragment extends Fragment {
         return inputStream;
     }
 }
-
 
 /*
 import android.os.Bundle;
