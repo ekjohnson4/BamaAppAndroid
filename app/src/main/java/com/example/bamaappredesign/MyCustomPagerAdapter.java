@@ -1,7 +1,13 @@
 package com.example.bamaappredesign;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MyCustomPagerAdapter extends PagerAdapter{
-    Context context;
-    int images[];
-    String strings[];
-    LayoutInflater layoutInflater;
+import java.io.InputStream;
 
-    public MyCustomPagerAdapter(Context context, int images[], String stringArray[]) {
+public class MyCustomPagerAdapter extends PagerAdapter{
+    private Context context;
+    private String images[];
+    private String strings[];
+    private LayoutInflater layoutInflater;
+
+    MyCustomPagerAdapter(Context context, String images[], String stringArray[]) {
         this.context = context;
         this.images = images;
         this.strings = stringArray;
@@ -29,18 +37,21 @@ public class MyCustomPagerAdapter extends PagerAdapter{
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, final int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View itemView;
         itemView = layoutInflater.inflate(R.layout.view_pager, container, false);
 
         //Load image and headline
         ImageView imageView = itemView.findViewById(R.id.imageView);
-        imageView.setImageResource(images[position]);
+        //imageView.setImageResource(images[position]);
+        new MyCustomPagerAdapter.DownloadImageTask((ImageView) itemView.findViewById(R.id.imageView))
+                .execute(images[position]);
         TextView txt = itemView.findViewById(R.id.textView);
         txt.setText(strings[position]);
 
@@ -58,7 +69,33 @@ public class MyCustomPagerAdapter extends PagerAdapter{
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((LinearLayout) object);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.bamaappredesign;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -25,8 +26,6 @@ import com.google.firebase.firestore.*;
 import java.io.InputStream;
 import java.util.Objects;
 
-import static android.content.ContentValues.TAG;
-
 public class HomeStudentFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
@@ -34,8 +33,8 @@ public class HomeStudentFragment extends Fragment {
 
     ViewPager viewPager;
     MyCustomPagerAdapter myCustomPagerAdapter;
-    int images[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
-    String strings[] = {"Headline 1", "Headline 2","Headline 3"};
+    String images[] = {"","",""};
+    String strings[] = {"","",""};
 
     public HomeStudentFragment() {
         // Required empty public constructor
@@ -57,16 +56,45 @@ public class HomeStudentFragment extends Fragment {
         //Set view
         final View view = inflater.inflate(R.layout.fragment_home_student, container, false);
 
-        //Home page slides
-        viewPager = view.findViewById(R.id.viewPager);
-        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
-        viewPager.setAdapter(myCustomPagerAdapter);
+        // Create a query against the collection.
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        assert user != null;
+        DocumentReference slideRef = db.collection("homePage").document("slides");
+
+        //Display action card image
+        slideRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        strings[0] = document.getString("slide1Header");
+                        strings[1] = document.getString("slide2Header");
+                        strings[2] = document.getString("slide3Header");
+
+                        images[0] = document.getString("slide1");
+                        images[1] = document.getString("slide2");
+                        images[2] = document.getString("slide3");
+
+                        //Home page slides
+                        viewPager = view.findViewById(R.id.viewPager);
+                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
+                        viewPager.setAdapter(myCustomPagerAdapter);
+                    } else {
+                        Log.d("LOGGER", "No such document");
+                    }
+                } else {
+                    Log.d("LOGGER", "get failed with ", task.getException());
+                }
+            }
+        });
 
         //Tickets Card
         CardView card_view = view.findViewById(R.id.card1);
         card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.flMain, new TicketsFragment());
                 ft.addToBackStack(null);
@@ -195,10 +223,11 @@ public class HomeStudentFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
+        DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 

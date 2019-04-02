@@ -8,12 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -22,8 +28,8 @@ public class HomeVisitorFragment extends Fragment {
     FirebaseUser user;
     ViewPager viewPager;
     MyCustomPagerAdapter myCustomPagerAdapter;
-    int images[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
-    String strings[] = {"Headline 1", "Headline 2","Headline 3"};
+    String images[] = {"","",""};
+    String strings[] = {"", "",""};
 
     public HomeVisitorFragment() {
         // Required empty public constructor
@@ -38,9 +44,38 @@ public class HomeVisitorFragment extends Fragment {
         //Set view
         final View view = inflater.inflate(R.layout.fragment_home_visitor, container, false);
 
-        //Display user's email
-        //TextView frv = view.findViewById(R.id.welcomeText);
-        //frv.setText("Welcome, " + user.getEmail() + "!");
+        // Create a query against the collection.
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        assert user != null;
+        DocumentReference slideRef = db.collection("homePage").document("slides");
+
+        //Display action card image
+        slideRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        strings[0] = document.getString("slide1Header");
+                        strings[1] = document.getString("slide2Header");
+                        strings[2] = document.getString("slide3Header");
+
+                        images[0] = document.getString("slide1");
+                        images[1] = document.getString("slide2");
+                        images[2] = document.getString("slide3");
+
+                        //Home page slides
+                        viewPager = view.findViewById(R.id.viewPager);
+                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
+                        viewPager.setAdapter(myCustomPagerAdapter);
+                    } else {
+                        Log.d("LOGGER", "No such document");
+                    }
+                } else {
+                    Log.d("LOGGER", "get failed with ", task.getException());
+                }
+            }
+        });
 
         //Home page slides
         viewPager = view.findViewById(R.id.viewPager);
@@ -52,6 +87,7 @@ public class HomeVisitorFragment extends Fragment {
         card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.flMain, new EventsFragment());
                 ft.addToBackStack(null);
@@ -75,6 +111,7 @@ public class HomeVisitorFragment extends Fragment {
         card_view3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.flMain, new NewsFragment());
                 ft.addToBackStack(null);
