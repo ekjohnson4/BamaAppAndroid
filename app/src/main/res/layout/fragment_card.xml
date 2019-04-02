@@ -100,5 +100,14 @@
             android:text="Dining Dollars"
             android:textColor="@android:color/white"
             android:textStyle="bold"/>
+        <Button
+            android:id="@+id/lost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lost/Stolen Card"
+            android:textColor = "@color/colorPrimary"
+            android:background="@android:color/transparent"
+            android:onClick="visitorLogin"
+            />
     </LinearLayout>
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.example.bamaappredesign;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -128,6 +131,28 @@ public class ActionCardFragment extends Fragment{
                 }
             }
         });
+
+        //Lost button
+        Button lost = inputView.findViewById(R.id.lost);
+        View.OnClickListener lostListener = new View.OnClickListener() {
+            @Override
+            public void onClick(android.view.View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Lost Card");
+                builder.setMessage("Immediately report your card lost or stolen. During regular business hours, call Action Card at 205-348-2288 and after hours or holidays, call UAPD at 205-348-5454.");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        };
+
+        lost.setOnClickListener(lostListener);
         return inputView;
     }
 
