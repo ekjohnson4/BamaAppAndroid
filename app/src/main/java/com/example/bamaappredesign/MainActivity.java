@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mPasswordView = findViewById(R.id.password);
-        if(user!=null){
+        if(auth.getCurrentUser()!=null){
+            System.out.println("Already signed in");
             goToHomePage();
         }
 
