@@ -3,7 +3,7 @@
     android:layout_height="match_parent">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_margin="16dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +19,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:src="@drawable/card" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,8 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
-                    android:text="Dining Dollars: "
-                    android:id="@+id/textview2"
+                    android:text="Bama Cash: "
+                    android:id="@+id/textview3"
                     android:textColor="#000"
                     android:paddingStart="10dp"
                     android:textSize="14sp" />
@@ -61,53 +60,48 @@
                     android:layout_marginBottom="8dp"
                     android:foregroundGravity="center"
                     android:gravity="right"
-                    android:text="Bama Cash: "
+                    android:text="Dining Dollars: "
                     android:paddingEnd="10dp"
-                    android:id="@+id/textview3"
+                    android:id="@+id/textview2"
                     android:textColor="#000"
                     android:textSize="14sp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <Button
+                    android:id="@+id/cash_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorPrimary"
+                    android:text="Bama Cash"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/dollars_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorPrimary"
+                    android:text="Dining Dollars"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"/>
+                <Button
+                    android:id="@+id/lost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lost/Stolen Card"
+                    android:textColor = "@color/colorPrimary"
+                    android:background="@android:color/transparent"
+                    android:onClick="visitorLogin"
+                    />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="350dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp">
-
-        <Button
-            android:id="@+id/cash_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Bama Cash"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/dollars_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimary"
-            android:text="Dining Dollars"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"/>
-        <Button
-            android:id="@+id/lost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lost/Stolen Card"
-            android:textColor = "@color/colorPrimary"
-            android:background="@android:color/transparent"
-            android:onClick="visitorLogin"
-            />
-    </LinearLayout>
 </RelativeLayout>
