@@ -27,7 +27,7 @@ public class LaundryFragment extends Fragment {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setDomStorageEnabled(true);
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("https://www.laundryview.com/selectProperty");
+        mWebView.loadUrl("https://www.laundryview.com/home/27/1937650");
 
         return view;
     }
