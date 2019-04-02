@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mPasswordView = findViewById(R.id.password);
+        if(user!=null){
+            goToHomePage();
+        }
 
     }
 
@@ -66,14 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                Bundle b = new Bundle();
-                                b.putInt("key", 1); //Your id
-                                intent.putExtras(b); //Put your id to your next Intent
-                                startActivity(intent);
-                                findViewById(R.id.login_progress).setVisibility(View.GONE);
-                                findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
-                                finish();
+                                goToHomePage();
                             }
                         }
                     })
@@ -97,6 +93,17 @@ public class MainActivity extends AppCompatActivity {
                     });
 
         }
+    }
+
+    private void goToHomePage(){
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("key", 1); //Your id
+        intent.putExtras(b); //Put your id to your next Intent
+        startActivity(intent);
+        findViewById(R.id.login_progress).setVisibility(View.GONE);
+        findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
+        finish();
     }
 }
 

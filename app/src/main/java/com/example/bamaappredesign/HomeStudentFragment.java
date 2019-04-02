@@ -36,6 +36,10 @@ public class HomeStudentFragment extends Fragment {
     String images[] = {"","",""};
     String strings[] = {"","",""};
 
+    Module moduleOne = Module.TICKETS;
+    Module moduleTwo = Module.ACTION_CARD;
+    Module moduleThree = Module.NEWS;
+
     public HomeStudentFragment() {
         // Required empty public constructor
     }
@@ -96,7 +100,7 @@ public class HomeStudentFragment extends Fragment {
             public void onClick(View v) {
                 assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, new TicketsFragment());
+                ft.replace(R.id.flMain, moduleOne.getFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -109,7 +113,7 @@ public class HomeStudentFragment extends Fragment {
             public void onClick(View v) {
                 assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, new ActionCardFragment());
+                ft.replace(R.id.flMain, moduleTwo.getFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -122,7 +126,7 @@ public class HomeStudentFragment extends Fragment {
             public void onClick(View v) {
                 assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, new NewsFragment());
+                ft.replace(R.id.flMain, moduleThree.getFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }

@@ -27,6 +27,9 @@ public class HomeVisitorFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
     ViewPager viewPager;
+    Module moduleOne = Module.EVENTS;
+    Module moduleTwo;
+    Module moduleThree = Module.NEWS;
     MyCustomPagerAdapter myCustomPagerAdapter;
     String images[] = {"","",""};
     String strings[] = {"", "",""};
@@ -87,9 +90,10 @@ public class HomeVisitorFragment extends Fragment {
         card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("Opening module one");
                 assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, new EventsFragment());
+                ft.replace(R.id.flMain, moduleOne.getFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -113,7 +117,7 @@ public class HomeVisitorFragment extends Fragment {
             public void onClick(View v) {
                 assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, new NewsFragment());
+                ft.replace(R.id.flMain, moduleThree.getFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }
