@@ -68,8 +68,9 @@ public class HomeVisitorFragment extends Fragment {
                         images[2] = document.getString("slide3");
 
                         //Home page slides
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
                         viewPager = view.findViewById(R.id.viewPager);
-                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
+                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
                         viewPager.setAdapter(myCustomPagerAdapter);
                     } else {
                         Log.d("LOGGER", "No such document");
@@ -79,11 +80,6 @@ public class HomeVisitorFragment extends Fragment {
                 }
             }
         });
-
-        //Home page slides
-        viewPager = view.findViewById(R.id.viewPager);
-        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
-        viewPager.setAdapter(myCustomPagerAdapter);
 
         //Events Card
         CardView card_view = view.findViewById(R.id.card4);

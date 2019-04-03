@@ -5,7 +5,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,20 +16,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 
-public class MyCustomPagerAdapter extends PagerAdapter{
+public class MyCustomPagerAdapter extends PagerAdapter {
     private Context context;
     private String images[];
     private String strings[];
+    private FragmentTransaction ft;
     private LayoutInflater layoutInflater;
 
-    MyCustomPagerAdapter(Context context, String images[], String stringArray[]) {
+    MyCustomPagerAdapter(Context context, String images[], String stringArray[], FragmentTransaction ft) {
         this.context = context;
         this.images = images;
         this.strings = stringArray;
+        this.ft = ft;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -49,7 +52,6 @@ public class MyCustomPagerAdapter extends PagerAdapter{
 
         //Load image and headline
         ImageView imageView = itemView.findViewById(R.id.imageView);
-        //imageView.setImageResource(images[position]);
         new MyCustomPagerAdapter.DownloadImageTask((ImageView) itemView.findViewById(R.id.imageView))
                 .execute(images[position]);
         TextView txt = itemView.findViewById(R.id.textView);
@@ -60,9 +62,15 @@ public class MyCustomPagerAdapter extends PagerAdapter{
         //listening to image click
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "you clicked headline " + (position + 1), Toast.LENGTH_LONG).show();
-            }
+            public void onClick(View view) {
+                WebViewFragment fragment = new WebViewFragment();
+                Bundle arguments = new Bundle();
+                arguments.putInt( "pos" , position);
+                fragment.setArguments(arguments);
+                ft.replace(R.id.flMain, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+        }
         });
 
         return itemView;

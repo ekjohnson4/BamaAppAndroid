@@ -65,7 +65,7 @@ public class HomeStudentFragment extends Fragment {
         assert user != null;
         DocumentReference slideRef = db.collection("homePage").document("slides");
 
-        //Display action card image
+        //Display slides
         slideRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -81,8 +81,9 @@ public class HomeStudentFragment extends Fragment {
                         images[2] = document.getString("slide3");
 
                         //Home page slides
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
                         viewPager = view.findViewById(R.id.viewPager);
-                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings);
+                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
                         viewPager.setAdapter(myCustomPagerAdapter);
                     } else {
                         Log.d("LOGGER", "No such document");
