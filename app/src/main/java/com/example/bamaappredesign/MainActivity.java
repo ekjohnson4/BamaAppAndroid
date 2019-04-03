@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser user;
     EditText e1, e2;
     private EditText mPasswordView;
-    private String uid;
+    private String uid, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mPasswordView = findViewById(R.id.password);
         setUID(auth.getCurrentUser().getUid());
+        setEmail(auth.getCurrentUser().getEmail());
         if(auth.getCurrentUser()!=null){
             System.out.println("Already signed in");
             goToHomePage();
@@ -107,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.login_progress).setVisibility(View.GONE);
         findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
         finish();
+    }
+
+    public void setEmail(String email)  {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     public void setUID(String userId)  {
