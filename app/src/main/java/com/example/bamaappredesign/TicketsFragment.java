@@ -80,7 +80,7 @@ public class TicketsFragment extends Fragment {
 
         DocumentReference imgRef = db.collection("ticketInformation").document("game1");
 
-        //Display action card image
+        //Display upcoming game information image
         imgRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -100,7 +100,7 @@ public class TicketsFragment extends Fragment {
                         TextView o = inputView.findViewById(R.id.game);
                         o.setText(game[0]);
 
-                        //Display date
+                        //Display game date
                         TextView d = inputView.findViewById(R.id.date);
                         d.setText(date[0] + " @ " + time[0]);
                     } else {
