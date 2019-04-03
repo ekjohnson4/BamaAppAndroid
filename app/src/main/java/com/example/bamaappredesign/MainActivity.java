@@ -1,7 +1,6 @@
 package com.example.bamaappredesign;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser user;
     EditText e1, e2;
     private EditText mPasswordView;
-    TextView a = findViewById(R.id.showdescriptiontitle);
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mPasswordView = findViewById(R.id.password);
+        setUID(auth.getCurrentUser().getUid());
         if(auth.getCurrentUser()!=null){
             System.out.println("Already signed in");
             goToHomePage();
@@ -108,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.login_progress).setVisibility(View.GONE);
         findViewById(R.id.showdescriptiontitle).setVisibility(View.VISIBLE);
         finish();
+    }
+
+    public void setUID(String userId)  {
+        this.uid = userId;
+    }
+
+    public String getUID() {
+        return this.uid;
     }
 }
 
