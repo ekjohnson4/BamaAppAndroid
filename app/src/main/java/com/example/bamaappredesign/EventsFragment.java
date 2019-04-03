@@ -35,6 +35,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import static android.util.LayoutDirection.LOCALE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -150,6 +152,9 @@ public class EventsFragment extends Fragment {
     }
 
     private void setTodaysEvents(){
+        if (nodelist == null){
+            return;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         String todayDate = sdf.format(c.getTime());
@@ -170,6 +175,9 @@ public class EventsFragment extends Fragment {
     }
 
     private void setTomorrowsEvents(){
+        if (nodelist == null){
+            return;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
@@ -190,6 +198,9 @@ public class EventsFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
     private void setWeeksEvents(){
+        if (nodelist == null){
+            return;
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
