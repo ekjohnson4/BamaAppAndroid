@@ -228,4 +228,8 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    public boolean getLoggedIn(){
+        return isLoggedIn;
+    }
+
 }
