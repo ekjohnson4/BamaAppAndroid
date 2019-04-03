@@ -81,10 +81,16 @@ public class HomeStudentFragment extends Fragment {
                         images[2] = document.getString("slide3");
 
                         //Home page slides
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        viewPager = view.findViewById(R.id.viewPager);
-                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
-                        viewPager.setAdapter(myCustomPagerAdapter);
+                        try {
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            viewPager = view.findViewById(R.id.viewPager);
+                            myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
+                            viewPager.setAdapter(myCustomPagerAdapter);
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+
                     } else {
                         Log.d("LOGGER", "No such document");
                     }
