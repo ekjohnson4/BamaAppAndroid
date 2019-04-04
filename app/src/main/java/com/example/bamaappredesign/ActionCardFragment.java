@@ -223,7 +223,7 @@ public class ActionCardFragment extends Fragment{
     }
 
     private void setDiningDollarTransactions(){
-       // linkList.clear();
+        linkList.clear();
         db.collection("transactions")
                 .whereEqualTo("email", user.getEmail())
                 .get()
