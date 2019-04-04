@@ -5,21 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/student_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop= "10dp"
-        android:paddingStart= "16dp"
-        android:paddingBottom="16dp"
-        android:text="Donate Ticket"
-        android:textColor="@android:color/black"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="68dp"
-        tools:ignore="MissingConstraints" />
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:inputType="none"
+        android:text="Your Ticket Has Been Successfully Donated!"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
 
 </LinearLayout>

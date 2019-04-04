@@ -99,10 +99,13 @@ public class TicketsFragment extends Fragment {
                         //Display opponent
                         TextView o = inputView.findViewById(R.id.game);
                         o.setText(game[0]);
-
+                     /*
                         //Display game date
                         TextView d = inputView.findViewById(R.id.date);
-                        d.setText(date[0] + " @ " + time[0]);
+                        //d.setText(date[0] + " @ " + time[0]);
+                        d.setText(date[0]);
+                      */
+
                     } else {
                         Log.d("LOGGER", "No such document");
                     }
