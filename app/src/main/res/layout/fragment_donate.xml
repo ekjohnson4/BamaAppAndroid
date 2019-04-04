@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@color/colorPrimary"
         android:ems="10"
         android:fontFamily="sans-serif"
         android:inputType="none"
         android:text="Your Ticket Has Been Successfully Donated!"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
 
