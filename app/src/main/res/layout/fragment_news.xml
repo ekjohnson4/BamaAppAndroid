@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".NewsFragment">
 
-
     <TextView
         android:id="@+id/student_text"
         android:layout_width="fill_parent"
@@ -14,7 +13,6 @@
         android:paddingTop= "10dp"
         android:paddingStart= "16dp"
         android:paddingBottom="16dp"
-        android:gravity="center"
         android:text="News"
         android:textColor="@android:color/black"
         android:textSize="26sp"
@@ -30,8 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:paddingTop="45dp"
+        android:paddingTop="40dp"
         />
-
-
 </FrameLayout>

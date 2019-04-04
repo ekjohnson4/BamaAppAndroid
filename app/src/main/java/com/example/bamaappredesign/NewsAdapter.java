@@ -94,7 +94,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
                 drawable = fiu.GetImage();
             }
             catch (Exception e) {
-                drawable = mContext.getResources().getDrawable(R.drawable.test);
+                //drawable = mContext.getResources().getDrawable(R.drawable.test);
             }
             // to display image,center of screen
             int imgH = drawable.getIntrinsicHeight();
