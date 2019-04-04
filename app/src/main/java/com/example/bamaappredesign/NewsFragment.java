@@ -56,7 +56,7 @@ public class NewsFragment extends Fragment {
         myrecyclerview = (RecyclerView) v.findViewById(R.id.rvNews);
         adapter = new NewsAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        System.out.println(linkList.size());
+        //System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
@@ -83,8 +83,8 @@ public class NewsFragment extends Fragment {
                 doc.getDocumentElement().normalize();
                 // Locate the Tag Name
                 nodelist = doc.getElementsByTagName("item");
-                System.out.println(nodelist.getLength());
-                System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+               // System.out.println(nodelist.getLength());
+                //System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -102,7 +102,15 @@ public class NewsFragment extends Fragment {
                     Element eElement = (Element) nNode;
                     // Set the texts into TextViews from item nodes
                     // Get the title
-                    News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), getNode("description", eElement));
+                    String firstDescription = getNode("description", eElement);
+                    int start = getNode("description", eElement).indexOf("src");
+                    int end = getNode("description", eElement).indexOf("class");
+                    String image = getNode("description", eElement).substring(start + 5, end - 2);
+                    int start1 = firstDescription.indexOf("<img width");
+                    int end2 = firstDescription.indexOf("link_thumbnail=\"\" />");
+                    String newDescription = firstDescription.substring(end2+24, firstDescription.length());
+
+                    News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), firstDescription, image);
                     linkList.add(a);
 
                 }
@@ -115,12 +123,12 @@ public class NewsFragment extends Fragment {
     }
     // getNode function
     private static String getNode(String sTag, Element eElement) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println(sTag);
+        //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        //System.out.println(sTag);
         NodeList nlList = eElement.getElementsByTagName(sTag).item(0)
                 .getChildNodes();
         Node nValue = (Node) nlList.item(0);
-        System.out.println(nValue.getNodeValue());
+        //System.out.println(nValue.getNodeValue());
         return nValue.getNodeValue();
     }
 

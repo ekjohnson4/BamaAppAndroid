@@ -6,7 +6,7 @@ public class News {
     private String pubdate;
     //private String author;
     private String description;
-
+    private String imgUrl;
 
     //category, image, author
 
@@ -14,8 +14,9 @@ public class News {
 
     }
 
-    public News(String title, String link, String pubdate, String description)
+    public News(String title, String link, String pubdate, String description, String imgUrl)
     {
+        this.imgUrl = imgUrl;
         this.title = title;
         this.link = link;
         this.description = description;
@@ -34,7 +35,9 @@ public class News {
     public String getLink(){
         return link;
     }
-
+    public String getImage(){
+        return imgUrl;
+    }
 
 }
 

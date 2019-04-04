@@ -3,24 +3,32 @@ package com.example.bamaappredesign;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
 
     Context mContext;
     List<News> mData;
+    int ScreenW,ScreenH;
+    int imageNumber = 1; //int to check which image is displayed
     //private WebView mWebView;
 
     public NewsAdapter(Context mContext, List<News> mData) {
@@ -63,8 +71,42 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         myViewHolder.tv_title.setText(mData.get(i).getTitle());
         myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription()));
         myViewHolder.tv_date.setText(mData.get(i).getDate().substring(0, 16));
+        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels;
+        float dpHeight = displayMetrics.heightPixels;
+
+        ScreenW = (int) dpWidth;
+        ScreenH = (int) dpHeight;
+        myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription(), Images, null));
+       // myViewHolder.tv_description.setCompoundDrawablesWithIntrinsicBounds(R.drawable.test, 0, 0, 0);
         //myViewHolder.tv_link.setText(mData.get(i).getLink());
     }
+
+    private Html.ImageGetter Images = new Html.ImageGetter() {
+
+        public Drawable getDrawable(String source) {
+
+            Drawable drawable = null;
+
+            FetchImageUrl fiu = new FetchImageUrl(mContext,source);
+            try {
+                fiu.execute().get();
+                drawable = fiu.GetImage();
+            }
+            catch (Exception e) {
+                drawable = mContext.getResources().getDrawable(R.drawable.test);
+            }
+            // to display image,center of screen
+            int imgH = drawable.getIntrinsicHeight();
+            int imgW = drawable.getIntrinsicWidth();
+            int padding =20;
+            int realWidth = 330-(2*padding);
+            int realHeight = imgH * realWidth/imgW;
+            drawable.setBounds(0,0,realWidth ,realHeight);
+            return drawable;
+        }
+    };
+
 
     @Override
     public int getItemCount() {
