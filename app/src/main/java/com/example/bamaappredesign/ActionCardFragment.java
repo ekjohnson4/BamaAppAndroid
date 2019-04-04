@@ -248,7 +248,7 @@ public class ActionCardFragment extends Fragment{
 
     }
     private void setBamaCashTransactions(){
-        //linkList.clear();
+        linkList.clear();
         db.collection("transactions")
                 .whereEqualTo("email", user.getEmail())
                 .get()
@@ -260,6 +260,7 @@ public class ActionCardFragment extends Fragment{
                                 if(document.get("Type").equals("Bama Cash")){
                                     Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
                                     linkList.add(a);
+                                    adapter.notifyDataSetChanged();
                                 }
 
                             }

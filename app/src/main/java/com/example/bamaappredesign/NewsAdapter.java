@@ -62,7 +62,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull NewsAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_title.setText(mData.get(i).getTitle());
         myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription()));
-        myViewHolder.tv_date.setText(mData.get(i).getDate());
+        myViewHolder.tv_date.setText(mData.get(i).getDate().substring(0, 16));
         //myViewHolder.tv_link.setText(mData.get(i).getLink());
     }
 
