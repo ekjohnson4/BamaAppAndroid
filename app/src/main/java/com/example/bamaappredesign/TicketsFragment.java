@@ -95,11 +95,11 @@ public class TicketsFragment extends Fragment {
                         //Display ticket banner
                         new TicketsFragment.DownloadImageTask((ImageView) inputView.findViewById(R.id.banner))
                                 .execute(img[0]);
-
+                    /*
                         //Display opponent
                         TextView o = inputView.findViewById(R.id.game);
                         o.setText(game[0]);
-                     /*
+                     
                         //Display game date
                         TextView d = inputView.findViewById(R.id.date);
                         //d.setText(date[0] + " @ " + time[0]);
