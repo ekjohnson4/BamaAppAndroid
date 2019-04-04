@@ -44,7 +44,7 @@ import static android.util.LayoutDirection.LOCALE;
 public class EventsFragment extends Fragment {
     View v;
     private RecyclerView myrecyclerview;
-    private List<Event> linkList = new ArrayList<>();;
+    private List<Event> linkList = new ArrayList<>();
     TextView textview;
     Button today;
     Button tomorrow;
@@ -247,10 +247,6 @@ public class EventsFragment extends Fragment {
 
 
         return date;
-    }
-
-    private void showEvent(){
-
     }
 
     @Override

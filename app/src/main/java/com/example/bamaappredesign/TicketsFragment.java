@@ -30,6 +30,10 @@ public class TicketsFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseFirestore db;
+    final String[] img = new String[1];
+    final String[] game = new String[1];
+    final String[] date = new String[1];
+    final String[] time = new String[1];
 
     public TicketsFragment()
     {
@@ -42,13 +46,9 @@ public class TicketsFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        final String[] img = new String[1];
-        final String[] game = new String[1];
-        final String[] date = new String[1];
-        final String[] time = new String[1];
         final View inputView = inflater.inflate(R.layout.fragment_tickets, container, false);
 
-        //transfer ticket button
+        //Transfer ticket button
         Button transferTicket = inputView.findViewById(R.id.transfer_button);
         View.OnClickListener transferListener = new View.OnClickListener()
         {
@@ -63,7 +63,7 @@ public class TicketsFragment extends Fragment {
             }
         };
 
-        //donate ticket button
+        //Donate ticket button
         Button donateTicket = inputView.findViewById(R.id.donate_button);
         View.OnClickListener donateListener = new View.OnClickListener()
         {
@@ -80,7 +80,7 @@ public class TicketsFragment extends Fragment {
 
         DocumentReference imgRef = db.collection("ticketInformation").document("game1");
 
-        //Display action card image
+        //Display upcoming game information image
         imgRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -99,10 +99,11 @@ public class TicketsFragment extends Fragment {
                         //Display opponent
                         TextView o = inputView.findViewById(R.id.game);
                         o.setText(game[0]);
-
-                        //Display date
+                     
+                        //Display game date
                         TextView d = inputView.findViewById(R.id.date);
                         d.setText(date[0] + " @ " + time[0]);
+
                     } else {
                         Log.d("LOGGER", "No such document");
                     }

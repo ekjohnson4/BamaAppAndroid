@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,19 +13,19 @@
         android:layout_width="fill_parent"
         android:layout_height="240dp"
         android:layout_gravity="center_horizontal"
-        android:scaleType="fitXY"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp"
+        android:scaleType="fitXY" />
 
     <TextView
-        android:id="@+id/game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop= "10dp"
-        android:paddingBottom="8dp"
-        android:text=""
-        android:textColor="@android:color/black"
-        android:textSize="26sp"
-        android:textStyle="bold"/>
+    android:id="@+id/game"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop= "10dp"
+    android:paddingBottom="8dp"
+    android:text=""
+    android:textColor="@android:color/black"
+    android:textSize="26sp"
+    android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/date"
@@ -38,28 +39,28 @@
 
     <Button
         android:id="@+id/transfer_button"
+        style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor = "@android:color/white"
-        android:textStyle="bold"
-        style="?android:textAppearanceSmall"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:text="Transfer Ticket" />
+        android:background="@color/colorPrimary"
+        android:text="Transfer Ticket"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/donate_button"
+        style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor = "@android:color/white"
-        android:textStyle="bold"
-        style="?android:textAppearanceSmall"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:text="Donate Ticket" />
+        android:background="@color/colorPrimary"
+        android:text="Donate Ticket"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
