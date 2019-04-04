@@ -34,11 +34,11 @@ public class TicketsFragment extends Fragment {
     final String[] game = new String[1];
     final String[] date = new String[1];
     final String[] time = new String[1];
+
     public TicketsFragment()
     {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -48,7 +48,7 @@ public class TicketsFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         final View inputView = inflater.inflate(R.layout.fragment_tickets, container, false);
 
-        //transfer ticket button
+        //Transfer ticket button
         Button transferTicket = inputView.findViewById(R.id.transfer_button);
         View.OnClickListener transferListener = new View.OnClickListener()
         {
@@ -63,7 +63,7 @@ public class TicketsFragment extends Fragment {
             }
         };
 
-        //donate ticket button
+        //Donate ticket button
         Button donateTicket = inputView.findViewById(R.id.donate_button);
         View.OnClickListener donateListener = new View.OnClickListener()
         {
@@ -95,16 +95,14 @@ public class TicketsFragment extends Fragment {
                         //Display ticket banner
                         new TicketsFragment.DownloadImageTask((ImageView) inputView.findViewById(R.id.banner))
                                 .execute(img[0]);
-                    /*
+
                         //Display opponent
                         TextView o = inputView.findViewById(R.id.game);
                         o.setText(game[0]);
                      
                         //Display game date
                         TextView d = inputView.findViewById(R.id.date);
-                        //d.setText(date[0] + " @ " + time[0]);
-                        d.setText(date[0]);
-                      */
+                        d.setText(date[0] + " @ " + time[0]);
 
                     } else {
                         Log.d("LOGGER", "No such document");
@@ -144,33 +142,5 @@ public class TicketsFragment extends Fragment {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
-    }
-
-    public String getOpponent(){
-        if(FirebaseFirestore.getInstance() == null){
-            return "";
-        }
-        db = FirebaseFirestore.getInstance();
-        DocumentReference imgRef = db.collection("ticketInformation").document("game1");
-        imgRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null) {
-                        img[0] = document.getString("banner");
-                        game[0] = document.getString("opponent");
-                        date[0] = document.getString("date");
-                        time[0] = document.getString("time");
-
-                    } else {
-                        Log.d("LOGGER", "No such document");
-                    }
-                } else {
-                    Log.d("LOGGER", "get failed with ", task.getException());
-                }
-            }
-        });
-        return game[0];
     }
 }
