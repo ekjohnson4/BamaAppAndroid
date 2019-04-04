@@ -1,5 +1,143 @@
 package com.example.bamaappredesign;
 
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+//import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class NewsFragment extends Fragment {
+    View v;
+    private RecyclerView myrecyclerview;
+    private List<News> linkList = new ArrayList<>();
+    TextView textview;
+    NodeList nodelist;
+    NewsAdapter adapter;
+    //ProgressBar progress;
+    // Insert image URL
+    String URL = "https://cw.ua.edu/feed/"; //"http://feeds.reuters.com/Reuters/domesticNews";
+    public NewsFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.fragment_news, container, false);
+        // Execute DownloadXML AsyncTask
+        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvNews);
+        adapter = new NewsAdapter(getContext(),linkList);
+        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        System.out.println(linkList.size());
+        myrecyclerview.setAdapter(adapter);
+        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
+
+        //progress = v.findViewById(R.id.progressBar);
+        //progress.setVisibility(View.VISIBLE);
+        return v;
+    }
+
+    private class DownloadXML extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(String... Url) {
+            try {
+                java.net.URL url = new URL(Url[0]);
+                DocumentBuilderFactory dbf = DocumentBuilderFactory
+                        .newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                // Download the XML file
+                Document doc = db.parse(new InputSource(url.openStream()));
+                doc.getDocumentElement().normalize();
+                // Locate the Tag Name
+                nodelist = doc.getElementsByTagName("item");
+                System.out.println(nodelist.getLength());
+                System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+
+            for (int temp = 0; temp < nodelist.getLength(); temp++) {
+                Node nNode = nodelist.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;
+                    // Set the texts into TextViews from item nodes
+                    // Get the title
+                    News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), getNode("description", eElement));
+                    linkList.add(a);
+
+                }
+            }
+            //.setVisibility(View.GONE);
+            adapter.notifyDataSetChanged();
+
+            // Close progressbar
+        }
+    }
+    // getNode function
+    private static String getNode(String sTag, Element eElement) {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(sTag);
+        NodeList nlList = eElement.getElementsByTagName(sTag).item(0)
+                .getChildNodes();
+        Node nValue = (Node) nlList.item(0);
+        System.out.println(nValue.getNodeValue());
+        return nValue.getNodeValue();
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new DownloadXML().execute(URL);
+    }
+
+}
+
+
+
+/*
+package com.example.bamaappredesign;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -123,7 +261,10 @@ public class NewsFragment extends Fragment {
     }
 }
 
-/*
+=================================================
+
+
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
