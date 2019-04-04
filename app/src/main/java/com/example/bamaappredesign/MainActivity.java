@@ -38,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mPasswordView = findViewById(R.id.password);
-        setUID(auth.getCurrentUser().getUid());
-        setEmail(auth.getCurrentUser().getEmail());
+
         if(auth.getCurrentUser()!=null){
             System.out.println("Already signed in");
+            setUID(auth.getCurrentUser().getUid());
+            setEmail(auth.getCurrentUser().getEmail());
             goToHomePage();
         }
 
