@@ -10,6 +10,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -24,14 +28,31 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class ActionCardFragment extends Fragment{
     private TextView diningDollarText;
     private TextView bamaCashText;
+    private RecyclerView myrecyclerview;
+    private Button diningDollarsButton;
+    private Button bamaCashButton;
+    private ImageView card;
+    TransactionAdapter adapter;
+    FirebaseFirestore db;
+    private List<Transaction> linkList = new ArrayList<>();
+    FirebaseUser user;
 
     public ActionCardFragment()
     {
@@ -41,23 +62,30 @@ public class ActionCardFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Set view
+        linkList.clear();
+        final View inputView = inflater.inflate(R.layout.fragment_card, container, false);
+        myrecyclerview = (RecyclerView) inputView.findViewById(R.id.rvTransactions);
+        adapter = new TransactionAdapter(getContext(),linkList);
+        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        System.out.println(linkList.size());
+        myrecyclerview.setAdapter(adapter);
+        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         //Inflate the layout for this fragment
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
+        user = auth.getCurrentUser();
         final String[] fname = new String[1];
         final String[] lname = new String[1];
         final String[] occ = new String[1];
         final String[] url = new String[1];
 
-        //Set view
-        final View inputView = inflater.inflate(R.layout.fragment_card, container, false);
 
         //Set TextViews
         diningDollarText = inputView.findViewById(R.id.textview2);
         bamaCashText = inputView.findViewById(R.id.textview3);
 
         // Create a query against the collection.
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         assert user != null;
         DocumentReference urlRef = db.collection("actionCards").document(user.getUid());
 
@@ -151,8 +179,20 @@ public class ActionCardFragment extends Fragment{
                 alert.show();
             }
         };
-
+        diningDollarsButton = inputView.findViewById(R.id.dollars_button);
+        diningDollarsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setDiningDollarTransactions();
+            }
+        });
+        bamaCashButton = inputView.findViewById(R.id.cash_button);
+        bamaCashButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+              //  setBamaCashTransactions();
+            }
+        });
         lost.setOnClickListener(lostListener);
+       // setDiningDollarTransactions();
         return inputView;
     }
 
@@ -180,5 +220,51 @@ public class ActionCardFragment extends Fragment{
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
+    }
+
+    private void setDiningDollarTransactions(){
+       // linkList.clear();
+        db.collection("transactions")
+                .whereEqualTo("email", user.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(document.get("Type").equals("Dining Dollars")){
+                                    Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
+                                    linkList.add(a);
+                                }
+
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        adapter.notifyDataSetChanged();
+    }
+    private void setBamaCashTransactions(){
+        //linkList.clear();
+        db.collection("transactions")
+                .whereEqualTo("email", user.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(document.get("Type").equals("Bama Cash")){
+                                    Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
+                                    linkList.add(a);
+                                }
+
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 }
