@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 //import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +42,13 @@ public class EmergencyAdapter extends RecyclerView.Adapter<EmergencyAdapter.MyVi
         vHolder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"Clicked on number: "+        String.valueOf(vHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext,"Clicked on number: "+        String.valueOf(vHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
                 // num =  (Contact) v.getta
                 //Intent call = new Intent(Intent.ACTION_CALL_BUTTON);
                 //call.setData(Uri.parse("tel:" + mData.get(vHolder.getAdapterPosition()).getPhone()));
+
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mData.get(vHolder.getAdapterPosition()).getPhone()));
+                mContext.startActivity(intent);
             }
         });
 
