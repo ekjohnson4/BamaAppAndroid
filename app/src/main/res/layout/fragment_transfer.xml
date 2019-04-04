@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@color/colorPrimary"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="Ticket Receipient Crimson Email:"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textStyle="bold|italic" />
 
     <Button

@@ -17,12 +17,6 @@
         android:scaleType="fitXY"
         app:srcCompat="@drawable/banner" />
 
-    <ImageView
-        android:id="@+id/game"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/game" />
-
     <Button
         android:id="@+id/transfer_button"
         style="?android:textAppearanceSmall"
@@ -48,5 +42,11 @@
         android:text="Donate Ticket"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/game"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/game" />
 
 </LinearLayout>
