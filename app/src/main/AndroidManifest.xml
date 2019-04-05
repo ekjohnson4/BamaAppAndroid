@@ -16,7 +16,7 @@
         android:screenOrientation="portrait"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".HomeActivity"
+            android:name=".Home.HomeActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>

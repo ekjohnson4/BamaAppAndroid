@@ -1,5 +1,7 @@
 package com.example.bamaappredesign;
 
+import com.example.bamaappredesign.Links.Link;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

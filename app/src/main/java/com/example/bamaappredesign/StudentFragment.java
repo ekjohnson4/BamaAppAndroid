@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.bamaappredesign.ActionCard.ActionCardFragment;
+import com.example.bamaappredesign.Grades.GradesFragment;
+import com.example.bamaappredesign.Tickets.TicketsFragment;
+
 public class StudentFragment extends Fragment {
 
     public StudentFragment() {
