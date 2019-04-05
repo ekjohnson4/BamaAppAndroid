@@ -11,10 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.bamaappredesign.CampusMapFragment;
 import com.example.bamaappredesign.CatalogFragment;
@@ -30,13 +32,23 @@ import com.example.bamaappredesign.StudentFragment;
 import com.example.bamaappredesign.Settings.StudentSettingsFragment;
 import com.example.bamaappredesign.TransportationFragment;
 import com.example.bamaappredesign.Settings.VisitorSettingsFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Objects;
 import static com.example.bamaappredesign.R.layout.action_bar;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private boolean isLoggedIn = false;
+    FirebaseAuth auth;
+    FirebaseUser user;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +57,11 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Bundle b = getIntent().getExtras();
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
         int value = -1; // or other values
+        final String[] name = new String[1];
 
         if(b != null)
             value = b.getInt("key");
@@ -56,6 +72,27 @@ public class HomeActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flMain, new HomeStudentFragment());
             ft.commit();
+
+            //Display Name
+            DocumentReference nameRef = db.collection("studentInformation").document(user.getUid());
+            nameRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+                            name[0] = document.getString("fname");
+                            TextView n = findViewById(R.id.nameID);
+                            n.setText("Welcome, " + name[0] + "!");
+
+                        } else {
+                            Log.d("LOGGER", "No such document");
+                        }
+                    } else {
+                        Log.d("LOGGER", "get failed with ", task.getException());
+                    }
+                }
+            });
         }
         else{
             isLoggedIn = false;
