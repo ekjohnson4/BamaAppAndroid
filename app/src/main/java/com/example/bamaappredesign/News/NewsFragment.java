@@ -111,8 +111,10 @@ public class NewsFragment extends Fragment {
                     int start1 = firstDescription.indexOf("<img width");
                     int end2 = firstDescription.indexOf("link_thumbnail=\"\" />");
                     String newDescription = firstDescription.substring(end2+24, firstDescription.length());
-
-                    News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), firstDescription, image);
+                    String firstPart = firstDescription.substring(0, end2+24).concat("<p></p>");
+                    String finished = firstPart.concat(firstDescription.substring(end2+24, firstDescription.length()));
+                    //System.out.println("a:   " + finished);
+                    News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), finished, image);
                     linkList.add(a);
 
                 }
