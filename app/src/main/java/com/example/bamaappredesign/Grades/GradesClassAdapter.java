@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.bamaappredesign.R;
-
 import java.util.List;
 
 public class GradesClassAdapter extends RecyclerView.Adapter<GradesClassAdapter.MyViewHolder> {
@@ -23,6 +21,7 @@ public class GradesClassAdapter extends RecyclerView.Adapter<GradesClassAdapter.
         this.mData = mData;
     }
 
+    @NonNull
     @Override
     public GradesClassAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v ;
