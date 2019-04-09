@@ -64,12 +64,13 @@ public class ActionCardFragment extends Fragment{
         //Set view
         linkList.clear();
         final View inputView = inflater.inflate(R.layout.fragment_card, container, false);
-        myrecyclerview = (RecyclerView) inputView.findViewById(R.id.rvTransactions);
+        myrecyclerview = inputView.findViewById(R.id.rvTransactions);
         adapter = new TransactionAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
         //Inflate the layout for this fragment
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -77,7 +78,6 @@ public class ActionCardFragment extends Fragment{
         final String[] lname = new String[1];
         final String[] occ = new String[1];
         final String[] url = new String[1];
-
 
         //Set TextViews
         diningDollarText = inputView.findViewById(R.id.textview2);
