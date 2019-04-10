@@ -129,8 +129,13 @@ public class EventsFragment extends Fragment {
                     // Set the texts into TextViews from item nodes
                     // Get the title
                     if(getNode("start_date", eElement).substring(0,10).equals(todayDate)) {
-                        Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
-                        linkList.add(a);
+                        try {
+                            Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                            linkList.add(a);
+                        }
+                        catch(Exception e){
+                            System.out.println("Failed to get event");
+                        }
                     }
                 }
             }
@@ -163,8 +168,13 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(getNode("start_date", eElement).substring(0,10).equals(todayDate)) {
-                    Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
-                    linkList.add(a);
+                    try {
+                        Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                        linkList.add(a);
+                    }
+                    catch(Exception e){
+                        System.out.println("Failed to get event");
+                    }
                 }
             }
         }
@@ -187,8 +197,13 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(getNode("start_date", eElement).substring(0,10).equals(tomorrowDate)) {
-                    Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
-                    linkList.add(a);
+                    try {
+                        Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                        linkList.add(a);
+                    }
+                    catch(Exception e){
+                        System.out.println("Failed to get event");
+                    }
                 }
             }
         }
@@ -210,8 +225,13 @@ public class EventsFragment extends Fragment {
                 // Set the texts into TextViews from item nodes
                 // Get the title
                 if(checkDate(getNode("start_date", eElement).substring(0,10))) {
-                    Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
-                    linkList.add(a);
+                    try {
+                        Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
+                        linkList.add(a);
+                    }
+                    catch(Exception e){
+                        System.out.println("Failed to get event");
+                    }
                 }
             }
         }
