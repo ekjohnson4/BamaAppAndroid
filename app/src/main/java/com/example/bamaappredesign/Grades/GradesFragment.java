@@ -96,7 +96,7 @@ public class GradesFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                GradesClass a = new GradesClass(String.valueOf(document.get("title")));
+                                GradesClass a = new GradesClass(String.valueOf(document.get("title")), Double.valueOf(document.getDouble("overallGrade")));
                                 linkList.add(a);
                                 adapter.notifyDataSetChanged();
                             }
