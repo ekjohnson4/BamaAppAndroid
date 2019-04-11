@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:paddingTop= "45dp"
         android:paddingStart= "16dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="30dp"
         android:text="Select two favorites to always display on your home page."
         android:textColor="@android:color/black"
         android:textSize="15sp"
@@ -34,10 +34,10 @@
         tools:ignore="MissingConstraints" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvContacts"
+        android:id="@+id/rvSettings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop= "70dp">
+        android:paddingTop= "85dp">
 
     </android.support.v7.widget.RecyclerView>
 

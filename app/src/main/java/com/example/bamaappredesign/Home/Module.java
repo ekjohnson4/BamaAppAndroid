@@ -13,20 +13,30 @@ import com.example.bamaappredesign.Tickets.TicketsFragment;
 import com.example.bamaappredesign.TransportationFragment;
 
 public enum Module {
-    EVENTS(new EventsFragment()),
-    ACTION_CARD(new ActionCardFragment()),
-    TICKETS(new TicketsFragment()),
-    GRADES(new GradesFragment()),
-    SCHEDULE(new ScheduleFragment()),
-    LAUNDRY(new LaundryFragment()),
-    NEWS(new NewsFragment()),
-    CAMPUS_MAP(new CampusMapFragment()),
-    TRANSPORTATION(new TransportationFragment());
+    EVENTS("Events", new EventsFragment(), ModuleType.VISITOR),
+    ACTION_CARD("Action Card", new ActionCardFragment(), ModuleType.STUDENT),
+    TICKETS("Tickets", new TicketsFragment(), ModuleType.STUDENT),
+    GRADES("Grades", new GradesFragment(), ModuleType.STUDENT),
+    SCHEDULE("Schedule", new ScheduleFragment(), ModuleType.STUDENT),
+    LAUNDRY("Laundry", new LaundryFragment(), ModuleType.VISITOR),
+    NEWS("News", new NewsFragment(), ModuleType.VISITOR),
+    CAMPUS_MAP("Campus Map", new CampusMapFragment(), ModuleType.VISITOR),
+    TRANSPORTATION("Transportation", new TransportationFragment(), ModuleType.VISITOR),
+    SHOPPING("Shopping", new TransportationFragment(), ModuleType.VISITOR);
 
     private Fragment fragment;
-
-    Module(Fragment fragment){
+    private String name;
+    private ModuleType moduleType;
+    public String getName(){
+        return name;
+    }
+    Module(String name, Fragment fragment, ModuleType a){
+        this.name = name;
         this.fragment = fragment;
+        moduleType = a;
+    }
+    public ModuleType getType(){
+        return moduleType;
     }
 
     public Fragment getFragment(){
