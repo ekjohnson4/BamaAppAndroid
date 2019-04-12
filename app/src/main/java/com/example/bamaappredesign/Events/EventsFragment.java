@@ -3,6 +3,7 @@ package com.example.bamaappredesign.Events;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,7 +44,6 @@ public class EventsFragment extends Fragment {
     View v;
     private RecyclerView myrecyclerview;
     private List<Event> linkList = new ArrayList<>();
-    TextView textview;
     Button today;
     Button tomorrow;
     Button week;
@@ -55,18 +56,17 @@ public class EventsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_events, container, false);
         // Execute DownloadXML AsyncTask
-        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvContacts);
+        myrecyclerview = v.findViewById(R.id.rvContacts);
         adapter = new EventsAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);
-        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
         today = v.findViewById(R.id.button);
         today.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -85,7 +85,7 @@ public class EventsFragment extends Fragment {
                 setWeeksEvents();
             }
         });
-        progress = v.findViewById(R.id.progressBar);
+        progress = v.findViewById(R.id.progressBarEvents);
         progress.setVisibility(View.VISIBLE);
         return v;
     }
@@ -113,7 +113,6 @@ public class EventsFragment extends Fragment {
                 e.printStackTrace();
             }
             return null;
-
         }
 
         @Override
@@ -141,15 +140,14 @@ public class EventsFragment extends Fragment {
             }
             progress.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
+        }
+    }
 
-            // Close progressbar
-    }
-    }
     // getNode function
     private static String getNode(String sTag, Element eElement) {
         NodeList nlList = eElement.getElementsByTagName(sTag).item(0)
                 .getChildNodes();
-        Node nValue = (Node) nlList.item(0);
+        Node nValue = nlList.item(0);
         return nValue.getNodeValue();
     }
 
@@ -257,13 +255,6 @@ public class EventsFragment extends Fragment {
             }
         }
         return true;
-    }
-
-    public String convertDate(String date){
-        String fixedDate = "";
-
-
-        return date;
     }
 
     @Override

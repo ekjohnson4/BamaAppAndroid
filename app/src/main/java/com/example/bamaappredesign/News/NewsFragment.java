@@ -1,20 +1,18 @@
 package com.example.bamaappredesign.News;
 
-
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import com.example.bamaappredesign.R;
 
@@ -31,40 +29,33 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class NewsFragment extends Fragment {
     View v;
     private RecyclerView myrecyclerview;
     private List<News> linkList = new ArrayList<>();
-    TextView textview;
     NodeList nodelist;
     NewsAdapter adapter;
-    //ProgressBar progress;
-    // Insert image URL
-    String URL = "https://cw.ua.edu/feed/"; //"http://feeds.reuters.com/Reuters/domesticNews";
+    String URL = "https://cw.ua.edu/feed/";
+    ProgressBar progress;
+    
     public NewsFragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_news, container, false);
         // Execute DownloadXML AsyncTask
-        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvNews);
+        myrecyclerview = v.findViewById(R.id.rvNews);
         adapter = new NewsAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         //System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-
-        //progress = v.findViewById(R.id.progressBar);
-        //progress.setVisibility(View.VISIBLE);
+        progress = v.findViewById(R.id.progressBarNews);
+        progress.setVisibility(View.VISIBLE);
         return v;
     }
 
@@ -85,19 +76,17 @@ public class NewsFragment extends Fragment {
                 doc.getDocumentElement().normalize();
                 // Locate the Tag Name
                 nodelist = doc.getElementsByTagName("item");
-               // System.out.println(nodelist.getLength());
+                //System.out.println(nodelist.getLength());
                 //System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             return null;
-
         }
 
         @Override
         protected void onPostExecute(Void args) {
-
             for (int temp = 0; temp < nodelist.getLength(); temp++) {
                 Node nNode = nodelist.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -110,30 +99,28 @@ public class NewsFragment extends Fragment {
                     String image = getNode("description", eElement).substring(start + 5, end - 2);
                     int end2 = firstDescription.indexOf("link_thumbnail=\"\" />");
                     String firstPart = firstDescription.substring(0, end2+24).concat("<p></p>");
-                    String finished = firstPart.concat(firstDescription.substring(end2+24, firstDescription.length()));
+                    String finished = firstPart.concat(firstDescription.substring(end2+24));
                     //System.out.println("a:   " + finished);
                     News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), finished, image);
                     linkList.add(a);
 
                 }
             }
-            //.setVisibility(View.GONE);
+            progress.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
-
-            // Close progressbar
         }
     }
+
     // getNode function
     private static String getNode(String sTag, Element eElement) {
         //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         //System.out.println(sTag);
         NodeList nlList = eElement.getElementsByTagName(sTag).item(0)
                 .getChildNodes();
-        Node nValue = (Node) nlList.item(0);
+        Node nValue = nlList.item(0);
         //System.out.println(nValue.getNodeValue());
         return nValue.getNodeValue();
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -142,8 +129,6 @@ public class NewsFragment extends Fragment {
     }
 
 }
-
-
 
 /*
 package com.example.bamaappredesign;
