@@ -108,7 +108,7 @@ public class HomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -126,6 +126,7 @@ public class HomeActivity extends AppCompatActivity
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.flMain, new HomeStudentFragment());
                     ft.commit();
+                    navigationView.getMenu().getItem(0).setChecked(true);
                 }
             });
         }
@@ -137,6 +138,7 @@ public class HomeActivity extends AppCompatActivity
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.flMain, new HomeVisitorFragment());
                     ft.commit();
+                    navigationView.getMenu().getItem(0).setChecked(true);
                 }
             });
         }
