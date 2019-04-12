@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,14 +39,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.support.constraint.Constraints.TAG;
 
 public class ActionCardFragment extends Fragment{
     private TextView diningDollarText;
     private TextView bamaCashText;
-    private RecyclerView myrecyclerview;
-    private ImageView card;
     TransactionAdapter adapter;
     FirebaseFirestore db;
     private List<Transaction> linkList = new ArrayList<>();
@@ -62,12 +62,12 @@ public class ActionCardFragment extends Fragment{
         //Set view
         linkList.clear();
         final View inputView = inflater.inflate(R.layout.fragment_card, container, false);
-        myrecyclerview = inputView.findViewById(R.id.rvTransactions);
+        RecyclerView myrecyclerview = inputView.findViewById(R.id.rvTransactions);
         adapter = new TransactionAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);
-        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
 
         //Inflate the layout for this fragment
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -147,7 +147,7 @@ public class ActionCardFragment extends Fragment{
                         bamaCashColor.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, bamaCashColor.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         bamaCashText.append(bamaCashColor);
                         diningDollarText.append(diningDollarColor);
-
+                        bamaCashText.setPaintFlags(bamaCashText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                     } else {
                         Log.d("LOGGER", "No such document");
                     }
@@ -181,14 +181,18 @@ public class ActionCardFragment extends Fragment{
         //Dining dollars
         diningDollarText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-             setDiningDollarTransactions();
+                diningDollarText.setPaintFlags(diningDollarText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                bamaCashText.setPaintFlags(bamaCashText.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+                setDiningDollarTransactions();
             }
         });
 
         //Bama cash
         bamaCashText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-              setBamaCashTransactions();
+                bamaCashText.setPaintFlags(bamaCashText.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                diningDollarText.setPaintFlags(diningDollarText.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+                setBamaCashTransactions();
             }
         });
 
@@ -232,7 +236,7 @@ public class ActionCardFragment extends Fragment{
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
                                 linkList.add(a);
                                 adapter.notifyDataSetChanged();
@@ -253,7 +257,7 @@ public class ActionCardFragment extends Fragment{
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
                                 linkList.add(a);
                                 adapter.notifyDataSetChanged();
