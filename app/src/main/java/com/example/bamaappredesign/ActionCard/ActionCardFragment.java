@@ -45,8 +45,6 @@ public class ActionCardFragment extends Fragment{
     private TextView diningDollarText;
     private TextView bamaCashText;
     private RecyclerView myrecyclerview;
-    private Button diningDollarsButton;
-    private Button bamaCashButton;
     private ImageView card;
     TransactionAdapter adapter;
     FirebaseFirestore db;
@@ -166,7 +164,8 @@ public class ActionCardFragment extends Fragment{
             public void onClick(android.view.View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Lost Card");
-                builder.setMessage("Immediately report your card lost or stolen. During regular business hours, call Action Card at 205-348-2288 and after hours or holidays, call UAPD at 205-348-5454.");
+                builder.setMessage("Immediately report your card lost or stolen. During regular business hours, " +
+                        "call Action Card at 205-348-2288 and after hours or holidays, call UAPD at 205-348-5454.");
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -178,20 +177,23 @@ public class ActionCardFragment extends Fragment{
                 alert.show();
             }
         };
-        diningDollarsButton = inputView.findViewById(R.id.dollars_button);
-        diningDollarsButton.setOnClickListener(new View.OnClickListener() {
+
+        //Dining dollars
+        diningDollarText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setDiningDollarTransactions();
+             setDiningDollarTransactions();
             }
         });
-        bamaCashButton = inputView.findViewById(R.id.cash_button);
-        bamaCashButton.setOnClickListener(new View.OnClickListener() {
+
+        //Bama cash
+        bamaCashText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-              //  setBamaCashTransactions();
+              setBamaCashTransactions();
             }
         });
+
         lost.setOnClickListener(lostListener);
-       // setDiningDollarTransactions();
+        setBamaCashTransactions();
         return inputView;
     }
 
@@ -223,19 +225,17 @@ public class ActionCardFragment extends Fragment{
 
     private void setDiningDollarTransactions(){
         linkList.clear();
-        db.collection("transactions")
-                .whereEqualTo("email", user.getEmail())
+        DocumentReference classRef = db.collection("actionCards").document(user.getUid());
+        classRef.collection("transactionsDollars")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if(document.get("Type").equals("Dining Dollars")){
-                                    Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
-                                    linkList.add(a);
-                                    adapter.notifyDataSetChanged();
-                                }
+                                Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
+                                linkList.add(a);
+                                adapter.notifyDataSetChanged();
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -246,19 +246,17 @@ public class ActionCardFragment extends Fragment{
 
     private void setBamaCashTransactions(){
         linkList.clear();
-        db.collection("transactions")
-                .whereEqualTo("email", user.getEmail())
+        DocumentReference classRef = db.collection("actionCards").document(user.getUid());
+        classRef.collection("transactionsCash")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if(document.get("Type").equals("Bama Cash")){
-                                    Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
-                                    linkList.add(a);
-                                    adapter.notifyDataSetChanged();
-                                }
+                                Transaction a = new Transaction(String.valueOf(document.get("Price")), String.valueOf(document.get("Location")), String.valueOf(document.get("Type")));
+                                linkList.add(a);
+                                adapter.notifyDataSetChanged();
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());

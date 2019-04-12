@@ -1,11 +1,13 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_margin="16dp"
+        android:paddingBottom="25dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
         <LinearLayout
@@ -75,41 +77,21 @@
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
-                <Button
-                    android:id="@+id/cash_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/colorPrimary"
-                    android:text="Bama Cash"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
-                <Button
-                    android:id="@+id/dollars_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/colorPrimary"
-                    android:text="Dining Dollars"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvTransactions"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 </android.support.v7.widget.RecyclerView>
-                <Button
-                    android:id="@+id/lost"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lost/Stolen Card"
-                    android:textColor = "@color/colorPrimary"
-                    android:background="@android:color/transparent"
-                    android:onClick="visitorLogin"
-                    />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
-</RelativeLayout>
+    <Button
+        android:id="@+id/lost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lost/Stolen Card"
+        android:textColor = "@color/colorPrimary"
+        android:background="@android:color/transparent"
+        android:onClick="visitorLogin"
+        />
+</LinearLayout>

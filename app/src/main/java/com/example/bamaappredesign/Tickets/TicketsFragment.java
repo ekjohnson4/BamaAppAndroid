@@ -1,6 +1,8 @@
 package com.example.bamaappredesign.Tickets;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.InputStream;
+import java.util.Random;
 
 public class TicketsFragment extends Fragment {
     FirebaseAuth auth;
@@ -71,17 +74,41 @@ public class TicketsFragment extends Fragment {
             @Override
             public void onClick(android.view.View view)
             {
-                assert getFragmentManager() != null;
-                FragmentTransaction fragtran = getFragmentManager().beginTransaction();
-                fragtran.replace(R.id.flMain, new DonateFragment());
-                fragtran.addToBackStack(null);
-                fragtran.commit();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle("Donate Ticket");
+                builder.setMessage("Are you sure you wish to donate your ticket?");
+                builder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setCancelable(true);
+                                builder.setTitle("Donation Successful!");
+                                builder.setMessage("Thank you for donating your ticket! You confirmation number is " + random(15) + ".");
+                                builder.setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        });
+                                AlertDialog dialog2 = builder.create();
+                                dialog2.show();
+                            }
+                        });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         };
 
-        DocumentReference imgRef = db.collection("ticketInformation").document("game1");
-
         //Display upcoming game information image
+        DocumentReference imgRef = db.collection("ticketInformation").document("game1");
         imgRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -143,5 +170,16 @@ public class TicketsFragment extends Fragment {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
+    }
+
+    private static final String ALLOWED_CHARACTERS ="0123456789QWERTYUIOPASDFGHJKLZXCVBNM";
+
+    private static String random(final int sizeOfRandomString)
+    {
+        final Random random=new Random();
+        final StringBuilder sb=new StringBuilder(sizeOfRandomString);
+        for(int i=0;i<sizeOfRandomString;++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
     }
 }
