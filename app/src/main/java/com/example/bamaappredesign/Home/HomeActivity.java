@@ -118,6 +118,7 @@ public class HomeActivity extends AppCompatActivity
         if(value == 1){
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.student_activity_drawer);
+            navigationView.getMenu().getItem(0).setChecked(true);
 
             //Make logo in ActionBar shortcut to Student home page
             ImageView img = findViewById(R.id.icon);
@@ -133,6 +134,7 @@ public class HomeActivity extends AppCompatActivity
         else{
             //Make logo in ActionBar shortcut to Visitor home page
             ImageView img = findViewById(R.id.icon);
+            navigationView.getMenu().getItem(0).setChecked(true);
             img.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

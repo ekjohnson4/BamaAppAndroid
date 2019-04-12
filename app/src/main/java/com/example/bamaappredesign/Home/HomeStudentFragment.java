@@ -83,6 +83,7 @@ public class HomeStudentFragment extends Fragment {
 
                         //Home page slides
                         try {
+                            assert getFragmentManager() != null;
                             FragmentTransaction ft = getFragmentManager().beginTransaction();
                             viewPager = view.findViewById(R.id.viewPager);
                             myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);

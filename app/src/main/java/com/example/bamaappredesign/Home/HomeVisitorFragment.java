@@ -69,6 +69,7 @@ public class HomeVisitorFragment extends Fragment {
                         images[2] = document.getString("slide3");
 
                         //Home page slides
+                        assert getFragmentManager() != null;
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         viewPager = view.findViewById(R.id.viewPager);
                         myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
