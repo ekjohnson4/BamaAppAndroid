@@ -57,6 +57,7 @@ public class HomeStudentFragment extends Fragment {
         final String[] bowl = new String[1];
         final String[] gate = new String[1];
         final String[] url = new String[1];
+        final boolean[] ticket = new boolean[1];
 
         //Set view
         final View view = inflater.inflate(R.layout.fragment_home_student, container, false);
@@ -221,11 +222,16 @@ public class HomeStudentFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-                        bowl[0] = document.getString("bowl");
-                        gate[0] = document.getString("gate");
-                        TextView bg = view.findViewById(R.id.ticketInfo2);
-                        bg.setText(bowl[0] + " - " + gate[0]);
-
+                        if (document.getBoolean("ticket") == false) {
+                            TextView bg = view.findViewById(R.id.ticketInfo2);
+                            bg.setText("No ticket");
+                        }
+                        else{
+                            bowl[0] = document.getString("bowl");
+                            gate[0] = document.getString("gate");
+                            TextView bg = view.findViewById(R.id.ticketInfo2);
+                            bg.setText(bowl[0] + " - " + gate[0]);
+                        }
                     } else {
                         Log.d("LOGGER", "No such document");
                     }

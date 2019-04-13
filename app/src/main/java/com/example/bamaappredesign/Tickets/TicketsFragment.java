@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bamaappredesign.Home.HomeStudentFragment;
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -51,6 +52,8 @@ public class TicketsFragment extends Fragment {
         user = auth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
         final View inputView = inflater.inflate(R.layout.fragment_tickets, container, false);
+        final DocumentReference gameRef = db.collection("ticketInformation").document("game1");
+        final DocumentReference gameRef2 = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getUid());
 
         //Transfer ticket button
         Button transferTicket = inputView.findViewById(R.id.transfer_button);
@@ -82,18 +85,50 @@ public class TicketsFragment extends Fragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                builder.setCancelable(true);
-                                builder.setTitle("Donation Successful!");
-                                builder.setMessage("Thank you for donating your ticket! You confirmation number is " + random(15) + ".");
-                                builder.setPositiveButton("OK",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
+                                //Donate ticket
+                                gameRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document != null) {
+                                                if (document.getBoolean("ticket") == false) {
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("Donation Failed!");
+                                                    builder.setMessage("You don't have a ticket to donate!");
+                                                    builder.setPositiveButton("OK",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                }
+                                                            });
+                                                    AlertDialog dialog2 = builder.create();
+                                                    dialog2.show();
+                                                }
+                                                else{
+                                                    gameRef2.update("ticket", false);
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                    builder.setCancelable(true);
+                                                    builder.setTitle("Donation Successful!");
+                                                    builder.setMessage("Thank you for donating your ticket! You confirmation number is " + random(15) + ".");
+                                                    builder.setPositiveButton("OK",
+                                                            new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                }
+                                                            });
+                                                    AlertDialog dialog2 = builder.create();
+                                                    dialog2.show();
+                                                }
+                                            } else {
+                                                Log.d("LOGGER", "No such document");
                                             }
-                                        });
-                                AlertDialog dialog2 = builder.create();
-                                dialog2.show();
+                                        } else {
+                                            Log.d("LOGGER", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
                             }
                         });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -108,8 +143,7 @@ public class TicketsFragment extends Fragment {
         };
 
         //Display upcoming game information image
-        DocumentReference imgRef = db.collection("ticketInformation").document("game1");
-        imgRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        gameRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {

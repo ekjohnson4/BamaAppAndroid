@@ -37,7 +37,7 @@ public class NewsFragment extends Fragment {
     NewsAdapter adapter;
     String URL = "https://cw.ua.edu/feed/";
     ProgressBar progress;
-    
+
     public NewsFragment() {
         // Required empty public constructor
     }
@@ -53,7 +53,6 @@ public class NewsFragment extends Fragment {
         //System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
         progress = v.findViewById(R.id.progressBarNews);
         progress.setVisibility(View.VISIBLE);
         return v;
@@ -103,7 +102,6 @@ public class NewsFragment extends Fragment {
                     //System.out.println("a:   " + finished);
                     News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), finished, image);
                     linkList.add(a);
-
                 }
             }
             progress.setVisibility(View.GONE);
