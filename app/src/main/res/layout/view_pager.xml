@@ -23,6 +23,10 @@
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowRadius="2"
+            android:shadowDx="1"
+            android:shadowDy="1"
             />
 
     </FrameLayout>
