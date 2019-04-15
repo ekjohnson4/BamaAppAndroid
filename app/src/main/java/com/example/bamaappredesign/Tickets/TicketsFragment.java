@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Random;
 
 public class TicketsFragment extends Fragment {
@@ -55,38 +56,38 @@ public class TicketsFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         final View inputView = inflater.inflate(R.layout.fragment_tickets, container, false);
         final DocumentReference gameRef = db.collection("ticketInformation").document("game1");
-        final DocumentReference studentRef = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getEmail());
+        final DocumentReference studentRef = db.collection("ticketInformation").document("game1").collection("stuTickets").document(Objects.requireNonNull(user.getEmail()));
 
         //Display upcoming game information image
         gameRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null) {
-                        img[0] = document.getString("banner");
-                        game[0] = document.getString("opponent");
-                        date[0] = document.getString("date");
-                        time[0] = document.getString("time");
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document != null) {
+                    img[0] = document.getString("banner");
+                    game[0] = document.getString("opponent");
+                    date[0] = document.getString("date");
+                    time[0] = document.getString("time");
 
-                        //Display ticket banner
-                        new TicketsFragment.DownloadImageTask((ImageView) inputView.findViewById(R.id.banner))
-                                .execute(img[0]);
+                    //Display ticket banner
+                    new TicketsFragment.DownloadImageTask((ImageView) inputView.findViewById(R.id.banner))
+                            .execute(img[0]);
 
-                        //Display opponent
-                        TextView o = inputView.findViewById(R.id.game);
-                        o.setText(game[0]);
+                    //Display opponent
+                    TextView o = inputView.findViewById(R.id.game);
+                    o.setText(game[0]);
 
-                        //Display game date
-                        TextView d = inputView.findViewById(R.id.date);
-                        d.setText(date[0] + " @ " + time[0]);
+                    //Display game date
+                    TextView d = inputView.findViewById(R.id.date);
+                    d.setText(date[0] + " @ " + time[0]);
 
-                    } else {
-                        Log.d("LOGGER", "No such document");
-                    }
                 } else {
-                    Log.d("LOGGER", "get failed with ", task.getException());
+                    Log.d("LOGGER", "No such document");
                 }
+            } else {
+                Log.d("LOGGER", "get failed with ", task.getException());
+            }
             }
         });
 
@@ -174,12 +175,12 @@ public class TicketsFragment extends Fragment {
                                     builder.setTitle("Donation Failed!");
                                     builder.setMessage("You don't have a ticket to donate!");
                                     builder.setPositiveButton("OK",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.cancel();
-                                                }
-                                            });
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
                                     AlertDialog dialog2 = builder.create();
                                     dialog2.show();
                                 }
@@ -190,12 +191,12 @@ public class TicketsFragment extends Fragment {
                                     builder.setTitle("Donation Successful!");
                                     builder.setMessage("Thank you for donating your ticket! You confirmation number is " + random() + ".");
                                     builder.setPositiveButton("OK",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.cancel();
-                                                }
-                                            });
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
                                     AlertDialog dialog2 = builder.create();
                                     dialog2.show();
                                 }
@@ -239,12 +240,12 @@ public class TicketsFragment extends Fragment {
                     builder.setTitle("Transfer Failed!");
                     builder.setMessage("You must enter in a Crimson Email!");
                     builder.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    transferTicket(studentRef, gameRef);
-                                }
-                            });
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                transferTicket(studentRef, gameRef);
+                            }
+                        });
                     AlertDialog dialog2 = builder.create();
                     dialog2.show();
                 }
@@ -266,36 +267,70 @@ public class TicketsFragment extends Fragment {
                                 builder.setTitle("Transfer Failed!");
                                 builder.setMessage("You don't have a ticket to transfer!");
                                 builder.setPositiveButton("OK",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.cancel();
-                                            }
-                                        });
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
                                 AlertDialog dialog2 = builder.create();
                                 dialog2.show();
                             }
                             else{
-                                studentRef.update("ticket", false);
+                                final DocumentReference transferRef = gameRef.collection("stuTickets").document(transferTo[0]);
+                                transferRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document != null) {
+                                            if (document.exists()) {
+                                                //Remove ticket from ticket holder
+                                                studentRef.update("ticket", false);
 
-                                gameRef.collection("stuTickets").document(transferTo[0]).update("ticket",true);
-                                gameRef.collection("stuTickets").document(transferTo[0]).update("bowl",bowl[0]);
-                                gameRef.collection("stuTickets").document(transferTo[0]).update("gate",gate[0]);
+                                                //Send ticket to transferee
+                                                transferRef.update("ticket",true);
+                                                transferRef.update("bowl",bowl[0]);
+                                                transferRef.update("gate",gate[0]);
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                builder.setCancelable(true);
-                                builder.setTitle("Transfer Successful!");
-                                builder.setMessage("Your ticket has been transferred to " + transferTo[0] +
-                                        "! You confirmation number is " + random() + ".");
-                                builder.setPositiveButton("OK",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.cancel();
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                builder.setCancelable(true);
+                                                builder.setTitle("Transfer Successful!");
+                                                builder.setMessage("Your ticket has been transferred to " + transferTo[0] +
+                                                        "! You confirmation number is " + random() + ".");
+                                                builder.setPositiveButton("OK",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+                                                AlertDialog dialog2 = builder.create();
+                                                dialog2.show();
                                             }
-                                        });
-                                AlertDialog dialog2 = builder.create();
-                                dialog2.show();
+                                            else{
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                builder.setCancelable(true);
+                                                builder.setTitle("Transfer Failed!");
+                                                builder.setMessage("User doesn't seem to exist!");
+                                                builder.setPositiveButton("OK",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+                                                AlertDialog dialog2 = builder.create();
+                                                dialog2.show();
+                                            }
+                                        } else {
+                                            Log.d("LOGGER", "No such document");
+                                        }
+                                    } else {
+                                        Log.d("LOGGER", "get failed with ", task.getException());
+                                    }
+                                    }
+                                });
                             }
                         } else {
                             Log.d("LOGGER", "get failed with ", task.getException());
