@@ -1,5 +1,7 @@
 package com.example.bamaappredesign;
 
+import com.example.bamaappredesign.Home.MainActivity;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

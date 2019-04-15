@@ -1,5 +1,4 @@
-package com.example.bamaappredesign;
-
+package com.example.bamaappredesign.Transportation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,17 +8,14 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.example.bamaappredesign.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TransportationFragment extends Fragment {
     private WebView mWebView;
 
     public TransportationFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,5 +30,4 @@ public class TransportationFragment extends Fragment {
 
         return view;
     }
-
 }

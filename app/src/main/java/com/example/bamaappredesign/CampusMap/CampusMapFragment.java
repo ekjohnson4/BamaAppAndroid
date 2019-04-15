@@ -1,4 +1,4 @@
-package com.example.bamaappredesign;
+package com.example.bamaappredesign.CampusMap;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
+import com.example.bamaappredesign.R;
 
 public class CampusMapFragment extends Fragment {
     private WebView mWebView;

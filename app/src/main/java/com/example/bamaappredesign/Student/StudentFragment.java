@@ -1,4 +1,4 @@
-package com.example.bamaappredesign;
+package com.example.bamaappredesign.Student;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +11,8 @@ import android.widget.Button;
 
 import com.example.bamaappredesign.ActionCard.ActionCardFragment;
 import com.example.bamaappredesign.Grades.GradesFragment;
+import com.example.bamaappredesign.R;
+import com.example.bamaappredesign.Schedule.ScheduleFragment;
 import com.example.bamaappredesign.Tickets.TicketsFragment;
 
 public class StudentFragment extends Fragment {
