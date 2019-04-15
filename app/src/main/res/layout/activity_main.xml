@@ -34,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
@@ -53,7 +52,6 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -71,7 +69,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -94,10 +91,6 @@
                 android:background="@android:color/transparent"
                 android:onClick="visitorLogin"
                 />
-
         </LinearLayout>
-
     </ScrollView>
-
-
 </LinearLayout>

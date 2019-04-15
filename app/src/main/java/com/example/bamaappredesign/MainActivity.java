@@ -16,13 +16,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
-    private FirebaseUser user;
     EditText e1, e2;
     private EditText mPasswordView;
     private String uid, email;
@@ -47,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             setEmail(auth.getCurrentUser().getEmail());
             goToHomePage();
         }
-
     }
 
     //Visitor login button pressed
@@ -97,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-
         }
     }
 
