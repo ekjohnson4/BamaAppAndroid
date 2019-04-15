@@ -38,6 +38,8 @@ public class TicketsFragment extends Fragment {
     final String[] game = new String[1];
     final String[] date = new String[1];
     final String[] time = new String[1];
+    final String[] bowl = new String[1];
+    final String[] gate = new String[1];
     final String[] transferTo = {""};
     private static final String ALLOWED_CHARACTERS ="0123456789QWERTYUIOPASDFGHJKLZXCVBNM";
 
@@ -53,7 +55,7 @@ public class TicketsFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         final View inputView = inflater.inflate(R.layout.fragment_tickets, container, false);
         final DocumentReference gameRef = db.collection("ticketInformation").document("game1");
-        final DocumentReference studentRef = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getUid());
+        final DocumentReference studentRef = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getEmail());
 
         //Display upcoming game information image
         gameRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -95,7 +97,7 @@ public class TicketsFragment extends Fragment {
             @Override
             public void onClick(android.view.View view)
             {
-                transferTicket(studentRef);
+                transferTicket(studentRef, gameRef);
             }
         };
 
@@ -110,6 +112,7 @@ public class TicketsFragment extends Fragment {
             }
         };
 
+        //UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
         transferTicket.setOnClickListener(transferListener);
         donateTicket.setOnClickListener(donateListener);
         return inputView;
@@ -218,7 +221,7 @@ public class TicketsFragment extends Fragment {
         dialog.show();
     }
 
-    private void transferTicket(final DocumentReference studentRef){
+    private void transferTicket(final DocumentReference studentRef, final DocumentReference gameRef){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Transfer Ticket");
         LayoutInflater inflater = this.getLayoutInflater();
@@ -239,7 +242,7 @@ public class TicketsFragment extends Fragment {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    transferTicket(studentRef);
+                                    transferTicket(studentRef, gameRef);
                                 }
                             });
                     AlertDialog dialog2 = builder.create();
@@ -254,42 +257,45 @@ public class TicketsFragment extends Fragment {
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document != null) {
-                                if (!document.getBoolean("ticket")) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                    builder.setCancelable(true);
-                                    builder.setTitle("Transfer Failed!");
-                                    builder.setMessage("You don't have a ticket to transfer!");
-                                    builder.setPositiveButton("OK",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.cancel();
-                                                }
-                                            });
-                                    AlertDialog dialog2 = builder.create();
-                                    dialog2.show();
-                                }
-                                else{
-                                    studentRef.update("ticket", false);
+                            assert document != null;
+                            bowl[0] = document.getString("bowl");
+                            gate[0] = document.getString("gate");
+                            if (!document.getBoolean("ticket")) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setCancelable(true);
+                                builder.setTitle("Transfer Failed!");
+                                builder.setMessage("You don't have a ticket to transfer!");
+                                builder.setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog dialog2 = builder.create();
+                                dialog2.show();
+                            }
+                            else{
+                                studentRef.update("ticket", false);
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                    builder.setCancelable(true);
-                                    builder.setTitle("Transfer Successful!");
-                                    builder.setMessage("Your ticket has been transferred to " + transferTo[0] +
-                                            "! You confirmation number is " + random() + ".");
-                                    builder.setPositiveButton("OK",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.cancel();
-                                                }
-                                            });
-                                    AlertDialog dialog2 = builder.create();
-                                    dialog2.show();
-                                }
-                            } else {
-                                Log.d("LOGGER", "No such document");
+                                gameRef.collection("stuTickets").document(transferTo[0]).update("ticket",true);
+                                gameRef.collection("stuTickets").document(transferTo[0]).update("bowl",bowl[0]);
+                                gameRef.collection("stuTickets").document(transferTo[0]).update("gate",gate[0]);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setCancelable(true);
+                                builder.setTitle("Transfer Successful!");
+                                builder.setMessage("Your ticket has been transferred to " + transferTo[0] +
+                                        "! You confirmation number is " + random() + ".");
+                                builder.setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog dialog2 = builder.create();
+                                dialog2.show();
                             }
                         } else {
                             Log.d("LOGGER", "get failed with ", task.getException());

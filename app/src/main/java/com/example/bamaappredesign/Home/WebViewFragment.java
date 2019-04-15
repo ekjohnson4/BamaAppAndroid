@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +20,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Objects;
-
 public class WebViewFragment extends Fragment {
     private WebView mWebView;
     FirebaseAuth auth;
@@ -36,7 +33,7 @@ public class WebViewFragment extends Fragment {
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
@@ -50,6 +47,7 @@ public class WebViewFragment extends Fragment {
         DocumentReference slideRef = db.collection("homePage").document("slides");
 
         Bundle arguments = getArguments();
+        assert arguments != null;
         final int position = arguments.getInt("pos");
 
         //Display slides
@@ -78,5 +76,4 @@ public class WebViewFragment extends Fragment {
 
         return view;
     }
-
 }

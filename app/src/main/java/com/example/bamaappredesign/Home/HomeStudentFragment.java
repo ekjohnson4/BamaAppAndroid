@@ -145,7 +145,7 @@ public class HomeStudentFragment extends Fragment {
         //Pull data
         DocumentReference actRef = db.collection("actionCards").document(user.getUid());
         DocumentReference ticRef = db.collection("ticketInformation").document("game1");
-        DocumentReference ticRef2 = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getUid());
+        DocumentReference ticRef2 = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getEmail());
         DocumentReference urlRef = db.collection("actionCards").document(user.getUid());
 
         //Display action card image
