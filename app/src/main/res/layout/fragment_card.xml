@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_margin="16dp"
-        android:paddingBottom="25dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
         <LinearLayout
@@ -71,7 +70,7 @@
                 android:textColor="#000"
                 android:textSize="14sp" />
         </LinearLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -80,18 +79,20 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvTransactions"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingBottom="50dp">
                 </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
+                <Button
+                    android:id="@+id/lost"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Lost/Stolen Card"
+                    android:textColor = "@color/colorPrimary"
+                    android:background="@android:color/transparent"
+                    android:onClick="visitorLogin"
+                    android:layout_alignParentBottom="true"
+                    />
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
-    <Button
-        android:id="@+id/lost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lost/Stolen Card"
-        android:textColor = "@color/colorPrimary"
-        android:background="@android:color/transparent"
-        android:onClick="visitorLogin"
-        />
 </LinearLayout>
