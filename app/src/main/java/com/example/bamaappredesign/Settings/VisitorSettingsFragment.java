@@ -1,6 +1,8 @@
 package com.example.bamaappredesign.Settings;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.bamaappredesign.Events.Event;
 import com.example.bamaappredesign.Events.EventsAdapter;
+import com.example.bamaappredesign.Home.HomeVisitorFragment;
 import com.example.bamaappredesign.Home.Module;
 import com.example.bamaappredesign.Home.ModuleType;
 import com.example.bamaappredesign.R;
@@ -27,7 +30,10 @@ public class VisitorSettingsFragment extends Fragment {
     private RecyclerView myrecyclerview;
     private List<Module> linkList = new ArrayList<>();
     private SettingsAdapter adapter;
-
+    Module moduleOne;
+    Module moduleTwo;
+    SharedPreferences sharedPreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
     public VisitorSettingsFragment() {
         // Required empty public constructor
@@ -45,6 +51,7 @@ public class VisitorSettingsFragment extends Fragment {
         System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        sharedPreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         setVisitorModules();
         return v;
     }

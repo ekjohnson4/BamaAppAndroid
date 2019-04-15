@@ -54,14 +54,14 @@ public class NewsFragment extends Fragment {
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         progress = v.findViewById(R.id.progressBarNews);
-        progress.setVisibility(View.VISIBLE);
         return v;
     }
 
     private class DownloadXML extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
+            if(progress!=null)
+               progress.setVisibility(View.VISIBLE);
         }
         @Override
         protected Void doInBackground(String... Url) {
@@ -86,6 +86,7 @@ public class NewsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void args) {
+            linkList.clear();
             for (int temp = 0; temp < nodelist.getLength(); temp++) {
                 Node nNode = nodelist.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -123,6 +124,7 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("test if created");
         new DownloadXML().execute(URL);
     }
 
