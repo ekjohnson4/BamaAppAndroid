@@ -153,6 +153,7 @@ public class TicketsFragment extends Fragment {
         builder.setCancelable(true);
         builder.setTitle("Donate Ticket");
         builder.setMessage("Are you sure you wish to donate your ticket?");
+
         builder.setPositiveButton("Yes",
             new DialogInterface.OnClickListener() {
                 @Override
@@ -205,6 +206,7 @@ public class TicketsFragment extends Fragment {
                     });
                 }
             });
+
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

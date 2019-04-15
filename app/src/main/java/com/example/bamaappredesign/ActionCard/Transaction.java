@@ -5,16 +5,16 @@ public class Transaction {
     private String location;
     private String type;
 
-    public Transaction(String price, String location, String type){
+    Transaction(String price, String location, String type){
         this.price = price;
         this.location = location;
         this.type = type;
     }
 
-    public String getPrice(){
+    String getPrice(){
         return price;
     }
-    public String getLocation(){
+    String getLocation(){
         return location;
     }
     public String getType(){

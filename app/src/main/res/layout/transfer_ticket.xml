@@ -11,7 +11,7 @@
         android:id="@+id/transferMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter Crimson Email of student you wish to transfer to."/>
+        android:text="Enter the Crimson Email of the student you wish to transfer to."/>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

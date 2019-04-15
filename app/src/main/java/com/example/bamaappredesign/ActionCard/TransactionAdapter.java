@@ -11,17 +11,19 @@ import android.widget.TextView;
 
 import com.example.bamaappredesign.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MyViewHolder> {
-    Context mContext;
-    List<Transaction> mData;
+    private Context mContext;
+    private List<Transaction> mData;
 
-    public TransactionAdapter(Context mContext, List<Transaction> mData) {
+    TransactionAdapter(Context mContext, List<Transaction> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
 
+    @NonNull
     @Override
     public TransactionAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v ;
@@ -34,7 +36,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(@NonNull TransactionAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.location.setText(mData.get(i).getLocation());
-        myViewHolder.price.setText("- $" + mData.get(i).getPrice());
+        String price = mData.get(i).getPrice();
+        double d = Double.parseDouble(price);
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        myViewHolder.price.setText("- $" + df.format(d));
     }
 
     @Override
@@ -42,12 +48,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return mData.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout item;
         private TextView location;
         private TextView price;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             item =  itemView.findViewById(R.id.contact_item);
