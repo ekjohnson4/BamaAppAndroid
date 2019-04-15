@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bamaappredesign.News.NewsFragment;
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -136,7 +137,7 @@ public class HomeStudentFragment extends Fragment {
             public void onClick(View v) {
                 assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, moduleThree.getFragment());
+                ft.replace(R.id.flMain, new NewsFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }

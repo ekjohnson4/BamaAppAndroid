@@ -70,19 +70,19 @@ public class EventsFragment extends Fragment {
         today = v.findViewById(R.id.button);
         today.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setTodaysEvents();
+                new DownloadXML(0).execute(URL);
             }
         });
         tomorrow =  v.findViewById(R.id.button4);
         tomorrow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setTomorrowsEvents();
+                new DownloadXML(1).execute(URL);
             }
         });
         week = v.findViewById(R.id.button5);
         week.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setWeeksEvents();
+                new DownloadXML(2).execute(URL);
             }
         });
         progress = v.findViewById(R.id.progressBarEvents);
@@ -91,6 +91,10 @@ public class EventsFragment extends Fragment {
     }
 
     private class DownloadXML extends AsyncTask<String, Void, Void> {
+        int x;
+        DownloadXML(int x){
+            this.x = x;
+        }
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -117,29 +121,23 @@ public class EventsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void args) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Calendar c = Calendar.getInstance();
-            String todayDate = sdf.format(c.getTime());
-            System.out.println("Today's date:" + todayDate);
-            for (int temp = 0; temp < nodelist.getLength(); temp++) {
-                Node nNode = nodelist.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    // Set the texts into TextViews from item nodes
-                    // Get the title
-                    if(getNode("start_date", eElement).substring(0,10).equals(todayDate)) {
-                        try {
-                            Event a = new Event(getNode("title", eElement), getNode("description", eElement), getNode("location", eElement), getNode("start_date", eElement));
-                            linkList.add(a);
-                        }
-                        catch(Exception e){
-                            System.out.println("Failed to get event");
-                        }
-                    }
-                }
+            progress.setVisibility(View.VISIBLE);
+            linkList.clear();
+            adapter.notifyDataSetChanged();
+            if(x == 0){
+                setTodaysEvents();
+                System.out.println("Setting today's events in new thread.");
+            }
+            else if(x == 1){
+                setTomorrowsEvents();
+                System.out.println("Setting tomorrow's events in new thread.");
+            }
+            else {
+                setWeeksEvents();
+                System.out.println("Setting week's events in new thread.");
             }
             progress.setVisibility(View.GONE);
-            adapter.notifyDataSetChanged();
+            //adapter.notifyDataSetChanged();
         }
     }
 
@@ -158,7 +156,7 @@ public class EventsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         String todayDate = sdf.format(c.getTime());
-        linkList.clear();
+        progress.setVisibility(View.VISIBLE);
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -186,7 +184,6 @@ public class EventsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
-        linkList.clear();
         String tomorrowDate = sdf.format(gc.getTime());
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
@@ -214,7 +211,6 @@ public class EventsFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
-        linkList.clear();
         for (int temp = 0; temp < nodelist.getLength(); temp++) {
             Node nNode = nodelist.item(temp);
 
@@ -260,7 +256,7 @@ public class EventsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new DownloadXML().execute(URL);
+        new DownloadXML(0).execute(URL);
     }
 
 }
