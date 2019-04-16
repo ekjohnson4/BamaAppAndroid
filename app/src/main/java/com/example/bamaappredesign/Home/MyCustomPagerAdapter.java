@@ -22,14 +22,12 @@ import com.example.bamaappredesign.R;
 import java.io.InputStream;
 
 public class MyCustomPagerAdapter extends PagerAdapter {
-    private Context context;
     private String images[];
     private String strings[];
     private FragmentTransaction ft;
     private LayoutInflater layoutInflater;
 
     MyCustomPagerAdapter(Context context, String images[], String stringArray[], FragmentTransaction ft) {
-        this.context = context;
         this.images = images;
         this.strings = stringArray;
         this.ft = ft;
@@ -49,8 +47,7 @@ public class MyCustomPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
-        View itemView;
-        itemView = layoutInflater.inflate(R.layout.view_pager, container, false);
+        View itemView = layoutInflater.inflate(R.layout.view_pager, container, false);
 
         //Load image and headline
         ImageView imageView = itemView.findViewById(R.id.imageView);

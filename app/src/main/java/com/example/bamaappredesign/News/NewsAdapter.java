@@ -1,30 +1,18 @@
 package com.example.bamaappredesign.News;
 
-
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.bamaappredesign.Home.MyCustomPagerAdapter;
-import com.example.bamaappredesign.Home.WebViewFragment;
 import com.example.bamaappredesign.R;
 
 import java.util.List;
@@ -34,37 +22,30 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     private List<News> mData;
     private FragmentTransaction ft;
 
-    NewsAdapter(Context mContext, List<News> mData) {
+    NewsAdapter(Context mContext, List<News> mData, FragmentTransaction ft) {
         this.mContext = mContext;
         this.mData = mData;
+        this.ft = ft;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v ;
-        v = LayoutInflater.from(mContext).inflate(R.layout.news_list,viewGroup,false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.news_list,viewGroup,false);
         final MyViewHolder vHolder = new MyViewHolder(v);
 
         vHolder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(mContext,"Clicked on number: "+  String.valueOf(mData.get(vHolder.getAdapterPosition()).getLink()),Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(mData.get(vHolder.getAdapterPosition()).getLink()));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-                //NewsWebViewFragment fragment = new NewsWebViewFragment();
-                //Bundle arguments = new Bundle();
-                //arguments.putString("link" , mData.get(vHolder.getAdapterPosition()).getLink());
-                //fragment.setArguments(arguments);
-                //ft.replace(R.id.flMain, fragment);
-                //ft.addToBackStack(null);
-                //ft.commit();
+                NewsWebViewFragment fragment = new NewsWebViewFragment();
+                Bundle arguments = new Bundle();
+                arguments.putString("link" , mData.get(vHolder.getAdapterPosition()).getLink());
+                fragment.setArguments(arguments);
+                ft.replace(R.id.flMain, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
-
         return vHolder;
     }
 
@@ -73,8 +54,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         myViewHolder.tv_title.setText(mData.get(i).getTitle());
         myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription()));
         myViewHolder.tv_date.setText(mData.get(i).getDate().substring(0, 16));
-        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
-
         myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription(), Images, null));
     }
 

@@ -29,13 +29,13 @@ public class NewsWebViewFragment extends Fragment {
 
         Bundle arguments = getArguments();
         assert arguments != null;
-        final String link = arguments.getString("link");
+        final String l = arguments.getString("link");
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient());
-        mWebView.loadUrl(link);
+        mWebView.loadUrl(l);
 
         return view;
     }
