@@ -67,7 +67,7 @@ public class MyCustomPagerAdapter extends PagerAdapter {
             public void onClick(View view) {
                 WebViewFragment fragment = new WebViewFragment();
                 Bundle arguments = new Bundle();
-                arguments.putInt( "pos" , position);
+                arguments.putInt("pos" , position);
                 fragment.setArguments(arguments);
                 ft.replace(R.id.flMain, fragment);
                 ft.addToBackStack(null);

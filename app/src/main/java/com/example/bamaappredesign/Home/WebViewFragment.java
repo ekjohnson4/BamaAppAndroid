@@ -35,12 +35,11 @@ public class WebViewFragment extends Fragment {
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        final View view =  inflater.inflate(R.layout.fragment_campus_map, container, false);
+        final View view = inflater.inflate(R.layout.fragment_campus_map, container, false);
         mWebView = view.findViewById(R.id.campus_map_webview);
 
         // Create a query against the collection.
