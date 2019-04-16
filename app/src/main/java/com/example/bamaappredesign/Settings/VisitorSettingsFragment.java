@@ -29,7 +29,7 @@ import java.util.List;
 public class VisitorSettingsFragment extends Fragment {
     private RecyclerView myrecyclerview;
     private List<Module> linkList = new ArrayList<>();
-    private SettingsAdapter adapter;
+    private VisitorSettingsAdapter adapter;
     Module moduleOne;
     Module moduleTwo;
     SharedPreferences sharedPreferences;
@@ -46,7 +46,7 @@ public class VisitorSettingsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_visitor_settings, container, false);
         // Execute DownloadXML AsyncTask
         myrecyclerview = (RecyclerView) v.findViewById(R.id.rvSettings);
-        adapter = new SettingsAdapter(getContext(),linkList);
+        adapter = new VisitorSettingsAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         System.out.println(linkList.size());
         myrecyclerview.setAdapter(adapter);

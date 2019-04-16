@@ -23,30 +23,26 @@ import com.example.bamaappredesign.R;
 
 import java.util.List;
 
-public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyViewHolder> {
+public class VisitorSettingsAdapter extends RecyclerView.Adapter<VisitorSettingsAdapter.MyViewHolder> {
 
     Context mContext;
     List<Module> mData;
     Dialog myDialog;
-    Module moduleOne;
-    Module moduleTwo;
     Module moduleThree;
     Module moduleFour;
 
-    public SettingsAdapter(Context mContext, List<Module> mData) {
+    public VisitorSettingsAdapter(Context mContext, List<Module> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
 
     @Override
-    public SettingsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public VisitorSettingsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View v ;
         v = LayoutInflater.from(mContext).inflate(R.layout.settings_list,viewGroup,false);
         final MyViewHolder vHolder = new MyViewHolder(v);
         ModuleHomeAdapter modAdapter = new ModuleHomeAdapter();
-        moduleOne = modAdapter.getModuleOne();
-        moduleTwo = modAdapter.getModuleTwo();
         ModuleVisitorAdapter modAdapterTwo = new ModuleVisitorAdapter();
         moduleThree = modAdapterTwo.getModuleOne();
         moduleFour = modAdapterTwo.getModuleTwo();
@@ -54,11 +50,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SettingsAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull VisitorSettingsAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_title.setText(mData.get(i).getName());
         Spannable greenTitle = new SpannableString(mData.get(i).getName());
         greenTitle.setSpan(new ForegroundColorSpan(Color.rgb(26, 117, 37)), 0, greenTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        if(mData.get(i).getName().equals(moduleOne.getName()) || mData.get(i).getName().equals(moduleTwo.getName())){
+        if(mData.get(i).getName().equals(moduleThree.getName()) || mData.get(i).getName().equals(moduleFour.getName())){
             //System.out.println("found one");
             myViewHolder.tv_title.setText(greenTitle);
         }

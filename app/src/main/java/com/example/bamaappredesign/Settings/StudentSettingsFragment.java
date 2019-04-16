@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bamaappredesign.Events.Event;
-import com.example.bamaappredesign.Events.EventsAdapter;
 import com.example.bamaappredesign.Home.Module;
 import com.example.bamaappredesign.R;
 
@@ -26,7 +24,8 @@ public class StudentSettingsFragment extends Fragment {
     private RecyclerView myrecyclerview;
     private List<Module> linkList = new ArrayList<>();
     private SettingsAdapter adapter;
-
+    Module moduleOne;
+    Module moduleTwo;
 
     public StudentSettingsFragment() {
         // Required empty public constructor
