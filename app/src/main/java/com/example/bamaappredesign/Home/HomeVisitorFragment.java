@@ -29,7 +29,7 @@ public class HomeVisitorFragment extends Fragment {
     FirebaseUser user;
     ViewPager viewPager;
     Module moduleOne = Module.EVENTS;
-    Module moduleTwo;
+    Module moduleTwo = Module.SHOPPING;
     Module moduleThree = Module.NEWS;
     MyCustomPagerAdapter myCustomPagerAdapter;
     String images[] = {"","",""};
@@ -50,7 +50,7 @@ public class HomeVisitorFragment extends Fragment {
 
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        assert user != null;
+       // assert user != null;
         DocumentReference slideRef = db.collection("homePage").document("slides");
 
         //Display action card image

@@ -30,6 +30,7 @@ public enum Module {
     public String getName(){
         return name;
     }
+
     Module(String name, Fragment fragment, ModuleType a){
         this.name = name;
         this.fragment = fragment;
