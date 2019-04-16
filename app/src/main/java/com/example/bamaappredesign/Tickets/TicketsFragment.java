@@ -189,7 +189,8 @@ public class TicketsFragment extends Fragment {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                                     builder.setCancelable(true);
                                     builder.setTitle("Donation Successful!");
-                                    builder.setMessage("Thank you for donating your ticket! You confirmation number is " + random() + ".");
+                                    String conf = random();
+                                    builder.setMessage("Thank you for donating your ticket! You confirmation number is " + conf + ".");
                                     builder.setPositiveButton("OK",
                                         new DialogInterface.OnClickListener() {
                                             @Override

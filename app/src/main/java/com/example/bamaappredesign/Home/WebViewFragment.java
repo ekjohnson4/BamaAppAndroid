@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -64,6 +66,8 @@ public class WebViewFragment extends Fragment {
 
                         WebSettings webSettings = mWebView.getSettings();
                         webSettings.setJavaScriptEnabled(true);
+                        mWebView.setWebChromeClient(new WebChromeClient());
+                        mWebView.setWebViewClient(new WebViewClient());
                         mWebView.loadUrl(strings[position]);
                     } else {
                         Log.d("LOGGER", "No such document");
