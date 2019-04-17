@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.bamaappredesign.Events.Event;
 import com.example.bamaappredesign.Events.EventsAdapter;
@@ -27,9 +29,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class VisitorSettingsFragment extends Fragment {
-    private RecyclerView myrecyclerview;
-    private List<Module> linkList = new ArrayList<>();
-    private VisitorSettingsAdapter adapter;
+    private ArrayList<String> linkList = new ArrayList<String>();
     Module moduleOne;
     Module moduleTwo;
     SharedPreferences sharedPreferences;
@@ -44,25 +44,24 @@ public class VisitorSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_visitor_settings, container, false);
-        // Execute DownloadXML AsyncTask
-        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvSettings);
-        adapter = new VisitorSettingsAdapter(getContext(),linkList);
-        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        System.out.println(linkList.size());
-        myrecyclerview.setAdapter(adapter);
-        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-        sharedPreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        // Spinner element
+        Spinner spinner = (Spinner) v.findViewById(R.id.spinner);
         setVisitorModules();
+        // Spinner click listener
+        String [] values =
+                {"Time at Residence","Under 6 months","6-12 months","1-2 years","2-4 years","4-8 years","8-15 years","Over 15 years",};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, linkList);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(adapter);
         return v;
     }
 
     private void setVisitorModules(){
         for (Module m : Module.values()) {
             if(m.getType() == ModuleType.VISITOR) {
-                linkList.add(m);
+                linkList.add(m.getName());
             }
         }
-        adapter.notifyDataSetChanged();
     }
 
 }

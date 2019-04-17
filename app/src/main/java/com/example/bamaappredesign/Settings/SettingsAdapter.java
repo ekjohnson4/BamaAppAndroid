@@ -27,7 +27,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.MyView
 
     Context mContext;
     List<Module> mData;
-    Dialog myDialog;
     Module moduleOne;
     Module moduleTwo;
     Module moduleThree;

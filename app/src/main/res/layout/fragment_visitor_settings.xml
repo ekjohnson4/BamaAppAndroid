@@ -33,12 +33,11 @@
         tools:layout_editor_absoluteY="68dp"
         tools:ignore="MissingConstraints" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvSettings"
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop= "85dp">
+        android:layout_height="wrap_content"
+        android:paddingTop="105dp"/>
 
-    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

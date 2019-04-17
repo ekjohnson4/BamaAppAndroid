@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bamaappredesign.News.NewsFragment;
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -69,7 +70,7 @@ public class HomeVisitorFragment extends Fragment {
                         images[2] = document.getString("slide3");
 
                         //Home page slides
-                        assert getFragmentManager() != null;
+//                        assert getFragmentManager() != null;
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         viewPager = view.findViewById(R.id.viewPager);
                         myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
@@ -115,7 +116,7 @@ public class HomeVisitorFragment extends Fragment {
             public void onClick(View v) {
                 assert getFragmentManager() != null;
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, moduleThree.getFragment());
+                ft.replace(R.id.flMain, new NewsFragment());
                 ft.addToBackStack(null);
                 ft.commit();
             }
