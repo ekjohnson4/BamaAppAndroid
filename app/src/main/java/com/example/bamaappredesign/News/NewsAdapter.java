@@ -52,7 +52,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull NewsAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_title.setText(mData.get(i).getTitle());
-        myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription()));
         myViewHolder.tv_date.setText(mData.get(i).getDate().substring(0, 16));
         myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription(), Images, null));
     }
@@ -75,7 +74,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             assert drawable != null;
             int imgH = drawable.getIntrinsicHeight();
             int imgW = drawable.getIntrinsicWidth();
-            int padding =20;
+            int padding = 20;
             int realWidth = 330-(2*padding);
             int realHeight = imgH * realWidth/imgW;
             drawable.setBounds(0,0,realWidth ,realHeight);
@@ -99,8 +98,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
 
             item =  itemView.findViewById(R.id.news_item);
             tv_title = itemView.findViewById(R.id.txtTitle);
-            tv_description = itemView.findViewById(R.id.txtDescription);
             tv_date = itemView.findViewById(R.id.txtDate);
+            tv_description = itemView.findViewById(R.id.txtDescription);
         }
     }
 }
