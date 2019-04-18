@@ -9,8 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.bamaappredesign.Home.Module;
+import com.example.bamaappredesign.Home.ModuleHomeAdapter;
+import com.example.bamaappredesign.Home.ModuleVisitorAdapter;
 import com.example.bamaappredesign.R;
 
 import java.util.ArrayList;
@@ -22,8 +26,8 @@ import java.util.List;
  */
 public class StudentSettingsFragment extends Fragment {
     private RecyclerView myrecyclerview;
-    private List<Module> linkList = new ArrayList<>();
     private SettingsAdapter adapter;
+    private ArrayList<String> linkList = new ArrayList<>();
     Module moduleOne;
     Module moduleTwo;
 
@@ -35,22 +39,27 @@ public class StudentSettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_student_settings, container, false);
-        // Execute DownloadXML AsyncTask
-        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvSettings);
-        adapter = new SettingsAdapter(getContext(),linkList);
-        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        System.out.println(linkList.size());
-        myrecyclerview.setAdapter(adapter);
-        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        View v = inflater.inflate(R.layout.fragment_visitor_settings, container, false);
+        // Spinner element
+        Spinner spinner = (Spinner) v.findViewById(R.id.spinner);
+        Spinner spinner1 = (Spinner) v.findViewById(R.id.spinner1);
         setStudentModules();
+        // Spinner click listener
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, linkList);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(adapter);
+        spinner1.setAdapter(adapter);
+        ModuleHomeAdapter a = new ModuleHomeAdapter();
+        moduleOne = a.getModuleOne();
+        moduleTwo = a.getModuleTwo();
+        spinner.setSelection(linkList.indexOf(moduleOne.getName()));
+        spinner1.setSelection(linkList.indexOf(moduleTwo.getName()));
         return v;
     }
 
     private void setStudentModules(){
         for (Module m : Module.values()) {
-            linkList.add(m);
+            linkList.add(m.getName());
         }
-        adapter.notifyDataSetChanged();
     }
 }
