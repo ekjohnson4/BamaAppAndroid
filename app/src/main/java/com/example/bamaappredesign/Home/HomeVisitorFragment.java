@@ -1,6 +1,11 @@
 package com.example.bamaappredesign.Home;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.bamaappredesign.News.NewsFragment;
 import com.example.bamaappredesign.R;
@@ -25,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeVisitorFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
@@ -35,6 +43,9 @@ public class HomeVisitorFragment extends Fragment {
     MyCustomPagerAdapter myCustomPagerAdapter;
     String images[] = {"","",""};
     String strings[] = {"", "",""};
+    SharedPreferences sharedPref;
+    TextView modOne;
+    TextView modTwo;
 
     public HomeVisitorFragment() {
         // Required empty public constructor
@@ -45,10 +56,29 @@ public class HomeVisitorFragment extends Fragment {
         //Inflate the layout for this fragment
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
         //Set view
         final View view = inflater.inflate(R.layout.fragment_home_visitor, container, false);
-
+        Context context = getActivity();
+        sharedPref = context.getSharedPreferences(
+                "modules", Context.MODE_PRIVATE);
+        if(!sharedPref.getString("modOne", "null").equals("null")){
+            Module temp = getModule(sharedPref.getString("modOne", "null"));
+            if(temp!=null){
+                moduleOne = temp;
+                System.out.println("Set module one to " + temp.getName());
+            }
+        }
+        if(!sharedPref.getString("modTwo", "null").equals("null")){
+            Module temp = getModule(sharedPref.getString("modTwo", "null"));
+            if(temp!=null){
+                moduleTwo = temp;
+                System.out.println("Set module two to " + temp.getName());
+            }
+        }
+        modOne = view.findViewById(R.id.modOne);
+        modTwo = view.findViewById(R.id.modTwo);
+        modOne.setText(moduleOne.getName());
+        modTwo.setText(moduleTwo.getName());
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
        // assert user != null;
@@ -71,10 +101,15 @@ public class HomeVisitorFragment extends Fragment {
 
                         //Home page slides
 //                        assert getFragmentManager() != null;
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        viewPager = view.findViewById(R.id.viewPager);
-                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
-                        viewPager.setAdapter(myCustomPagerAdapter);
+                        try {
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            viewPager = view.findViewById(R.id.viewPager);
+                            myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
+                            viewPager.setAdapter(myCustomPagerAdapter);
+                        }
+                        catch(NullPointerException e){
+                            e.printStackTrace();
+                        }
                     } else {
                         Log.d("LOGGER", "No such document");
                     }
@@ -103,9 +138,17 @@ public class HomeVisitorFragment extends Fragment {
         card_view2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("https://www.universitysupplystore.com/");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                if(moduleTwo == Module.SHOPPING) {
+                    Uri uri = Uri.parse("https://www.universitysupplystore.com/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                else{
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, moduleTwo.getFragment());
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
 
@@ -124,5 +167,15 @@ public class HomeVisitorFragment extends Fragment {
 
         return view;
     }
+
+    Module getModule(String mod){
+        for(Module m : Module.values()){
+            if(m.getName().equals(mod)){
+                return m;
+            }
+        }
+        return null;
+    }
+
 }
 

@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.bamaappredesign.Events.Event;
 import com.example.bamaappredesign.Events.EventsAdapter;
+import com.example.bamaappredesign.Events.EventsFragment;
 import com.example.bamaappredesign.Home.HomeVisitorFragment;
 import com.example.bamaappredesign.Home.Module;
 import com.example.bamaappredesign.Home.ModuleType;
@@ -33,8 +36,10 @@ public class VisitorSettingsFragment extends Fragment {
     private ArrayList<String> linkList = new ArrayList<>();
     Module moduleOne;
     Module moduleTwo;
-    SharedPreferences sharedPreferences;
-    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedPref;
+    Spinner spinner;
+    ModuleVisitorAdapter modVisitorAdapter;
+    Spinner spinner1;
 
     public VisitorSettingsFragment() {
         // Required empty public constructor
@@ -46,19 +51,27 @@ public class VisitorSettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_visitor_settings, container, false);
         // Spinner element
-        Spinner spinner = (Spinner) v.findViewById(R.id.spinner);
-        Spinner spinner1 = (Spinner) v.findViewById(R.id.spinner1);
+        spinner = (Spinner) v.findViewById(R.id.spinner);
+        spinner1 = (Spinner) v.findViewById(R.id.spinner1);
         setVisitorModules();
-        // Spinner click listener
+        Context context = getActivity();
+        sharedPref = context.getSharedPreferences(
+                "modules", Context.MODE_PRIVATE);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, linkList);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
         spinner1.setAdapter(adapter);
-        ModuleVisitorAdapter a = new ModuleVisitorAdapter();
-        moduleOne = a.getModuleOne();
-        moduleTwo = a.getModuleTwo();
+        modVisitorAdapter = new ModuleVisitorAdapter();
+        moduleOne = modVisitorAdapter.getModuleOne();
+        moduleTwo = modVisitorAdapter.getModuleTwo();
         spinner.setSelection(linkList.indexOf(moduleOne.getName()));
         spinner1.setSelection(linkList.indexOf(moduleTwo.getName()));
+        Button save =  v.findViewById(R.id.button);
+        save.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                writeModulesToDatabase();
+            }
+        });
         return v;
     }
 
@@ -68,6 +81,29 @@ public class VisitorSettingsFragment extends Fragment {
                 linkList.add(m.getName());
             }
         }
+    }
+
+    private void writeModulesToDatabase(){
+        String a = spinner.getSelectedItem().toString();
+        String b = spinner1.getSelectedItem().toString();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("modOne", a);
+        editor.putString("modTwo", b);
+        editor.commit();
+        modVisitorAdapter.setModuleOne(getModule(a));
+        modVisitorAdapter.setModuleTwo(getModule(b));
+        Toast.makeText(getActivity(),"Saved favorites.", Toast.LENGTH_SHORT).show();
+        //spinner.setSelection(linkList.indexOf(a));
+        //spinner1.setSelection(linkList.indexOf(b));
+    }
+
+    private Module getModule(String mod){
+        for(Module m : Module.values()){
+            if(m.getName().equals(mod)){
+                return m;
+            }
+        }
+        return null;
     }
 
 }

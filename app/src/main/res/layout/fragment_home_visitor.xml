@@ -50,6 +50,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/modOne"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -92,6 +93,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/modTwo"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Shop"

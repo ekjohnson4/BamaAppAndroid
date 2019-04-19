@@ -62,7 +62,7 @@ android:orientation="vertical">
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
-                android:id="@+id/cash_button"
+                android:id="@+id/button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
