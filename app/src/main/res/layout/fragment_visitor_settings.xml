@@ -29,7 +29,7 @@ android:orientation="vertical">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="Select two favorites to always display on your home page."
                 android:id="@+id/textview4"
                 android:textColor="#000"
@@ -58,19 +58,20 @@ android:orientation="vertical">
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@android:color/transparent"
+                android:background="@color/colorPrimary"
                 android:text="Save"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
