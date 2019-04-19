@@ -125,11 +125,17 @@ public class HomeVisitorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("Opening module one");
-                assert getFragmentManager() != null;
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, moduleOne.getFragment());
-                ft.addToBackStack(null);
-                ft.commit();
+                if(moduleOne == Module.SHOPPING) {
+                    Uri uri = Uri.parse("https://www.universitysupplystore.com/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                else{
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, moduleOne.getFragment());
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
 

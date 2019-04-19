@@ -1,8 +1,12 @@
 package com.example.bamaappredesign.Home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,6 +41,9 @@ public class HomeStudentFragment extends Fragment {
     MyCustomPagerAdapter myCustomPagerAdapter;
     String images[] = {"","",""};
     String strings[] = {"","",""};
+    SharedPreferences sharedPref;
+    TextView modOne;
+    TextView modTwo;
 
     Module moduleOne = Module.TICKETS;
     Module moduleTwo = Module.ACTION_CARD;
@@ -62,7 +69,27 @@ public class HomeStudentFragment extends Fragment {
 
         //Set view
         final View view = inflater.inflate(R.layout.fragment_home_student, container, false);
-
+        Context context = getActivity();
+        sharedPref = context.getSharedPreferences(
+                "modules", Context.MODE_PRIVATE);
+        if(!sharedPref.getString("modThree", "null").equals("null")){
+            Module temp = getModule(sharedPref.getString("modThree", "null"));
+            if(temp!=null){
+                moduleOne = temp;
+                System.out.println("Set module one to " + temp.getName());
+            }
+        }
+        if(!sharedPref.getString("modFour", "null").equals("null")){
+            Module temp = getModule(sharedPref.getString("modFour", "null"));
+            if(temp!=null){
+                moduleTwo = temp;
+                System.out.println("Set module two to " + temp.getName());
+            }
+        }
+        modOne = view.findViewById(R.id.modOne);
+        modTwo = view.findViewById(R.id.modTwo);
+        modOne.setText(moduleOne.getName());
+        modTwo.setText(moduleTwo.getName());
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         assert user != null;
@@ -109,11 +136,18 @@ public class HomeStudentFragment extends Fragment {
         card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assert getFragmentManager() != null;
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, moduleOne.getFragment());
-                ft.addToBackStack(null);
-                ft.commit();
+                System.out.println("Opening module one");
+                if(moduleOne == Module.SHOPPING) {
+                    Uri uri = Uri.parse("https://www.universitysupplystore.com/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                else{
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, moduleOne.getFragment());
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
 
@@ -122,11 +156,18 @@ public class HomeStudentFragment extends Fragment {
         card_view2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assert getFragmentManager() != null;
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, moduleTwo.getFragment());
-                ft.addToBackStack(null);
-                ft.commit();
+                System.out.println("Opening module one");
+                if(moduleTwo == Module.SHOPPING) {
+                    Uri uri = Uri.parse("https://www.universitysupplystore.com/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                else{
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, moduleTwo.getFragment());
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
 
@@ -244,7 +285,14 @@ public class HomeStudentFragment extends Fragment {
 
         return view;
     }
-
+    Module getModule(String mod){
+        for(Module m : Module.values()){
+            if(m.getName().equals(mod)){
+                return m;
+            }
+        }
+        return null;
+    }
     @SuppressLint("StaticFieldLeak")
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;

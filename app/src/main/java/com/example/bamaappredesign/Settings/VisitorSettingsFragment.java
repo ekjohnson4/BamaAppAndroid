@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VisitorSettingsFragment extends Fragment {
+public class VisitorSettingsFragment extends SettingsInterface {
     private ArrayList<String> linkList = new ArrayList<>();
     Module moduleOne;
     Module moduleTwo;
@@ -83,7 +83,7 @@ public class VisitorSettingsFragment extends Fragment {
         }
     }
 
-    private void writeModulesToDatabase(){
+    void writeModulesToDatabase(){
         String a = spinner.getSelectedItem().toString();
         String b = spinner1.getSelectedItem().toString();
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -97,13 +97,5 @@ public class VisitorSettingsFragment extends Fragment {
         //spinner1.setSelection(linkList.indexOf(b));
     }
 
-    private Module getModule(String mod){
-        for(Module m : Module.values()){
-            if(m.getName().equals(mod)){
-                return m;
-            }
-        }
-        return null;
-    }
 
 }
