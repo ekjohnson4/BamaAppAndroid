@@ -190,11 +190,13 @@ public class HomeActivity extends AppCompatActivity
             if(isLoggedIn) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.flMain, new StudentSettingsFragment());
+                ft.addToBackStack(null);
                 ft.commit();
             }
             else{
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.flMain, new VisitorSettingsFragment());
+                ft.addToBackStack(null);
                 ft.commit();
             }
         }
