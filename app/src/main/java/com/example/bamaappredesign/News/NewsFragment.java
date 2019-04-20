@@ -46,6 +46,7 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_news, container, false);
+        progress = v.findViewById(R.id.progressBarNews);
 
         // Execute DownloadXML AsyncTask
         RecyclerView myrecyclerview = v.findViewById(R.id.rvNews);
@@ -55,7 +56,6 @@ public class NewsFragment extends Fragment {
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
-        progress = v.findViewById(R.id.progressBarNews);
         return v;
     }
 
@@ -122,8 +122,6 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("test if created");
         new DownloadXML().execute(URL);
     }
-
 }

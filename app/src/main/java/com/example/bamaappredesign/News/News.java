@@ -4,11 +4,8 @@ public class News {
     private String title;
     private String link;
     private String pubdate;
-    //private String author;
     private String description;
     private String imgUrl;
-
-    //category, image, author
 
     public News() {
 
@@ -26,10 +23,10 @@ public class News {
     public String getTitle(){
         return title;
     }
-    public String getDescription(){
+    String getDescription(){
         return description;
     }
-    public String getDate(){
+    String getDate(){
         return pubdate;
     }
     public String getLink(){
@@ -38,6 +35,4 @@ public class News {
     public String getImage(){
         return imgUrl;
     }
-
 }
-

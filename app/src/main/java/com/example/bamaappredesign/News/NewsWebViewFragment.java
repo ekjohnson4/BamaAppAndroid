@@ -15,7 +15,6 @@ import android.webkit.WebViewClient;
 import com.example.bamaappredesign.R;
 
 public class NewsWebViewFragment extends Fragment {
-    private WebView mWebView;
 
     public NewsWebViewFragment() {
         // Required empty public constructor
@@ -25,7 +24,7 @@ public class NewsWebViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_campus_map, container, false);
-        mWebView = view.findViewById(R.id.campus_map_webview);
+        WebView mWebView = view.findViewById(R.id.campus_map_webview);
 
         Bundle arguments = getArguments();
         assert arguments != null;
