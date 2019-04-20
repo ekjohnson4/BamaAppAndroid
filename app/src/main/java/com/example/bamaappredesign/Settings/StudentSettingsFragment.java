@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class StudentSettingsFragment extends SettingsInterface {
     private RecyclerView myrecyclerview;
-    private SettingsAdapter adapter;
     private ArrayList<String> linkList = new ArrayList<>();
     Module moduleOne;
     Module moduleTwo;
@@ -66,7 +65,9 @@ public class StudentSettingsFragment extends SettingsInterface {
 
     private void setStudentModules(){
         for (Module m : Module.values()) {
-            linkList.add(m.getName());
+            if(m != Module.NEWS) {
+                linkList.add(m.getName());
+            }
         }
     }
 
