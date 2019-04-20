@@ -1,6 +1,6 @@
 package com.example.bamaappredesign.Events;
 
-
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.bamaappredesign.R;
 
@@ -36,13 +35,8 @@ import java.util.Objects;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class EventsFragment extends Fragment {
     View v;
-    private RecyclerView myrecyclerview;
     private List<Event> linkList = new ArrayList<>();
     Button today;
     Button tomorrow;
@@ -50,18 +44,20 @@ public class EventsFragment extends Fragment {
     NodeList nodelist;
     EventsAdapter adapter;
     ProgressBar progress;
+
     // Insert image URL
     String URL = "https://www.ua.edu/api/events/?cat=2";
+
     public EventsFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_events, container, false);
+
         // Execute DownloadXML AsyncTask
-        myrecyclerview = v.findViewById(R.id.rvContacts);
+        RecyclerView myrecyclerview = v.findViewById(R.id.rvContacts);
         adapter = new EventsAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         System.out.println(linkList.size());
@@ -80,16 +76,19 @@ public class EventsFragment extends Fragment {
             }
         });
         week = v.findViewById(R.id.button5);
+
         week.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new DownloadXML(2).execute(URL);
             }
         });
+
         progress = v.findViewById(R.id.progressBarEvents);
         progress.setVisibility(View.VISIBLE);
         return v;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class DownloadXML extends AsyncTask<String, Void, Void> {
         int x;
         DownloadXML(int x){
@@ -137,7 +136,6 @@ public class EventsFragment extends Fragment {
                 System.out.println("Setting week's events in new thread.");
             }
             progress.setVisibility(View.GONE);
-            //adapter.notifyDataSetChanged();
         }
     }
 
@@ -258,7 +256,4 @@ public class EventsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         new DownloadXML(0).execute(URL);
     }
-
 }
-
-

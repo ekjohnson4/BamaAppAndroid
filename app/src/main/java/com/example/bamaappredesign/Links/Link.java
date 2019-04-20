@@ -1,12 +1,7 @@
 package com.example.bamaappredesign.Links;
 public class Link {
-
     private String title;
     private String url;
-
-
-    public Link() {
-    }
 
     public Link(String title, String url) {
         this.title = title;
@@ -17,17 +12,11 @@ public class Link {
         return title;
     }
 
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 
-    //settter
-
     public void setTitle(String name) {
         this.title = name;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

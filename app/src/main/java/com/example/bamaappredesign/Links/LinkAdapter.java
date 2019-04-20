@@ -16,15 +16,15 @@ import com.example.bamaappredesign.R;
 import java.util.List;
 
 public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.MyViewHolder> {
+    private Context mContext;
+    private List<Link> mData;
 
-    Context mContext;
-    List<Link> mData;
-
-    public LinkAdapter(Context mContext, List<Link> mData) {
+    LinkAdapter(Context mContext, List<Link> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
 
+    @NonNull
     @Override
     public LinkAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
@@ -54,12 +54,12 @@ public class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.MyViewHolder> 
         return mData.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
 
         private LinearLayout item;
         private TextView tv_name;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             item =  itemView.findViewById(R.id.contact_item);

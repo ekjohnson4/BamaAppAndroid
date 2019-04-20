@@ -6,10 +6,6 @@ public class Event {
     private String location;
     private String date;
 
-
-    public Event(){
-
-    }
     public Event(String title, String description, String location, String date){
         this.title = title;
         this.description = description;
@@ -20,13 +16,13 @@ public class Event {
     public String getTitle(){
         return title;
     }
-    public String getDescription(){
+    String getDescription(){
         return description;
     }
-    public String getLocation(){
+    String getLocation(){
         return location;
     }
-    public String getDate(){
+    String getDate(){
         return fixDate(date);
     }
 
@@ -37,5 +33,4 @@ public class Event {
         fixedDate = fixedDate.concat("/" + date.substring(0,4));
         return fixedDate;
     }
-
 }

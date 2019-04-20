@@ -1,7 +1,7 @@
 package com.example.bamaappredesign.Links;
 
-
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,36 +15,27 @@ import com.example.bamaappredesign.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class LinksFragment extends Fragment {
-
     View v;
-    private RecyclerView myrecyclerview;
     private List<Link> linkList;
-
 
     public LinksFragment() {
         // Required empty public constructor
     }
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_links, container, false);
 
-        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvContacts);
+        RecyclerView myrecyclerview = v.findViewById(R.id.rvContacts);
         LinkAdapter adapter = new LinkAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(adapter);
 
-        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
+        myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
 
         return v;
     }
@@ -62,6 +53,4 @@ public class LinksFragment extends Fragment {
         linkList.add(new Link("Alumni","https://alumni.ua.edu/"));
         linkList.add(new Link("WellBama","http://wellness.ua.edu/wellbama/"));
     }
-
-
 }

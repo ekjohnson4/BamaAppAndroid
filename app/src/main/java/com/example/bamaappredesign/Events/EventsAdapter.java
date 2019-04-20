@@ -1,7 +1,5 @@
 package com.example.bamaappredesign.Events;
 
-
-import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,32 +10,26 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//import java.util.ArrayList;
 import com.example.bamaappredesign.R;
 
 import java.util.List;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.MyViewHolder> {
+    private Context mContext;
+    private List<Event> mData;
 
-    Context mContext;
-    List<Event> mData;
-    Dialog myDialog;
-
-    public EventsAdapter(Context mContext, List<Event> mData) {
+    EventsAdapter(Context mContext, List<Event> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
 
+    @NonNull
     @Override
     public EventsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
         View v ;
         v = LayoutInflater.from(mContext).inflate(R.layout.event_list,viewGroup,false);
-        final MyViewHolder vHolder = new MyViewHolder(v);
 
-
-
-        return vHolder;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -52,14 +44,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.MyViewHold
         return mData.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout item;
         private TextView tv_title;
         private TextView tv_description;
         private TextView tv_location;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             item =  itemView.findViewById(R.id.contact_item);
@@ -67,6 +58,5 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.MyViewHold
             tv_description = itemView.findViewById(R.id.description);
             tv_location = itemView.findViewById(R.id.location);
         }
-
     }
 }

@@ -1,7 +1,7 @@
 package com.example.bamaappredesign.Emergency;
 
-
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,37 +15,27 @@ import com.example.bamaappredesign.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class EmergencyFragment extends Fragment {//implements EmergencyAdapter.ItemClickListener {
-
+public class EmergencyFragment extends Fragment {
     View v;
-    private RecyclerView myrecyclerview;
     private List<Contact> listContact;
-
 
     public EmergencyFragment() {
         // Required empty public constructor
     }
 
-    //EmergencyAdapter adapter;
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_emergency, container, false);
 
-        myrecyclerview = (RecyclerView) v.findViewById(R.id.rvContacts);
+        RecyclerView myrecyclerview = v.findViewById(R.id.rvContacts);
         EmergencyAdapter adapter = new EmergencyAdapter(getContext(),listContact);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(adapter);
 
-        myrecyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
+        myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
 
         return v;
     }
@@ -63,50 +53,5 @@ public class EmergencyFragment extends Fragment {//implements EmergencyAdapter.I
         listContact.add(new Contact("MAP (business hours)","2053480121"));
         listContact.add(new Contact("MAP (after hours)","205348994"));
         listContact.add(new Contact("University Operator","2053486010"));
-       // listContact.add(new Contact("Michael Ahern","1111111111"));
     }
 }
-
-
-
-        /*
-        ArrayList<String> names = new ArrayList<>();
-        names.add("University Police");
-        names.add("Tuscaloosa Police");
-        names.add("Tuscaloosa County Sheriff's Office");
-        names.add("Northport Police");
-        names.add("348-RIDE (after hours)");
-        names.add("MAP (business hours)");
-        names.add("MAP (after hours)");
-        names.add("University Operator");
-
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_emergency, container, false);
-*/
-     /*   RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvContacts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        adapter = new EmergencyAdapter(getActivity(), names);
-
-        //adapter.setClickListener(this);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
-
-     //   adapter.setClickListener(getActivity());
-
-
-        recyclerView.setAdapter(adapter);
-
-
-        return view;
-    }
-
-   // @Override
-    //public void onItemClick(View view, int position) {
-      //  Toast.makeText(getActivity(), new StringBuilder().append("You clicked ").append(adapter.getItem(position)).append(" on row number ").append(position).toString(), Toast.LENGTH_SHORT).show();
-   //}
-
-}*/
-
-
-
