@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.*;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -68,7 +69,8 @@ public class HomeActivity extends AppCompatActivity
         //User is logged in, update layout for student
         if(value == 1){
             isLoggedIn = true;
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.flMain, new HomeStudentFragment());
             ft.commit();
 
@@ -127,6 +129,11 @@ public class HomeActivity extends AppCompatActivity
                     ft.replace(R.id.flMain, new HomeStudentFragment());
                     ft.commit();
                     navigationView.getMenu().getItem(0).setChecked(true);
+                    FragmentManager fm = getSupportFragmentManager();
+                    int count = fm.getBackStackEntryCount();
+                    for(int i = 0; i < count; ++i) {
+                        fm.popBackStack();
+                    }
                 }
             });
         }
@@ -140,6 +147,11 @@ public class HomeActivity extends AppCompatActivity
                     ft.replace(R.id.flMain, new HomeVisitorFragment());
                     ft.commit();
                     navigationView.getMenu().getItem(0).setChecked(true);
+                    FragmentManager fm = getSupportFragmentManager();
+                    int count = fm.getBackStackEntryCount();
+                    for(int i = 0; i < count; ++i) {
+                        fm.popBackStack();
+                    }
                 }
             });
         }
