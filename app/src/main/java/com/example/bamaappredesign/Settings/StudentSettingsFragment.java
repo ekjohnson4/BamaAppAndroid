@@ -1,13 +1,9 @@
 package com.example.bamaappredesign.Settings;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +15,10 @@ import android.widget.Toast;
 
 import com.example.bamaappredesign.Home.Module;
 import com.example.bamaappredesign.Home.ModuleHomeAdapter;
-import com.example.bamaappredesign.Home.ModuleVisitorAdapter;
 import com.example.bamaappredesign.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class StudentSettingsFragment extends SettingsInterface {
     private RecyclerView myrecyclerview;
     private SettingsAdapter adapter;
@@ -44,16 +34,16 @@ public class StudentSettingsFragment extends SettingsInterface {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_visitor_settings, container, false);
+
         // Spinner element
         spinner = v.findViewById(R.id.spinner);
         spinner1 = v.findViewById(R.id.spinner1);
         setStudentModules();
         Context context = getActivity();
+        assert context != null;
         sharedPref = context.getSharedPreferences(
                 "modules", Context.MODE_PRIVATE);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, linkList);
@@ -86,7 +76,7 @@ public class StudentSettingsFragment extends SettingsInterface {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("modThree", a);
         editor.putString("modFour", b);
-        editor.commit();
+        editor.apply();
         modHomeAdapter.setModuleOne(getModule(a));
         modHomeAdapter.setModuleTwo(getModule(b));
         Toast.makeText(getActivity(),"Saved favorites.", Toast.LENGTH_SHORT).show();
