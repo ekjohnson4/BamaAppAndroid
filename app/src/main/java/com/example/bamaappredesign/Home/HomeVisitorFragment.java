@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bamaappredesign.News.NewsFragment;
@@ -46,6 +47,8 @@ public class HomeVisitorFragment extends Fragment {
     SharedPreferences sharedPref;
     TextView modOne;
     TextView modTwo;
+    ImageView imageOne;
+    ImageView imageTwo;
 
     public HomeVisitorFragment() {
         // Required empty public constructor
@@ -77,8 +80,16 @@ public class HomeVisitorFragment extends Fragment {
         }
         modOne = view.findViewById(R.id.modOne);
         modTwo = view.findViewById(R.id.modTwo);
+        imageOne = view.findViewById(R.id.imageOne);
+        imageTwo = view.findViewById(R.id.imageTwo);
         modOne.setText(moduleOne.getName());
         modTwo.setText(moduleTwo.getName());
+        if(moduleOne.getImage() != 0) {
+            imageOne.setImageResource(moduleOne.getImage());
+        }
+        if(moduleTwo.getImage() != 0){
+            imageTwo.setImageResource(moduleTwo.getImage());
+        }
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
        // assert user != null;

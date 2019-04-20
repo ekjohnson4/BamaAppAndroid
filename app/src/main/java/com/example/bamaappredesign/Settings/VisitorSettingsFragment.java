@@ -64,7 +64,7 @@ public class VisitorSettingsFragment extends SettingsInterface {
 
     private void setVisitorModules(){
         for (Module m : Module.values()) {
-            if(m.getType() == ModuleType.VISITOR) {
+            if(m.getType() == ModuleType.VISITOR && m != Module.NEWS) {
                 linkList.add(m.getName());
             }
         }
