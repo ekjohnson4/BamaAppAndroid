@@ -7,51 +7,82 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CatalogFragment extends Fragment {
     FirebaseFirestore db;
+    FirebaseFirestore rootRef;
+    Spinner spinner;
 
     public CatalogFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_catalog, container, false);
 
         //Initialize variables
         db = FirebaseFirestore.getInstance();
-        final Spinner spinner = v.findViewById(R.id.subjects);
-        final List<String> subjects = new ArrayList<>();
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, subjects);
+        spinner = v.findViewById(R.id.subjects);
+        final List<String> semester = new ArrayList<>();
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, semester);
 
-        //Retrieve subjects, currently hardcoded for Spring 2019
-        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-        CollectionReference subjectsRef = rootRef.collection("courseCatalog").document("Spring2019").collection("subject");
+        //Retrieve terms
+        rootRef = FirebaseFirestore.getInstance();
+        CollectionReference semesterRef = rootRef.collection("courseCatalog");
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        semesterRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                        String term = document.getId();
+                        semester.add(term);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        Button submit = v.findViewById(R.id.catalogButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                retrieveSubjects(v);
+            }
+        });
+        return v;
+    }
+
+    void retrieveSubjects(View v){
+        String selected = spinner.getSelectedItem().toString();
+        CollectionReference subjectsRef = rootRef.collection("courseCatalog").document(selected).collection("subject");
+
+        final List<String> subjects = new ArrayList<>();
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, subjects);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         subjectsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                         String abb = document.getId();
                         String subject = document.getString("name");
                         subjects.add(abb + " - " + subject);
@@ -60,6 +91,16 @@ public class CatalogFragment extends Fragment {
                 }
             }
         });
-        return v;
+
+        Button submit = v.findViewById(R.id.catalogButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                retrieveCourses(v);
+            }
+        });
+    }
+
+    void retrieveCourses(View v) {
+
     }
 }

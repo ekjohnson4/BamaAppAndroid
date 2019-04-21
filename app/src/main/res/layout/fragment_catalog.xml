@@ -24,7 +24,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="start"
             android:text="Please select a subject."
-            android:id="@+id/textview4"
+            android:id="@+id/catalogText"
             android:textColor="#000"
             android:textSize="14sp"
             android:paddingStart="16dp"
