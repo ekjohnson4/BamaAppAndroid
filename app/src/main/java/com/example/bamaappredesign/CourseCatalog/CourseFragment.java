@@ -51,14 +51,41 @@ public class CourseFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-                        TextView d = v.findViewById(R.id.courseDescription);
-                        d.setText(document.getString("description"));
-                        TextView p = v.findViewById(R.id.prereq);
-                        p.setText(document.getString("prereq"));
-                        TextView pc = v.findViewById(R.id.prereqc);
-                        pc.setText(document.getString("prereqc"));
-                        TextView h = v.findViewById(R.id.hours);
-                        h.setText("Hours: " + document.getString("hours"));
+                        //Course description
+                        if (document.getString("description") == null) {
+                            TextView p = v.findViewById(R.id.courseDescription);
+                            p.setText("N/A");
+                        } else{
+                            TextView d = v.findViewById(R.id.courseDescription);
+                            d.setText(document.getString("description"));
+                        }
+
+                        //Prereq
+                        if (document.getString("prereq") == null) {
+                            TextView p = v.findViewById(R.id.prereq);
+                            p.setText("N/A");
+                        } else{
+                            TextView p = v.findViewById(R.id.prereq);
+                            p.setText(document.getString("prereq"));
+                        }
+
+                        //Prereq w/ concurrency
+                        if (document.getString("prereqc") == null){
+                            TextView pc = v.findViewById(R.id.prereqc);
+                            pc.setText("N/A");
+                        } else{
+                            TextView pc = v.findViewById(R.id.prereqc);
+                            pc.setText(document.getString("prereqc"));
+                        }
+
+                        //Hours
+                        if (document.getString("hours") == null){
+                            TextView h = v.findViewById(R.id.hours);
+                            h.setText("Hours: N/A");
+                        } else{
+                            TextView h = v.findViewById(R.id.hours);
+                            h.setText("Hours: " + document.getString("hours"));
+                        }
                     } else {
                         Log.d("LOGGER", "No such document");
                     }

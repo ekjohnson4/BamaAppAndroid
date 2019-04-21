@@ -73,6 +73,7 @@
             android:textSize="18sp"/>
         <TextView
             android:id="@+id/prereq"
+            android:text="N/A"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
@@ -95,6 +96,7 @@
             android:textSize="18sp"/>
         <TextView
             android:id="@+id/prereqc"
+            android:text="N/A"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
