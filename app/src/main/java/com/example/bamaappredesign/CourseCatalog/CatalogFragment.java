@@ -12,9 +12,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.bamaappredesign.Grades.GradesFragment;
-import com.example.bamaappredesign.News.NewsAdapter;
-import com.example.bamaappredesign.News.NewsWebViewFragment;
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,12 +27,11 @@ import java.util.Objects;
 public class CatalogFragment extends Fragment {
     FirebaseFirestore db;
     FirebaseFirestore rootRef;
-    private FragmentTransaction ft;
+    Bundle args = new Bundle();
     Spinner spinner;
     TextView description;
 
     public CatalogFragment() {
-        this.ft = ft;
     }
 
     @Override
@@ -79,6 +75,7 @@ public class CatalogFragment extends Fragment {
 
     void retrieveSubjects(View v){
         String selected = spinner.getSelectedItem().toString();
+        args.putString("term" , selected);
         final CollectionReference subjectsRef = rootRef.collection("courseCatalog").document(selected).collection("subject");
 
         final List<String> subjects = new ArrayList<>();
@@ -111,6 +108,7 @@ public class CatalogFragment extends Fragment {
 
     void retrieveCourses(View v, CollectionReference subjectsRef) {
         String selected = spinner.getSelectedItem().toString();
+        args.putString("subject" , selected);
         final CollectionReference coursesRef = subjectsRef.document(selected).collection("courses");
 
         final List<String> subjects = new ArrayList<>();
@@ -136,17 +134,17 @@ public class CatalogFragment extends Fragment {
         Button submit = v.findViewById(R.id.catalogButton);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                retrieveInfo(v);
+                retrieveInfo();
             }
         });
     }
 
-    void retrieveInfo(View v){
+    void retrieveInfo(){
         String selected = spinner.getSelectedItem().toString();
 
+        assert getFragmentManager() != null;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         CourseFragment fragment = new CourseFragment();
-        Bundle args = new Bundle();
         args.putString("course" , selected);
         fragment.setArguments(args);
         ft.replace(R.id.flMain, fragment);
