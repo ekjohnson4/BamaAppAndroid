@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ public class CatalogFragment extends Fragment {
     FirebaseFirestore db;
     FirebaseFirestore rootRef;
     Spinner spinner;
+    TextView bc;
 
     public CatalogFragment() {
         // Required empty public constructor
@@ -35,6 +37,7 @@ public class CatalogFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_catalog, container, false);
+        bc = v.findViewById(R.id.catalogText);
 
         //Initialize variables
         db = FirebaseFirestore.getInstance();
@@ -71,12 +74,14 @@ public class CatalogFragment extends Fragment {
 
     void retrieveSubjects(View v){
         String selected = spinner.getSelectedItem().toString();
-        CollectionReference subjectsRef = rootRef.collection("courseCatalog").document(selected).collection("subject");
+        final CollectionReference subjectsRef = rootRef.collection("courseCatalog").document(selected).collection("subject");
 
         final List<String> subjects = new ArrayList<>();
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, subjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        bc.setText("Please select a subject.");
 
         subjectsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -84,8 +89,7 @@ public class CatalogFragment extends Fragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                         String abb = document.getId();
-                        String subject = document.getString("name");
-                        subjects.add(abb + " - " + subject);
+                        subjects.add(abb);
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -95,12 +99,44 @@ public class CatalogFragment extends Fragment {
         Button submit = v.findViewById(R.id.catalogButton);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                retrieveCourses(v);
+                retrieveCourses(v, subjectsRef);
             }
         });
     }
 
-    void retrieveCourses(View v) {
+    void retrieveCourses(View v, CollectionReference subjectsRef) {
+        String selected = spinner.getSelectedItem().toString();
+        subjectsRef = subjectsRef.document(selected).collection("courses");
+
+        final List<String> subjects = new ArrayList<>();
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, subjects);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        bc.setText("Please select a course.");
+
+        subjectsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                        String abb = document.getId();
+                        subjects.add(abb);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        Button submit = v.findViewById(R.id.catalogButton);
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                retrieveInfo(v);
+            }
+        });
+    }
+
+    void retrieveInfo(View v){
 
     }
 }

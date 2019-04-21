@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="start"
-            android:text="Please select a subject."
+            android:text="Please select a term."
             android:id="@+id/catalogText"
             android:textColor="#000"
             android:textSize="14sp"
