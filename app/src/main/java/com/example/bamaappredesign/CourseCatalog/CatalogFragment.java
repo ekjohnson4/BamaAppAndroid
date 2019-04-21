@@ -3,6 +3,7 @@ package com.example.bamaappredesign.CourseCatalog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.bamaappredesign.Grades.GradesFragment;
+import com.example.bamaappredesign.News.NewsAdapter;
+import com.example.bamaappredesign.News.NewsWebViewFragment;
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,18 +30,19 @@ import java.util.Objects;
 public class CatalogFragment extends Fragment {
     FirebaseFirestore db;
     FirebaseFirestore rootRef;
+    private FragmentTransaction ft;
     Spinner spinner;
-    TextView bc;
+    TextView description;
 
     public CatalogFragment() {
-        // Required empty public constructor
+        this.ft = ft;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_catalog, container, false);
-        bc = v.findViewById(R.id.catalogText);
+        description = v.findViewById(R.id.catalogText);
 
         //Initialize variables
         db = FirebaseFirestore.getInstance();
@@ -81,7 +86,7 @@ public class CatalogFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        bc.setText("Please select a subject.");
+        description.setText("Please select a subject.");
 
         subjectsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -106,16 +111,16 @@ public class CatalogFragment extends Fragment {
 
     void retrieveCourses(View v, CollectionReference subjectsRef) {
         String selected = spinner.getSelectedItem().toString();
-        subjectsRef = subjectsRef.document(selected).collection("courses");
+        final CollectionReference coursesRef = subjectsRef.document(selected).collection("courses");
 
         final List<String> subjects = new ArrayList<>();
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, subjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        bc.setText("Please select a course.");
+        description.setText("Please select a course.");
 
-        subjectsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        coursesRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -137,6 +142,15 @@ public class CatalogFragment extends Fragment {
     }
 
     void retrieveInfo(View v){
+        String selected = spinner.getSelectedItem().toString();
 
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        CourseFragment fragment = new CourseFragment();
+        Bundle args = new Bundle();
+        args.putString("course" , selected);
+        fragment.setArguments(args);
+        ft.replace(R.id.flMain, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
