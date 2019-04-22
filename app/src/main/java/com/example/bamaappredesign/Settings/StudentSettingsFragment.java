@@ -56,6 +56,8 @@ public class StudentSettingsFragment extends SettingsInterface {
         moduleOne = modHomeAdapter.getModuleOne();
         moduleTwo = modHomeAdapter.getModuleTwo();
         Button save =  v.findViewById(R.id.button);
+        spinner.setSelection(linkList.indexOf(moduleOne.getName()));
+        spinner1.setSelection(linkList1.indexOf(moduleTwo.getName()));
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 writeModulesToDatabase();
