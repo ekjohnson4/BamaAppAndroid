@@ -31,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/test"/>
+            />
         <TextView
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
