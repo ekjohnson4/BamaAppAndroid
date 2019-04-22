@@ -44,6 +44,8 @@ public class HomeStudentFragment extends Fragment {
     SharedPreferences sharedPref;
     TextView modOne;
     TextView modTwo;
+    ImageView imageOne;
+    ImageView imageTwo;
 
     Module moduleOne = Module.TICKETS;
     Module moduleTwo = Module.ACTION_CARD;
@@ -90,6 +92,14 @@ public class HomeStudentFragment extends Fragment {
         modTwo = view.findViewById(R.id.modTwo);
         modOne.setText(moduleOne.getName());
         modTwo.setText(moduleTwo.getName());
+        imageOne = view.findViewById(R.id.ticketImg);
+        imageTwo = view.findViewById(R.id.card_image2);
+        if(moduleOne.getImage() != 0) {
+            imageOne.setImageResource(moduleOne.getImage());
+        }
+        if(moduleTwo.getImage() != 0){
+            imageTwo.setImageResource(moduleTwo.getImage());
+        }
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         assert user != null;
@@ -200,11 +210,14 @@ public class HomeStudentFragment extends Fragment {
                         url[0] = document.getString("image2");
 
                         //Display action card
-                        new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.card_image2))
-                                .execute(url[0]);
-                        new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.ticketImg))
-                                .execute("https://firebasestorage.googleapis.com/v0/b/bama-app.appspot.com/o/ticket.png?alt=media&token=9c8f2a78-314e-499c-ab3e-e216f1ca2eb0");
-
+                        if(moduleTwo == Module.ACTION_CARD) {
+                            new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.card_image2))
+                                    .execute(url[0]);
+                        }
+                        if(moduleOne == Module.TICKETS){
+                            new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.ticketImg))
+                                    .execute("https://firebasestorage.googleapis.com/v0/b/bama-app.appspot.com/o/ticket.png?alt=media&token=9c8f2a78-314e-499c-ab3e-e216f1ca2eb0");
+                        }
                     } else {
                         Log.d("LOGGER", "No such document");
                     }
@@ -227,6 +240,12 @@ public class HomeStudentFragment extends Fragment {
                         bc.setText("Bama Cash: $" + bamaCash[0]);
                         TextView dd = view.findViewById(R.id.actionInfo2);
                         dd.setText("Dining Dollars: $" + diningDollars[0]);
+                        bc.setVisibility(View.VISIBLE);
+                        dd.setVisibility(View.VISIBLE);
+                        if(moduleTwo != Module.ACTION_CARD){
+                            bc.setVisibility(View.GONE);
+                            dd.setVisibility(View.GONE);
+                        }
 
                     } else {
                         Log.d("LOGGER", "No such document");
@@ -247,6 +266,10 @@ public class HomeStudentFragment extends Fragment {
                         opponent[0] = document.getString("opponent");
                         TextView o = view.findViewById(R.id.ticketInfo1);
                         o.setText(opponent[0]);
+                        o.setVisibility(View.VISIBLE);
+                        if(moduleOne != Module.TICKETS){
+                            o.setVisibility(View.GONE);
+                        }
 
                     } else {
                         Log.d("LOGGER", "No such document");
@@ -267,12 +290,18 @@ public class HomeStudentFragment extends Fragment {
                         if (document.getBoolean("ticket") == false) {
                             TextView bg = view.findViewById(R.id.ticketInfo2);
                             bg.setText("No ticket");
+                            bg.setVisibility(View.VISIBLE);
                         }
                         else{
                             bowl[0] = document.getString("bowl");
                             gate[0] = document.getString("gate");
                             TextView bg = view.findViewById(R.id.ticketInfo2);
                             bg.setText(bowl[0] + " - " + gate[0]);
+                            bg.setVisibility(View.VISIBLE);
+                        }
+                        if(moduleOne != Module.TICKETS){
+                            TextView bg = view.findViewById(R.id.ticketInfo2);
+                            bg.setVisibility(View.GONE);
                         }
                     } else {
                         Log.d("LOGGER", "No such document");

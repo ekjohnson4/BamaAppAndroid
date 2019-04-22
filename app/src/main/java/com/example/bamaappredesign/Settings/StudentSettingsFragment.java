@@ -20,8 +20,8 @@ import com.example.bamaappredesign.R;
 import java.util.ArrayList;
 
 public class StudentSettingsFragment extends SettingsInterface {
-    private RecyclerView myrecyclerview;
     private ArrayList<String> linkList = new ArrayList<>();
+    private ArrayList<String> linkList1 = new ArrayList<>();
     Module moduleOne;
     Module moduleTwo;
     Spinner spinner;
@@ -40,20 +40,21 @@ public class StudentSettingsFragment extends SettingsInterface {
         // Spinner element
         spinner = v.findViewById(R.id.spinner);
         spinner1 = v.findViewById(R.id.spinner1);
-        setStudentModules();
+        setStudentModulesOne();
         Context context = getActivity();
         assert context != null;
         sharedPref = context.getSharedPreferences(
                 "modules", Context.MODE_PRIVATE);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, linkList);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, linkList1);
+        adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
-        spinner1.setAdapter(adapter);
+        setStudentModulesTwo();
+        spinner1.setAdapter(adapter1);
         modHomeAdapter = new ModuleHomeAdapter();
         moduleOne = modHomeAdapter.getModuleOne();
         moduleTwo = modHomeAdapter.getModuleTwo();
-        spinner.setSelection(linkList.indexOf(moduleOne.getName()));
-        spinner1.setSelection(linkList.indexOf(moduleTwo.getName()));
         Button save =  v.findViewById(R.id.button);
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -63,10 +64,17 @@ public class StudentSettingsFragment extends SettingsInterface {
         return v;
     }
 
-    private void setStudentModules(){
+    private void setStudentModulesOne(){
         for (Module m : Module.values()) {
-            if(m != Module.NEWS) {
+            if(m != Module.NEWS && m != Module.ACTION_CARD) {
                 linkList.add(m.getName());
+            }
+        }
+    }
+    private void setStudentModulesTwo(){
+        for (Module m : Module.values()) {
+            if(m != Module.NEWS && m != Module.TICKETS) {
+                linkList1.add(m.getName());
             }
         }
     }
