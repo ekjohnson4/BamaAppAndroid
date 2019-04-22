@@ -60,14 +60,14 @@ public class NewsFragment extends Fragment {
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(adapter);
         myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
+        progress.setVisibility(View.VISIBLE);
         return v;
     }
 
     private class DownloadXML extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPreExecute() {
-            if(progress!=null)
-               progress.setVisibility(View.VISIBLE);
+            super.onPreExecute();
         }
 
         @Override
