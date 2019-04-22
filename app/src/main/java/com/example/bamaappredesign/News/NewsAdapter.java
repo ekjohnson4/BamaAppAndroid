@@ -1,20 +1,26 @@
 package com.example.bamaappredesign.News;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bamaappredesign.R;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
@@ -53,7 +59,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull NewsAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tv_title.setText(mData.get(i).getTitle());
         myViewHolder.tv_date.setText(mData.get(i).getDate().substring(0, 16));
-        myViewHolder.tv_description.setText(Html.fromHtml(mData.get(i).getDescription(), Images, null));
+        myViewHolder.tv_description.setText(mData.get(i).getDescription());
+        new DownloadImageTask(myViewHolder.tv_image)
+                .execute(mData.get(i).getImage());
     }
 
     private Html.ImageGetter Images = new Html.ImageGetter() {
@@ -92,6 +100,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         private TextView tv_title;
         private TextView tv_date;
         private TextView tv_description;
+        private ImageView tv_image;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +109,32 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             tv_title = itemView.findViewById(R.id.txtTitle);
             tv_date = itemView.findViewById(R.id.txtDate);
             tv_description = itemView.findViewById(R.id.txtDescription);
+            tv_image = itemView.findViewById(R.id.image);
+        }
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 }

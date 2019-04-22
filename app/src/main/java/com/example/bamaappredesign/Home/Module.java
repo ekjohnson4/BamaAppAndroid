@@ -22,7 +22,7 @@ public enum Module {
     LAUNDRY("Laundry", new LaundryFragment(), ModuleType.VISITOR, R.drawable.laundry2),
     NEWS("News", new NewsFragment(), ModuleType.VISITOR),
     CAMPUS_MAP("Campus Map", new CampusMapFragment(), ModuleType.VISITOR, R.drawable.map2),
-    TRANSPORTATION("Transportation", new TransportationFragment(), ModuleType.VISITOR, R.drawable.transportation2),
+    TRANSPORTATION("Transport", new TransportationFragment(), ModuleType.VISITOR, R.drawable.transportation2),
     SHOPPING("Shopping", new TransportationFragment(), ModuleType.VISITOR, R.drawable.supe);
 
     private Fragment fragment;

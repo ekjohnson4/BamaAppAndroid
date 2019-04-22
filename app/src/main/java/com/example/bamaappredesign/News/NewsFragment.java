@@ -1,5 +1,7 @@
 package com.example.bamaappredesign.News;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.bamaappredesign.R;
@@ -23,6 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,10 +103,16 @@ public class NewsFragment extends Fragment {
                     int start = getNode("description", eElement).indexOf("src");
                     int end = getNode("description", eElement).indexOf("class");
                     String image = getNode("description", eElement).substring(start + 5, end - 2);
-                    int end2 = firstDescription.indexOf("link_thumbnail=\"\" />");
-                    String firstPart = firstDescription.substring(0, end2+24).concat("<p></p>");
-                    String finished = firstPart.concat(firstDescription.substring(end2+24));
-                    News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), finished, image);
+                    int end2 = firstDescription.indexOf("<img");
+                    String firstPart = firstDescription.substring(0, end2);
+                    int endOfImage = firstDescription.indexOf("</a>");
+                    String finished = firstDescription.substring(endOfImage + 4, firstDescription.length());
+                    int indexOfDimensions = image.indexOf("70x70");
+                    String fullImage = image;
+                    if(indexOfDimensions != -1){
+                        fullImage = image.substring(0, indexOfDimensions-1).concat(image.substring(indexOfDimensions + 5, image.length()));
+                    }
+                    News a = new News(getNode("title", eElement), getNode("link", eElement), getNode("pubDate", eElement), finished, fullImage);
                     linkList.add(a);
                 }
             }
@@ -124,4 +134,5 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         new DownloadXML().execute(URL);
     }
+
 }
