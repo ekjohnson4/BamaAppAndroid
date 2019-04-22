@@ -1,7 +1,6 @@
 package com.example.bamaappredesign.Schedule;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +14,10 @@ import com.example.bamaappredesign.R;
 import java.util.List;
 
 public class ScheduleClassAdapter extends RecyclerView.Adapter<ScheduleClassAdapter.MyViewHolder> {
-    Context mContext;
-    List<ScheduleClass> mData;
+    private Context mContext;
+    private List<ScheduleClass> mData;
 
-    public ScheduleClassAdapter(Context mContext, List<ScheduleClass> mData) {
+    ScheduleClassAdapter(Context mContext, List<ScheduleClass> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -28,9 +27,8 @@ public class ScheduleClassAdapter extends RecyclerView.Adapter<ScheduleClassAdap
     public ScheduleClassAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v ;
         v = LayoutInflater.from(mContext).inflate(R.layout.schedule_class_list,viewGroup,false);
-        final MyViewHolder vHolder = new MyViewHolder(v);
 
-        return vHolder;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -46,14 +44,14 @@ public class ScheduleClassAdapter extends RecyclerView.Adapter<ScheduleClassAdap
         return mData.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout item;
         private TextView cls;
         private TextView days;
         private TextView time;
         private TextView prof;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             item =  itemView.findViewById(R.id.contact_item);
