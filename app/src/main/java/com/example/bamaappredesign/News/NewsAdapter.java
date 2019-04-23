@@ -26,12 +26,12 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
     private Context mContext;
     private List<News> mData;
-    private FragmentTransaction ft;
+    //private FragmentTransaction ft;
 
-    NewsAdapter(Context mContext, List<News> mData, FragmentTransaction ft) {
+    NewsAdapter(Context mContext, List<News> mData) {
         this.mContext = mContext;
         this.mData = mData;
-        this.ft = ft;
+      //  this.ft = ft;
     }
 
     @NonNull
@@ -47,9 +47,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
                 Bundle arguments = new Bundle();
                 arguments.putString("link" , mData.get(vHolder.getAdapterPosition()).getLink());
                 fragment.setArguments(arguments);
-                ft.replace(R.id.flMain, fragment);
-                ft.addToBackStack(null);
-                ft.commit();
+                ////ft.replace(R.id.flMain, fragment);
+               /// ft.addToBackStack(null);
+              //  ft.commit();
             }
         });
         return vHolder;

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 //import android.widget.ProgressBar;
 
 import com.example.bamaappredesign.R;
@@ -41,7 +42,7 @@ public class NewsFragment extends Fragment {
     NodeList nodelist;
     NewsAdapter adapter;
     String URL = "https://cw.ua.edu/feed/";
-    //ProgressBar progress;
+    ProgressBar progress;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -50,17 +51,17 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_news, container, false);
-       // progress = v.findViewById(R.id.progressBarNews);
+        progress = v.findViewById(R.id.progressBarNews);
 
         // Execute DownloadXML AsyncTask
         RecyclerView myrecyclerview = v.findViewById(R.id.rvNews);
-        assert getFragmentManager() != null;
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        adapter = new NewsAdapter(getContext(),linkList,ft);
+        //assert getFragmentManager() != null;
+        //FragmentTransaction ft = getFragmentManager().beginTransaction();
+        adapter = new NewsAdapter(getContext(),linkList);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(adapter);
         //myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
-        //progress.setVisibility(View.VISIBLE);
+        progress.setVisibility(View.VISIBLE);
         return v;
     }
 
@@ -118,7 +119,7 @@ public class NewsFragment extends Fragment {
                     linkList.add(a);
                 }
             }
-            //progress.setVisibility(View.GONE);
+            progress.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
         }
     }

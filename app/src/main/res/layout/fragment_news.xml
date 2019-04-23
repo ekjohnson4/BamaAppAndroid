@@ -27,7 +27,7 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="68dp"
             tools:ignore="MissingConstraints" />
-    <!--
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -40,7 +40,7 @@
                     android:layout_gravity="center"
                     tools:layout_editor_absoluteX="170dp"
                     tools:layout_editor_absoluteY="373dp" />
-        </RelativeLayout>-->
+        </RelativeLayout>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

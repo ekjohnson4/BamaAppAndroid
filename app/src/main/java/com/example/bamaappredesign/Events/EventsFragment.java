@@ -76,13 +76,11 @@ public class EventsFragment extends Fragment {
             }
         });
         week = v.findViewById(R.id.button5);
-
         week.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new DownloadXML(2).execute(URL);
             }
         });
-
         progress = v.findViewById(R.id.progressBarEvents);
         progress.setVisibility(View.VISIBLE);
         return v;
