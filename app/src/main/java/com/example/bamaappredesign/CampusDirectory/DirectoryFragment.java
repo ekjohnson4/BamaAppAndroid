@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import com.example.bamaappredesign.R;
 
@@ -25,7 +27,15 @@ public class DirectoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_directory, container, false);
+
+        View view =  inflater.inflate(R.layout.fragment_directory, container, false);
+        WebView mWebView = view.findViewById(R.id.directoryWB);
+
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        mWebView.loadUrl("https://www.ua.edu/directory/");//"https://www.ua.edu/directory/?l=&f=michael&p=&d=&t=all&_action=submit");
+
+        return view;
     }
 
 }
