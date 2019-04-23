@@ -81,49 +81,50 @@ public class HomeStudentFragment extends Fragment {
         slideRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null) {
-                        strings[0] = document.getString("slide1Header");
-                        strings[1] = document.getString("slide2Header");
-                        strings[2] = document.getString("slide3Header");
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document != null) {
+                    strings[0] = document.getString("slide1Header");
+                    strings[1] = document.getString("slide2Header");
+                    strings[2] = document.getString("slide3Header");
 
-                        images[0] = document.getString("slide1");
-                        images[1] = document.getString("slide2");
-                        images[2] = document.getString("slide3");
+                    images[0] = document.getString("slide1");
+                    images[1] = document.getString("slide2");
+                    images[2] = document.getString("slide3");
 
-                        //Home page slides
-                        try {
-                            assert getFragmentManager() != null;
-                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            viewPager = view.findViewById(R.id.viewPager);
-                            myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
-                            viewPager.setAdapter(myCustomPagerAdapter);
-                        }
-                        catch(Exception e){
-                            e.printStackTrace();
-                        }
-
-                    } else {
-                        Log.d("LOGGER", "No such document");
+                    //Home page slides
+                    try {
+                        assert getFragmentManager() != null;
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        viewPager = view.findViewById(R.id.viewPager);
+                        myCustomPagerAdapter = new MyCustomPagerAdapter(Objects.requireNonNull(getActivity()), images, strings, ft);
+                        viewPager.setAdapter(myCustomPagerAdapter);
                     }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
+
                 } else {
-                    Log.d("LOGGER", "get failed with ", task.getException());
+                    Log.d("LOGGER", "No such document");
                 }
+            } else {
+                Log.d("LOGGER", "get failed with ", task.getException());
+            }
             }
         });
 
-        //Modules
-        sharedPref = context.getSharedPreferences(
+        //Get selected modules
+        assert context != null;
+        sharedPref = Objects.requireNonNull(context).getSharedPreferences(
                 "modules", Context.MODE_PRIVATE);
-        if(!sharedPref.getString("modThree", "null").equals("null")){
+        if(!Objects.equals(sharedPref.getString("modThree", "null"), "null")){
             Module temp = getModule(sharedPref.getString("modThree", "null"));
             if(temp!=null){
                 moduleOne = temp;
                 System.out.println("Set module one to " + temp.getName());
             }
         }
-        if(!sharedPref.getString("modFour", "null").equals("null")){
+        if(!Objects.equals(sharedPref.getString("modFour", "null"), "null")){
             Module temp = getModule(sharedPref.getString("modFour", "null"));
             if(temp!=null){
                 moduleTwo = temp;
@@ -148,18 +149,19 @@ public class HomeStudentFragment extends Fragment {
         card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Opening module one");
-                if(moduleOne == Module.SHOPPING) {
-                    Uri uri = Uri.parse("https://www.universitysupplystore.com/");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
-                else{
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.flMain, moduleOne.getFragment());
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
+            System.out.println("Opening module one");
+            if(moduleOne == Module.SHOPPING) {
+                Uri uri = Uri.parse("https://www.universitysupplystore.com/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+            else{
+                assert getFragmentManager() != null;
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.flMain, moduleOne.getFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+            }
             }
         });
 
@@ -168,18 +170,19 @@ public class HomeStudentFragment extends Fragment {
         card_view2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Opening module one");
-                if(moduleTwo == Module.SHOPPING) {
-                    Uri uri = Uri.parse("https://www.universitysupplystore.com/");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
-                else{
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.flMain, moduleTwo.getFragment());
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
+            System.out.println("Opening module one");
+            if(moduleTwo == Module.SHOPPING) {
+                Uri uri = Uri.parse("https://www.universitysupplystore.com/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+            else{
+                assert getFragmentManager() != null;
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.flMain, moduleTwo.getFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+            }
             }
         });
 
@@ -188,44 +191,44 @@ public class HomeStudentFragment extends Fragment {
         card_view3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assert getFragmentManager() != null;
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.flMain, new NewsFragment());
-                ft.addToBackStack(null);
-                ft.commit();
+            assert getFragmentManager() != null;
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.flMain, new NewsFragment());
+            ft.addToBackStack(null);
+            ft.commit();
             }
         });
 
         //Pull data
         DocumentReference actRef = db.collection("actionCards").document(user.getUid());
         DocumentReference ticRef = db.collection("ticketInformation").document("game1");
-        DocumentReference ticRef2 = db.collection("ticketInformation").document("game1").collection("stuTickets").document(user.getEmail());
+        DocumentReference ticRef2 = db.collection("ticketInformation").document("game1").collection("stuTickets").document(Objects.requireNonNull(user.getEmail()));
         DocumentReference urlRef = db.collection("actionCards").document(user.getUid());
 
         //Display action card image
         urlRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null) {
-                        url[0] = document.getString("image2");
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document != null) {
+                    url[0] = document.getString("image2");
 
-                        //Display action card
-                        if(moduleTwo == Module.ACTION_CARD) {
-                            new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.card_image2))
-                                    .execute(url[0]);
-                        }
-                        if(moduleOne == Module.TICKETS){
-                            new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.ticketImg))
-                                    .execute("https://firebasestorage.googleapis.com/v0/b/bama-app.appspot.com/o/ticket.png?alt=media&token=9c8f2a78-314e-499c-ab3e-e216f1ca2eb0");
-                        }
-                    } else {
-                        Log.d("LOGGER", "No such document");
+                    //Display action card
+                    if(moduleTwo == Module.ACTION_CARD) {
+                        new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.card_image2))
+                                .execute(url[0]);
+                    }
+                    if(moduleOne == Module.TICKETS){
+                        new HomeStudentFragment.DownloadImageTask((ImageView) view.findViewById(R.id.ticketImg))
+                                .execute("https://firebasestorage.googleapis.com/v0/b/bama-app.appspot.com/o/ticket.png?alt=media&token=9c8f2a78-314e-499c-ab3e-e216f1ca2eb0");
                     }
                 } else {
-                    Log.d("LOGGER", "get failed with ", task.getException());
+                    Log.d("LOGGER", "No such document");
                 }
+            } else {
+                Log.d("LOGGER", "get failed with ", task.getException());
+            }
             }
         });
 
@@ -313,9 +316,9 @@ public class HomeStudentFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
+
     Module getModule(String mod){
         for(Module m : Module.values()){
             if(m.getName().equals(mod)){
@@ -324,6 +327,7 @@ public class HomeStudentFragment extends Fragment {
         }
         return null;
     }
+
     @SuppressLint("StaticFieldLeak")
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
