@@ -43,8 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 import static com.example.bamaappredesign.R.layout.action_bar;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private boolean isLoggedIn = false;
     FirebaseAuth auth;
     FirebaseUser user;
@@ -125,15 +124,20 @@ public class HomeActivity extends AppCompatActivity
             ImageView img = findViewById(R.id.icon);
             img.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.flMain, new HomeStudentFragment());
-                    ft.commit();
-                    navigationView.getMenu().getItem(0).setChecked(true);
+                    //Clear back stack
                     FragmentManager fm = getSupportFragmentManager();
                     int count = fm.getBackStackEntryCount();
                     for(int i = 0; i < count; ++i) {
                         fm.popBackStack();
                     }
+
+                    //Open home fragment
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, new HomeStudentFragment());
+                    ft.commit();
+
+                    //Select home in nav menu
+                    navigationView.getMenu().getItem(0).setChecked(true);
                 }
             });
         }
@@ -143,15 +147,20 @@ public class HomeActivity extends AppCompatActivity
             navigationView.getMenu().getItem(0).setChecked(true);
             img.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.flMain, new HomeVisitorFragment());
-                    ft.commit();
-                    navigationView.getMenu().getItem(0).setChecked(true);
+                    //Clear back stack
                     FragmentManager fm = getSupportFragmentManager();
                     int count = fm.getBackStackEntryCount();
                     for(int i = 0; i < count; ++i) {
                         fm.popBackStack();
                     }
+
+                    //Open home fragment
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.flMain, new HomeVisitorFragment());
+                    ft.commit();
+
+                    //Select Home in nav menu
+                    navigationView.getMenu().getItem(0).setChecked(true);
                 }
             });
         }
