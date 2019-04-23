@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.bamaappredesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -70,7 +71,7 @@ public class ScheduleFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                ScheduleClass a = new ScheduleClass(String.valueOf(document.get("title")), String.valueOf(document.get("time")), String.valueOf(document.get("days")), String.valueOf(document.get("prof")));
+                                ScheduleClass a = new ScheduleClass(String.valueOf(document.get("title")), String.valueOf(document.get("time")), String.valueOf(document.get("days")), String.valueOf(document.get("prof")), String.valueOf(document.get("location")));
                                 linkList.add(a);
                                 adapter.notifyDataSetChanged();
                             }

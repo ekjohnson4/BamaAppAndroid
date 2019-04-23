@@ -5,12 +5,14 @@ class ScheduleClass {
     private String time;
     private String days;
     private String prof;
+    private String location;
 
-    ScheduleClass(String cls, String time, String days, String prof){
+    ScheduleClass(String cls, String time, String days, String prof, String location){
         this.cls = cls;
         this.time = time;
         this.days = days;
         this.prof = prof;
+        this.location = location;
     }
 
     String getCls(){
@@ -24,5 +26,8 @@ class ScheduleClass {
     }
     String getProf(){
         return prof;
+    }
+    String getLocation(){
+        return location;
     }
 }

@@ -37,6 +37,12 @@ public class ScheduleClassAdapter extends RecyclerView.Adapter<ScheduleClassAdap
         myViewHolder.time.setText(mData.get(i).getTime());
         myViewHolder.days.setText(mData.get(i).getDays());
         myViewHolder.prof.setText(mData.get(i).getProf());
+        myViewHolder.location.setText(mData.get(i).getLocation());
+
+        //If class is online, just ignore location
+        if (mData.get(i).getLocation().equals("")){
+            myViewHolder.location.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -50,6 +56,7 @@ public class ScheduleClassAdapter extends RecyclerView.Adapter<ScheduleClassAdap
         private TextView days;
         private TextView time;
         private TextView prof;
+        private TextView location;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +66,7 @@ public class ScheduleClassAdapter extends RecyclerView.Adapter<ScheduleClassAdap
             days = itemView.findViewById(R.id.days);
             time = itemView.findViewById(R.id.time);
             prof = itemView.findViewById(R.id.prof);
+            location = itemView.findViewById(R.id.loc);
         }
     }
 }
