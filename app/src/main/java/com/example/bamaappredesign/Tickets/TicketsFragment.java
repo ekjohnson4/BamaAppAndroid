@@ -82,6 +82,31 @@ public class TicketsFragment extends Fragment {
                     TextView d = inputView.findViewById(R.id.date);
                     d.setText(date[0] + " @ " + time[0]);
 
+                    studentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document != null) {
+                                    if (document.getBoolean("ticket")){
+                                        bowl[0] = document.getString("bowl");
+                                        gate[0] = document.getString("gate");
+                                        TextView g = inputView.findViewById(R.id.gateBowl);
+                                        g.setText(bowl[0] + " Bowl - " + gate[0]);
+                                    }
+                                    else{
+                                        TextView g = inputView.findViewById(R.id.gateBowl);
+                                        g.setText("You have no ticket.");
+                                    }
+                                } else {
+                                    Log.d("LOGGER", "No such document");
+                                }
+                            } else {
+                                Log.d("LOGGER", "get failed with ", task.getException());
+                            }
+                        }
+                    });
+
                 } else {
                     Log.d("LOGGER", "No such document");
                 }
@@ -113,7 +138,6 @@ public class TicketsFragment extends Fragment {
             }
         };
 
-        //UserRecord userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
         transferTicket.setOnClickListener(transferListener);
         donateTicket.setOnClickListener(donateListener);
         return inputView;

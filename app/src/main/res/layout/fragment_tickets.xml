@@ -17,15 +17,15 @@
         android:scaleType="fitXY" />
 
     <TextView
-    android:id="@+id/game"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingTop= "10dp"
-    android:paddingBottom="8dp"
-    android:text=""
-    android:textColor="@android:color/black"
-    android:textSize="26sp"
-    android:textStyle="bold"/>
+        android:id="@+id/game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop= "10dp"
+        android:paddingBottom="8dp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/date"
@@ -36,6 +36,16 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/gateBowl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text=""
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/transfer_button"
