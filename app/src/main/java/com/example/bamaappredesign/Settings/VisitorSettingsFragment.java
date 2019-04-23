@@ -1,6 +1,7 @@
 package com.example.bamaappredesign.Settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.bamaappredesign.Home.HomeActivity;
 import com.example.bamaappredesign.Home.Module;
 import com.example.bamaappredesign.Home.ModuleType;
 import com.example.bamaappredesign.Home.ModuleVisitorAdapter;
@@ -79,8 +80,8 @@ public class VisitorSettingsFragment extends SettingsInterface {
         editor.apply();
         modVisitorAdapter.setModuleOne(getModule(a));
         modVisitorAdapter.setModuleTwo(getModule(b));
-        Toast.makeText(getActivity(),"Saved favorites.", Toast.LENGTH_SHORT).show();
-        //spinner.setSelection(linkList.indexOf(a));
-        //spinner1.setSelection(linkList.indexOf(b));
+
+        Intent i = new Intent(getContext(), HomeActivity.class);
+        startActivity(i);
     }
 }

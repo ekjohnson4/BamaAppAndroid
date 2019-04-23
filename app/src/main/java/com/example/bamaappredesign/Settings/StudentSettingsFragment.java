@@ -4,15 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.bamaappredesign.Home.HomeStudentFragment;
 import com.example.bamaappredesign.Home.Module;
 import com.example.bamaappredesign.Home.ModuleHomeAdapter;
 import com.example.bamaappredesign.R;
@@ -90,8 +90,11 @@ public class StudentSettingsFragment extends SettingsInterface {
         editor.apply();
         modHomeAdapter.setModuleOne(getModule(a));
         modHomeAdapter.setModuleTwo(getModule(b));
-        Toast.makeText(getActivity(),"Saved favorites.", Toast.LENGTH_SHORT).show();
-        //spinner.setSelection(linkList.indexOf(a));
-        //spinner1.setSelection(linkList.indexOf(b));
+
+        assert getFragmentManager() != null;
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.flMain, new HomeStudentFragment());
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
