@@ -39,8 +39,8 @@ public class HomeStudentFragment extends Fragment {
 
     ViewPager viewPager;
     MyCustomPagerAdapter myCustomPagerAdapter;
-    String images[] = {"","",""};
-    String strings[] = {"","",""};
+    String[] images = {"", "", ""};
+    String[] strings = {"", "", ""};
     SharedPreferences sharedPref;
     TextView modOne;
     TextView modTwo;
@@ -49,7 +49,6 @@ public class HomeStudentFragment extends Fragment {
 
     Module moduleOne = Module.TICKETS;
     Module moduleTwo = Module.ACTION_CARD;
-    Module moduleThree = Module.NEWS;
 
     public HomeStudentFragment() {
         // Required empty public constructor
@@ -72,34 +71,7 @@ public class HomeStudentFragment extends Fragment {
         //Set view
         final View view = inflater.inflate(R.layout.fragment_home_student, container, false);
         Context context = getActivity();
-        sharedPref = context.getSharedPreferences(
-                "modules", Context.MODE_PRIVATE);
-        if(!sharedPref.getString("modThree", "null").equals("null")){
-            Module temp = getModule(sharedPref.getString("modThree", "null"));
-            if(temp!=null){
-                moduleOne = temp;
-                System.out.println("Set module one to " + temp.getName());
-            }
-        }
-        if(!sharedPref.getString("modFour", "null").equals("null")){
-            Module temp = getModule(sharedPref.getString("modFour", "null"));
-            if(temp!=null){
-                moduleTwo = temp;
-                System.out.println("Set module two to " + temp.getName());
-            }
-        }
-        modOne = view.findViewById(R.id.modOne);
-        modTwo = view.findViewById(R.id.modTwo);
-        modOne.setText(moduleOne.getName());
-        modTwo.setText(moduleTwo.getName());
-        imageOne = view.findViewById(R.id.ticketImg);
-        imageTwo = view.findViewById(R.id.card_image2);
-        if(moduleOne.getImage() != 0) {
-            imageOne.setImageResource(moduleOne.getImage());
-        }
-        if(moduleTwo.getImage() != 0){
-            imageTwo.setImageResource(moduleTwo.getImage());
-        }
+
         // Create a query against the collection.
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         assert user != null;
@@ -141,7 +113,37 @@ public class HomeStudentFragment extends Fragment {
             }
         });
 
-        //Tickets Card
+        //Modules
+        sharedPref = context.getSharedPreferences(
+                "modules", Context.MODE_PRIVATE);
+        if(!sharedPref.getString("modThree", "null").equals("null")){
+            Module temp = getModule(sharedPref.getString("modThree", "null"));
+            if(temp!=null){
+                moduleOne = temp;
+                System.out.println("Set module one to " + temp.getName());
+            }
+        }
+        if(!sharedPref.getString("modFour", "null").equals("null")){
+            Module temp = getModule(sharedPref.getString("modFour", "null"));
+            if(temp!=null){
+                moduleTwo = temp;
+                System.out.println("Set module two to " + temp.getName());
+            }
+        }
+        modOne = view.findViewById(R.id.modOne);
+        modTwo = view.findViewById(R.id.modTwo);
+        modOne.setText(moduleOne.getName());
+        modTwo.setText(moduleTwo.getName());
+        imageOne = view.findViewById(R.id.ticketImg);
+        imageTwo = view.findViewById(R.id.card_image2);
+        if(moduleOne.getImage() != 0) {
+            imageOne.setImageResource(moduleOne.getImage());
+        }
+        if(moduleTwo.getImage() != 0){
+            imageTwo.setImageResource(moduleTwo.getImage());
+        }
+
+        //Module 1
         CardView card_view = view.findViewById(R.id.card1);
         card_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +163,7 @@ public class HomeStudentFragment extends Fragment {
             }
         });
 
-        //ActionCard Card
+        //Module 2
         CardView card_view2 = view.findViewById(R.id.card2);
         card_view2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +183,7 @@ public class HomeStudentFragment extends Fragment {
             }
         });
 
-        //News Card
+        //News Module
         CardView card_view3 = view.findViewById(R.id.card3);
         card_view3.setOnClickListener(new View.OnClickListener() {
             @Override
