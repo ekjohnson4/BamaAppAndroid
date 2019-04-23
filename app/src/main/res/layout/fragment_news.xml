@@ -16,8 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop= "10dp"
-            android:paddingStart= "16dp"
-            android:paddingBottom="16dp"
+            android:paddingStart="16dp"
+            android:paddingBottom="24dp"
             android:text="News"
             android:textColor="@android:color/black"
             android:textSize="26sp"
@@ -27,26 +27,26 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="68dp"
             tools:ignore="MissingConstraints" />
+    <!--
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ProgressBar
-                android:id="@+id/progressBarNews"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                tools:layout_editor_absoluteX="170dp"
-                tools:layout_editor_absoluteY="373dp" />
-        </RelativeLayout>
+                <ProgressBar
+                    android:id="@+id/progressBarNews"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:layout_editor_absoluteX="170dp"
+                    tools:layout_editor_absoluteY="373dp" />
+        </RelativeLayout>-->
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvNews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:paddingTop="40dp"
-        />
+        android:paddingTop="50dp"
+        android:scrollbars="vertical" />
 </RelativeLayout>
