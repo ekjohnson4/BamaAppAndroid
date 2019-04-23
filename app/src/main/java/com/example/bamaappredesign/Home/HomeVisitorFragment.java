@@ -93,17 +93,18 @@ public class HomeVisitorFragment extends Fragment {
             }
         });
 
-        //Modules
+        //Get selected modules
+        assert context != null;
         sharedPref = context.getSharedPreferences(
                 "modules", Context.MODE_PRIVATE);
-        if(!sharedPref.getString("modOne", "null").equals("null")){
+        if(!Objects.equals(sharedPref.getString("modOne", "null"), "null")){
             Module temp = getModule(sharedPref.getString("modOne", "null"));
             if(temp!=null){
                 moduleOne = temp;
                 System.out.println("Set module one to " + temp.getName());
             }
         }
-        if(!sharedPref.getString("modTwo", "null").equals("null")){
+        if(!Objects.equals(sharedPref.getString("modTwo", "null"), "null")){
             Module temp = getModule(sharedPref.getString("modTwo", "null"));
             if(temp!=null){
                 moduleTwo = temp;
@@ -135,6 +136,7 @@ public class HomeVisitorFragment extends Fragment {
                     startActivity(intent);
                 }
                 else{
+                    assert getFragmentManager() != null;
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.flMain, moduleOne.getFragment());
                     ft.addToBackStack(null);
@@ -154,6 +156,7 @@ public class HomeVisitorFragment extends Fragment {
                     startActivity(intent);
                 }
                 else{
+                    assert getFragmentManager() != null;
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.flMain, moduleTwo.getFragment());
                     ft.addToBackStack(null);
