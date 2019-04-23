@@ -56,8 +56,8 @@ public class NewsFragment extends Fragment {
         // Execute DownloadXML AsyncTask
         RecyclerView myrecyclerview = v.findViewById(R.id.rvNews);
         //assert getFragmentManager() != null;
-        //FragmentTransaction ft = getFragmentManager().beginTransaction();
-        adapter = new NewsAdapter(getContext(),linkList);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        adapter = new NewsAdapter(getContext(),linkList, ft);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(adapter);
         //myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
