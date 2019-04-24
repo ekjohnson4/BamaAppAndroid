@@ -1,13 +1,13 @@
 package com.example.bamaappredesign.Schedule;
 
-class ScheduleClass {
+public class ScheduleClass {
     private String cls;
     private String time;
     private String days;
     private String prof;
     private String location;
 
-    ScheduleClass(String cls, String time, String days, String prof, String location){
+    public ScheduleClass(String cls, String time, String days, String prof, String location){
         this.cls = cls;
         this.time = time;
         this.days = days;
@@ -15,19 +15,19 @@ class ScheduleClass {
         this.location = location;
     }
 
-    String getCls(){
+    public String getCls(){
         return cls;
     }
-    String getTime(){
+    public String getTime(){
         return time;
     }
-    String getDays(){
+    public String getDays(){
         return days;
     }
-    String getProf(){
+    public String getProf(){
         return prof;
     }
-    String getLocation(){
+    public String getLocation(){
         return location;
     }
 }
