@@ -55,12 +55,10 @@ public class NewsFragment extends Fragment {
 
         // Execute DownloadXML AsyncTask
         RecyclerView myrecyclerview = v.findViewById(R.id.rvNews);
-        //assert getFragmentManager() != null;
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         adapter = new NewsAdapter(getContext(),linkList, ft);
         myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myrecyclerview.setAdapter(adapter);
-        //myrecyclerview.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), LinearLayoutManager.VERTICAL));
         progress.setVisibility(View.VISIBLE);
         return v;
     }
@@ -136,7 +134,6 @@ public class NewsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new DownloadXML().execute(URL);
-       // REMOVE progress.setVisibility(View.GONE);
     }
 
 }

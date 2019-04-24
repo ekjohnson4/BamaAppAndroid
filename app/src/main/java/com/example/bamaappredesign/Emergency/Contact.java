@@ -1,10 +1,10 @@
 package com.example.bamaappredesign.Emergency;
 
-class Contact {
+public class Contact {
     private String Name;
     private String Phone;
 
-    Contact(String name, String phone) {
+    public Contact(String name, String phone) {
         Name = name;
         Phone = phone;
     }
