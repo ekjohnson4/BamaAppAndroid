@@ -1,8 +1,8 @@
 <h2 style="text-align: center;">CS 495 Capstone Project at The University of Alabama</h2>
 
-### Proof of Concept
+### App Overview
 
-[![Proof of Concept](http://img.youtube.com/vi/DnNfLOJirgY/0.jpg)](http://www.youtube.com/watch?v=DnNfLOJirgY "Alabama Redesign App Proof of Concept")
+[![App Overview](https://i9.ytimg.com/vi/CJr7WGcF044/mq1.jpg?sqp=CKiLguYF&rs=AOn4CLAt3pgb40vqbtT4XUf11XFGEH-YKg)](https://www.youtube.com/watch?v=CJr7WGcF044&t=1s "Alabama Redesign App")
 
 ### About
 
