@@ -12,6 +12,6 @@ public class ModuleHomeAdapter extends HomeStudentFragment {
         moduleOne = mod;
     }
     public void setModuleTwo(Module mod){
-        moduleOne = mod;
+        moduleTwo = mod;
     }
 }

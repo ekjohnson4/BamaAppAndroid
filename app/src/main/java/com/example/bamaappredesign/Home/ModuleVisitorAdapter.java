@@ -12,6 +12,6 @@ public class ModuleVisitorAdapter extends HomeVisitorFragment {
         moduleOne = mod;
     }
     public void setModuleTwo(Module mod){
-        moduleOne = mod;
+        moduleTwo = mod;
     }
 }
