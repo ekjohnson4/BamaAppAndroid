@@ -2,7 +2,7 @@
 
 ### App Overview
 
-[![App Overview](https://i9.ytimg.com/vi/CJr7WGcF044/mq1.jpg?sqp=COyGiuYF&rs=AOn4CLAf-SilOrx3zuj70n_7mnb7YNVuCg)](https://www.youtube.com/watch?v=CJr7WGcF044&t=1s "Alabama Redesign App")
+[![App Overview](https://i.ytimg.com/vi/CJr7WGcF044/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBSmkOHohu9DRPU6YPygmA6lEy4Sw)](https://www.youtube.com/watch?v=CJr7WGcF044&t=1s "Alabama Redesign App")
 
 ### About
 
